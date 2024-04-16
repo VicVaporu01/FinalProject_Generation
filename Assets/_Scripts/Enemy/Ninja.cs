@@ -13,5 +13,6 @@ public class Ninja : Enemy
     private void Update()
     {
         base.DetectPlayer(followDistance, player);
+        base.FollowPlayer(player);
     }
 }

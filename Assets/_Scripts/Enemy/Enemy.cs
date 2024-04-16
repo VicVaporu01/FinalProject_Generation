@@ -9,7 +9,7 @@ public class Enemy : MonoBehaviour
     public LayerMask playerLayer;
 
     public float health, speed, damage;
-
+    public bool hasLineOfSight = false;
     public float followDistance;
 
     public void DetectPlayer(float followDistance, GameObject player)
@@ -18,11 +18,28 @@ public class Enemy : MonoBehaviour
         Vector2 playerDirection = player.transform.position - transform.position;
         Ray2D rayToSee = new Ray2D(transform.position, playerDirection);
         Debug.DrawRay(rayToSee.origin, rayToSee.direction * followDistance, Color.green);
-        
+
         RaycastHit2D hit = Physics2D.Raycast(rayToSee.origin, playerDirection, followDistance, playerLayer);
-        if (hit.collider!=null)
+        if (hit.collider != null && hit.collider.CompareTag("Player"))
         {
-            Debug.Log("Collider "+hit.collider.name+" detected");
+            hasLineOfSight = true;
+        }
+        else
+        {
+            hasLineOfSight = false;
+        }
+    }
+
+    public void FollowPlayer(GameObject player)
+    {
+        if (hasLineOfSight)
+        {
+            Vector2 playerDirection = player.transform.position - transform.position;
+            enemyRB.velocity = playerDirection.normalized * speed;
+        }
+        else
+        {
+            enemyRB.velocity = Vector2.zero;
         }
     }
 }

@@ -13,5 +13,6 @@ public class Archer : Enemy
     private void Update()
     {
         base.DetectPlayer(followDistance, player);
+        base.FollowPlayer(player);
     }
 }

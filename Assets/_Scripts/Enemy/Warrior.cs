@@ -14,5 +14,6 @@ public class Warrior : Enemy
     private void Update()
     {
         base.DetectPlayer(followDistance, player);
+        base.FollowPlayer(player);
     }
 }
