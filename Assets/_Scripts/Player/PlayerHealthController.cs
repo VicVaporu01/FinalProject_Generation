@@ -22,7 +22,7 @@ public class PlayerHealthController : MonoBehaviour
 
     void Start()
     {
-        currentHealth = maxHealth; ;
+        currentHealth = maxHealth;
 
         theSR = GetComponent<SpriteRenderer>();
     }
@@ -50,18 +50,17 @@ public class PlayerHealthController : MonoBehaviour
             {
                 currentHealth = 0;
 
-                Destroy(theSR);
+                // Destroy(theSR);
+                gameObject.SetActive(false);
             }
             else
             {
                 invincibleCounter = invincibleLength;
                 theSR.color = new Color(theSR.color.r, theSR.color.g, theSR.color.b, .5f);
-
             }
 
             //UIController.instance.UpdateHealthDisplay();
         }
-
     }
 
     public void HealPlayer()
