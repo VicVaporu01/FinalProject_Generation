@@ -33,22 +33,18 @@ public class Warrior : Enemy, IDamage
         }
     }
 
-    public void TakeDamage(float damage, DamageType damageType)
+    public override float CalculateFinalDamage(float damage, DamageType damageType)
     {
-        float finalDamage = 0.0f;
+        Debug.Log("Warrior CalculateFinalDamage");
         switch (damageType)
         {
             case DamageType.Physical:
-                finalDamage = damage / 2.0f;
-                base.ReduceHealth(finalDamage);
-                break;
+                return damage / 2.0f;
             case DamageType.Magical:
-                finalDamage = damage * 2.0f;
-                base.ReduceHealth(finalDamage);
-                break;
+                return damage * 2.0f;
             default:
                 Debug.LogError("Damage type not found");
-                break;
+                return 0f;
         }
     }
 }

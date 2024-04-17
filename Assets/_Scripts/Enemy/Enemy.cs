@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class Enemy : MonoBehaviour, IDamage
 {
     private Rigidbody2D enemyRB;
     private GameObject player;
@@ -49,6 +49,27 @@ public class Enemy : MonoBehaviour
     public void GenerateRandomDirection()
     {
         randomDirection = new Vector2(Random.Range(-xRange, xRange), Random.Range(-yRange, yRange)).normalized;
+    }
+
+    public void TakeDamage(float damage, DamageType damageType)
+    {
+        float finalDamage = CalculateFinalDamage(damage, damageType);
+        ReduceHealth(finalDamage);
+    }
+
+    public virtual float CalculateFinalDamage(float damage, DamageType damageType)
+    {
+        Debug.Log("Enemy CalculateFinalDamage");
+        switch (damageType)
+        {
+            case DamageType.Physical:
+                return damage;
+            case DamageType.Magical:
+                return damage;
+            default:
+                Debug.LogError("Damage type not found");
+                return 0f;
+        }
     }
 
     public void ReduceHealth(float damage)
