@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,5 +16,20 @@ public class Warrior : Enemy
     {
         base.DetectPlayer(followDistance, player);
         base.FollowPlayer(player);
+    }
+
+    private void FixedUpdate()
+    {
+        if (!hasLineOfSight && timePatrolling >= 0)
+        {
+            Debug.Log("Moviendose");
+            timePatrolling -= Time.deltaTime;
+            enemyRB.velocity = randomDirection * speed;
+        }
+        else
+        {
+            base.GenerateRandomDirection();
+            timePatrolling = 5.0f;
+        }
     }
 }
