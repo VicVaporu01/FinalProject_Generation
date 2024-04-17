@@ -5,11 +5,16 @@ using UnityEngine;
 
 public class Warrior : Enemy, IDamage
 {
+    [SerializeField] private MeleeCombat meleeCombatController;
+
+    [SerializeField] private float minApproachValue;
+
     private void Start()
     {
         // followDistance = 2.0f;
         SetEnemyRB(GetComponent<Rigidbody2D>());
         SetPlayer(GameObject.Find("Player"));
+        meleeCombatController = GetComponent<MeleeCombat>();
     }
 
     private void Update()
@@ -20,6 +25,12 @@ public class Warrior : Enemy, IDamage
 
     private void FixedUpdate()
     {
+        if (canAttack)
+        {
+            meleeCombatController.Hit();
+        }
+
+        CalculateApproach(minApproachValue);
         if (!hasLineOfSight && GetTimePatrolling() >= 0)
         {
             Debug.Log("Moviendose");
@@ -33,22 +44,18 @@ public class Warrior : Enemy, IDamage
         }
     }
 
-    public void TakeDamage(float damage, DamageType damageType)
+    public override float CalculateFinalDamage(float damage, DamageType damageType)
     {
-        float finalDamage = 0.0f;
+        Debug.Log("Warrior CalculateFinalDamage");
         switch (damageType)
         {
             case DamageType.Physical:
-                finalDamage = damage / 2.0f;
-                base.ReduceHealth(finalDamage);
-                break;
+                return damage / 2.0f;
             case DamageType.Magical:
-                finalDamage = damage * 2.0f;
-                base.ReduceHealth(finalDamage);
-                break;
+                return damage * 2.0f;
             default:
                 Debug.LogError("Damage type not found");
-                break;
+                return 0f;
         }
     }
 }
