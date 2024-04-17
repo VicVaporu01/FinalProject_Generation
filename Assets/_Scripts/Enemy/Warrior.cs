@@ -5,11 +5,16 @@ using UnityEngine;
 
 public class Warrior : Enemy, IDamage
 {
+    [SerializeField] private MeleeCombat meleeCombatController;
+
+    [SerializeField] private float minApproachValue;
+
     private void Start()
     {
         // followDistance = 2.0f;
         SetEnemyRB(GetComponent<Rigidbody2D>());
         SetPlayer(GameObject.Find("Player"));
+        meleeCombatController = GetComponent<MeleeCombat>();
     }
 
     private void Update()
@@ -20,6 +25,12 @@ public class Warrior : Enemy, IDamage
 
     private void FixedUpdate()
     {
+        if (canAttack)
+        {
+            meleeCombatController.Hit();
+        }
+
+        CalculateApproach(minApproachValue);
         if (!hasLineOfSight && GetTimePatrolling() >= 0)
         {
             Debug.Log("Moviendose");
