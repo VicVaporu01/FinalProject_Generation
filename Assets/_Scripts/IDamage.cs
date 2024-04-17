@@ -2,15 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IDamage : MonoBehaviour
+public interface IDamage
 {
-    private void Start()
-    {
-        
-    }
+    void TakeDamage(float damage, DamageType damageType);
+}
 
-    private void Update()
-    {
-        
-    }
+public enum DamageType
+{
+    Physical,
+    Magical
 }

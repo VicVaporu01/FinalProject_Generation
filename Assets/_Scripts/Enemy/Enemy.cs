@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    public Rigidbody2D enemyRB;
-    public GameObject player;
+    private Rigidbody2D enemyRB;
+    private GameObject player;
 
     public float health, speed, damage;
     public bool hasLineOfSight = false;
 
     public float followDistance;
-    public float timePatrolling;
-    public Vector2 randomDirection;
+    private float timePatrolling;
+    private Vector2 randomDirection;
     public float xRange, yRange;
 
     public void DetectPlayer(float followDistance, GameObject player)
@@ -49,5 +49,54 @@ public class Enemy : MonoBehaviour
     public void GenerateRandomDirection()
     {
         randomDirection = new Vector2(Random.Range(-xRange, xRange), Random.Range(-yRange, yRange)).normalized;
+    }
+
+    public void ReduceHealth(float damage)
+    {
+        health -= damage;
+        if (health <= 0)
+        {
+            Die();
+        }
+    }
+
+    public void Die()
+    {
+        gameObject.SetActive(false);
+    }
+
+    public Rigidbody2D GetEnemyRB()
+    {
+        return enemyRB;
+    }
+
+    public void SetEnemyRB(Rigidbody2D rb)
+    {
+        enemyRB = rb;
+    }
+
+    public GameObject GetPlayer()
+    {
+        return player;
+    }
+
+    public void SetPlayer(GameObject playerFound)
+    {
+        player = playerFound;
+    }
+
+    public float GetTimePatrolling()
+    {
+        return timePatrolling;
+    }
+
+    public void SetTimePatrolling(float time)
+    {
+        timePatrolling = time;
+    }
+
+    public Vector2 GetRandomDirection()
+    {
+        return randomDirection;
     }
 }
