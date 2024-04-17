@@ -902,7 +902,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentHealth: 0
-  maxHealth: 6
+  maxHealth: 5
   invincibleLength: 0
 --- !u!4 &1084366522 stripped
 Transform:
