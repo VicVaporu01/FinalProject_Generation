@@ -4,13 +4,16 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    public Rigidbody2D enemyRB;
-    public GameObject player;
-    public LayerMask playerLayer;
+    private Rigidbody2D enemyRB;
+    private GameObject player;
 
     public float health, speed, damage;
     public bool hasLineOfSight = false;
+
     public float followDistance;
+    private float timePatrolling;
+    private Vector2 randomDirection;
+    public float xRange, yRange;
 
     public void DetectPlayer(float followDistance, GameObject player)
     {
@@ -19,8 +22,8 @@ public class Enemy : MonoBehaviour
         Ray2D rayToSee = new Ray2D(transform.position, playerDirection);
         Debug.DrawRay(rayToSee.origin, rayToSee.direction * followDistance, Color.green);
 
-        RaycastHit2D hit = Physics2D.Raycast(rayToSee.origin, playerDirection, followDistance, playerLayer);
-        if (hit.collider != null && hit.collider.CompareTag("Player"))
+        RaycastHit2D[] hit = Physics2D.RaycastAll(rayToSee.origin, playerDirection, followDistance);
+        if (hit.Length > 1 && hit[1].collider != null && hit[1].collider.CompareTag("Player"))
         {
             hasLineOfSight = true;
         }
@@ -41,5 +44,59 @@ public class Enemy : MonoBehaviour
         {
             enemyRB.velocity = Vector2.zero;
         }
+    }
+
+    public void GenerateRandomDirection()
+    {
+        randomDirection = new Vector2(Random.Range(-xRange, xRange), Random.Range(-yRange, yRange)).normalized;
+    }
+
+    public void ReduceHealth(float damage)
+    {
+        health -= damage;
+        if (health <= 0)
+        {
+            Die();
+        }
+    }
+
+    public void Die()
+    {
+        gameObject.SetActive(false);
+    }
+
+    public Rigidbody2D GetEnemyRB()
+    {
+        return enemyRB;
+    }
+
+    public void SetEnemyRB(Rigidbody2D rb)
+    {
+        enemyRB = rb;
+    }
+
+    public GameObject GetPlayer()
+    {
+        return player;
+    }
+
+    public void SetPlayer(GameObject playerFound)
+    {
+        player = playerFound;
+    }
+
+    public float GetTimePatrolling()
+    {
+        return timePatrolling;
+    }
+
+    public void SetTimePatrolling(float time)
+    {
+        timePatrolling = time;
+    }
+
+    public Vector2 GetRandomDirection()
+    {
+        return randomDirection;
     }
 }
