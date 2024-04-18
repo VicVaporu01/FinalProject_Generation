@@ -322,7 +322,8 @@ MonoBehaviour:
   xRange: 10
   yRange: 10
   meleeCombatController: {fileID: 0}
-  minApproachValue: 2
+  minDistanceValue: 1.5
+  timeToAttack: 1.5
 --- !u!61 &179790965
 BoxCollider2D:
   m_ObjectHideFlags: 0
