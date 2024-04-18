@@ -59,7 +59,8 @@ public class PlayerHealthController : MonoBehaviour
                 theSR.color = new Color(theSR.color.r, theSR.color.g, theSR.color.b, .5f);
             }
 
-            //UIController.instance.UpdateHealthDisplay();
+            
+            UIHealthController.instance.UpdateHealthDisplay(currentHealth, maxHealth);
         }
     }
 
@@ -71,6 +72,8 @@ public class PlayerHealthController : MonoBehaviour
             currentHealth = maxHealth;
         }
 
-        //UIController.instance.UpdateHealthDisplay();
+        
+        UIHealthController.instance.UpdateHealthDisplay(currentHealth, maxHealth);
     }
+
 }

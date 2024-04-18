@@ -2,12 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class Warrior : Enemy, IDamage
 {
     [SerializeField] private MeleeCombat meleeCombatController;
 
-    [SerializeField] private float minApproachValue;
+    [SerializeField] private float minDistanceValue;
+    [SerializeField] private float timeToAttack = 1.5f;
 
     private void Start()
     {
@@ -25,12 +27,24 @@ public class Warrior : Enemy, IDamage
 
     private void FixedUpdate()
     {
-        if (canAttack)
+        // This is to make the enemy look at its walking direction
+        if (GetEnemyRB().velocity != Vector2.zero)
         {
-            meleeCombatController.Hit();
+            Vector3 lookDirection = new Vector3(GetEnemyRB().velocity.x, GetEnemyRB().velocity.y, 0);
+            transform.up = lookDirection;
         }
 
-        CalculateApproach(minApproachValue);
+        if (canAttack && timeToAttack <= 0)
+        {
+            meleeCombatController.Hit();
+            timeToAttack = 1.5f;
+        }
+        else if (timeToAttack >= 0)
+        {
+            timeToAttack -= Time.deltaTime;
+        }
+
+        CalculateApproach(minDistanceValue);
         if (!hasLineOfSight && GetTimePatrolling() >= 0)
         {
             Debug.Log("Moviendose");
