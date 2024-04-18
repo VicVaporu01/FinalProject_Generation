@@ -12,7 +12,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Movement")]
     [SerializeField] private Rigidbody2D rb2D;
     [SerializeField] private float movementSpeed;
-    private Vector2 moveDirection;
+    [SerializeField] private Vector2 moveDirection;
 
     private void Awake()
     {
