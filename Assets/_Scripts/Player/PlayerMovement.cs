@@ -18,6 +18,8 @@ public class PlayerMovement : MonoBehaviour
 
     Animator anims;
 
+    public float MovementSpeed { get => movementSpeed; set => movementSpeed = value; }
+
     private void Awake()
     {
         moveAction = playerInput.actions["Move"];
@@ -39,10 +41,22 @@ public class PlayerMovement : MonoBehaviour
         rb2D.velocity = moveDirection * movementSpeed;
         if (attack.WasPressedThisFrame() && attack.IsPressed())
         {
-            Debug.Log("Precionado");
-            anims.SetTrigger("attack");
+            Attack();
         }
-        
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            Damaged();
+        }
     }
-
+    public void Attack()
+    {
+        int attackAnim = Random.Range(0, 3);
+        anims.SetTrigger("Attack");
+        anims.SetInteger("AttackAnim", attackAnim);
+        Debug.Log(attackAnim);
+    }
+    public void Damaged()
+    {
+        anims.SetTrigger("Damaged");
+    }
 }
