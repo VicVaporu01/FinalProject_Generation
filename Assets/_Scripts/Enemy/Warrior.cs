@@ -2,12 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class Warrior : Enemy, IDamage
 {
     [SerializeField] private MeleeCombat meleeCombatController;
 
-    [SerializeField] private float minApproachValue;
+    [SerializeField] private float minDistanceValue;
+    [SerializeField] private float timeToAttack = 1.5f;
 
     private void Start()
     {
@@ -25,12 +27,18 @@ public class Warrior : Enemy, IDamage
 
     private void FixedUpdate()
     {
-        if (canAttack)
+        if (canAttack && timeToAttack <= 0)
         {
             meleeCombatController.Hit();
+            timeToAttack = 1.5f;
         }
 
-        CalculateApproach(minApproachValue);
+        if (timeToAttack >= 0)
+        {
+            timeToAttack -= Time.deltaTime;
+        }
+
+        CalculateApproach(minDistanceValue);
         if (!hasLineOfSight && GetTimePatrolling() >= 0)
         {
             Debug.Log("Moviendose");
