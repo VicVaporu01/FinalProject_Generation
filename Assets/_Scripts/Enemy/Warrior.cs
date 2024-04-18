@@ -47,7 +47,7 @@ public class Warrior : Enemy, IDamage
         CalculateApproach(minDistanceValue);
         if (!hasLineOfSight && GetTimePatrolling() >= 0)
         {
-            Debug.Log("Moviendose");
+            // Debug.Log("Moviendose");
             SetTimePatrolling((GetTimePatrolling() - Time.deltaTime));
             GetEnemyRB().velocity = GetRandomDirection() * speed;
         }
@@ -60,7 +60,7 @@ public class Warrior : Enemy, IDamage
 
     public override float CalculateFinalDamage(float damage, DamageType damageType)
     {
-        Debug.Log("Warrior CalculateFinalDamage");
+        // Debug.Log("Warrior CalculateFinalDamage");
         switch (damageType)
         {
             case DamageType.Physical:
