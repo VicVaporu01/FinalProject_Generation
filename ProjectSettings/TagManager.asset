@@ -5,14 +5,16 @@ TagManager:
   serializedVersion: 2
   tags:
   - SpeedObject
+  - Enemy
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
+  - Ground
   - Player
   - Water
   - UI
-  - 
+  - Enemy
   - 
   - 
   - 
