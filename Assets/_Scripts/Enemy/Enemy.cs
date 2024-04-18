@@ -7,6 +7,7 @@ public class Enemy : MonoBehaviour, IDamage
     private Rigidbody2D enemyRB;
     private GameObject player;
 
+    public Transform eyes;
     public float health, speed, damage;
     public bool hasLineOfSight = false, canApproach = false, canAttack = false;
 

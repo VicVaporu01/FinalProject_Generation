@@ -27,13 +27,19 @@ public class Warrior : Enemy, IDamage
 
     private void FixedUpdate()
     {
+        // This is to make the enemy look at its walking direction
+        if (GetEnemyRB().velocity != Vector2.zero)
+        {
+            Vector3 lookDirection = new Vector3(GetEnemyRB().velocity.x, GetEnemyRB().velocity.y, 0);
+            transform.up = lookDirection;
+        }
+
         if (canAttack && timeToAttack <= 0)
         {
             meleeCombatController.Hit();
             timeToAttack = 1.5f;
         }
-
-        if (timeToAttack >= 0)
+        else if (timeToAttack >= 0)
         {
             timeToAttack -= Time.deltaTime;
         }
