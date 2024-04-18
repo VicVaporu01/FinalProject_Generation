@@ -6,13 +6,13 @@ public class Ninja : Enemy
 {
     private void Start()
     {
-        enemyRB = GetComponent<Rigidbody2D>();
-        player = GameObject.Find("Player");
+        SetEnemyRB(GetComponent<Rigidbody2D>());
+        SetPlayer(GameObject.Find("Player"));
     }
 
     private void Update()
     {
-        base.DetectPlayer(followDistance, player);
-        base.FollowPlayer(player);
+        base.DetectPlayer(followDistance, GetPlayer());
+        base.FollowPlayer(GetPlayer());
     }
 }
