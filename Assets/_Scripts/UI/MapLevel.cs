@@ -3,26 +3,24 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
-
-using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class MapLevel : MonoBehaviour
 {
+    [Header("References")]
     [SerializeField] private RectTransform objectRectTransform;
     [SerializeField] private UILineRenderer uILineRenderer;
-    [SerializeField] private MapLevel[] testObjectives;
-    [SerializeField] public Vector2 objectPositionVector2;
-    [SerializeField] private Vector3[] objectCornersObject = new Vector3[4];
 
-    [SerializeField] private List<MapLevel> previousLevels;
-    [SerializeField] private List<MapLevel> nextLevels;
-    [SerializeField] private float multiplyFactor;
+    [Header("Parameters")]
     [SerializeField] private Color lineColor;
+    private Vector3[] levelCorners = new Vector3[4];
+    public List<MapLevel> PreviousLevels;
+    public List<MapLevel> NextLevels;
+    private Vector2 objectPositionVector2;
 
     private void Start()
     {
-        multiplyFactor = 3f;
-
         objectRectTransform = GetComponent<RectTransform>();
 
         StartCoroutine(GetPositionCoroutine());
@@ -41,14 +39,14 @@ public class MapLevel : MonoBehaviour
 
         rectTransform.GetWorldCorners(objectCornersInternal);
 
-        objectCornersObject = objectCornersInternal;
+        levelCorners = objectCornersInternal;
 
-        objectPositionVector2 = new Vector2((objectCornersObject[1].x + objectCornersObject[2].x) / 2, (objectCornersObject[1].y + objectCornersObject[0].y) / 2);
+        objectPositionVector2 = new Vector2((levelCorners[1].x + levelCorners[2].x) / 2, (levelCorners[1].y + levelCorners[0].y) / 2);
     }
 
-    public void GenerateLines()
+    public void GenerateLines(float multiplyFactor)
     {
-        MapLevel[] objectives = previousLevels.ToArray();
+        MapLevel[] objectives = NextLevels.ToArray();
 
         Vector2[] lines = new Vector2[objectives.Length * 2];
 
@@ -60,7 +58,9 @@ public class MapLevel : MonoBehaviour
             }
             else
             {
-                Vector2 objetivePosition = new((objectives[i / 2].objectPositionVector2.x - objectPositionVector2.x) * multiplyFactor, (objectives[i / 2].objectPositionVector2.y - objectPositionVector2.y) * multiplyFactor);
+                Vector2 objetivePosition = new(
+                    (objectives[i / 2].objectPositionVector2.x - objectPositionVector2.x) * multiplyFactor,
+                    (objectives[i / 2].objectPositionVector2.y - objectPositionVector2.y) * multiplyFactor);
 
                 lines[i] = objetivePosition;
             }
@@ -73,16 +73,23 @@ public class MapLevel : MonoBehaviour
 
     public void AddPreviousLevel(MapLevel levelGameObject)
     {
-        previousLevels.Add(levelGameObject);
+        PreviousLevels.Add(levelGameObject);
     }
 
     public void AddNextLevel(MapLevel levelGameObject)
     {
-        nextLevels.Add(levelGameObject);
+        NextLevels.Add(levelGameObject);
     }
 
-    public void LoadInitialScene()
+    public void ActivateNextLevels()
     {
-        SceneManager.LoadScene(1);
+        foreach (MapLevel mapLevel in NextLevels)
+        {
+            mapLevel.GetComponent<Button>().interactable = true;
+
+            EventSystem.current.SetSelectedGameObject(mapLevel.gameObject);
+        }
+
+        GetComponent<Button>().interactable = false;
     }
 }
