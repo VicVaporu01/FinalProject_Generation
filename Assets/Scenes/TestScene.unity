@@ -321,6 +321,50 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1059919091
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1059919092}
+  - component: {fileID: 1059919093}
+  m_Layer: 0
+  m_Name: SceneManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1059919092
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1059919091}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 268.96655, y: 296.2854, z: -6.6798587}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1059919093
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1059919091}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa325badd688a6c4488e08d153a10df8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1320513189
 GameObject:
   m_ObjectHideFlags: 0
@@ -335,8 +379,9 @@ GameObject:
   - component: {fileID: 1320513190}
   - component: {fileID: 1320513194}
   - component: {fileID: 1320513195}
+  - component: {fileID: 1320513196}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: MapCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -438,8 +483,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   contentRectTransform: {fileID: 1038944645}
+  mapCanvasGroup: {fileID: 1320513196}
   stepValue: 125
   timeToComplete: 0.05
+  timeToOpenMap: 1
+  timeToCloseMap: 0.5
+  easeOpenMap: 26
+  easeCloseMap: 26
+  mapStagesSpawned: []
+  actualMapLevel: {fileID: 0}
+  actualMapStageIndex: 0
+  isPlayingALevel: 0
 --- !u!114 &1320513195
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -454,7 +508,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   firstStageLevel: {fileID: -8669842696077281433, guid: 06b9bfd48f397b945850ee869fc28924, type: 3}
   lastStageLevel: {fileID: 572995194503574971, guid: af463db9708e8384db00be187e093331, type: 3}
-  stageGameObject: {fileID: 1804071201435373141, guid: d3e6ec6f72355d8499a5c313969763d1, type: 3}
+  stageGameObject: {fileID: -3426785301411115135, guid: d3e6ec6f72355d8499a5c313969763d1, type: 3}
   containerRectTransform: {fileID: 1038944645}
   canvasScaler: {fileID: 1320513191}
   levelTipeList:
@@ -467,6 +521,18 @@ MonoBehaviour:
   minimumLevelsByStage: 2
   maximumLevelsByStage: 4
   randomConectionProbability: 25
+--- !u!225 &1320513196
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1320513189}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 1
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &1559154211
 GameObject:
   m_ObjectHideFlags: 0

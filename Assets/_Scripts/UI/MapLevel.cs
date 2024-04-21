@@ -11,9 +11,13 @@ public class MapLevel : MonoBehaviour
     [Header("References")]
     [SerializeField] private RectTransform objectRectTransform;
     [SerializeField] private UILineRenderer uILineRenderer;
+    [SerializeField] private Button mapButton;
 
     [Header("Parameters")]
+    [SerializeField] private MapLevelTypeEnum mapLevelType;
     [SerializeField] private Color lineColor;
+    [SerializeField] private bool canSelectLevel = false;
+    [SerializeField] private Image targetImage;
     private Vector3[] levelCorners = new Vector3[4];
     public List<MapLevel> PreviousLevels;
     public List<MapLevel> NextLevels;
@@ -23,7 +27,17 @@ public class MapLevel : MonoBehaviour
     {
         objectRectTransform = GetComponent<RectTransform>();
 
+        mapButton.onClick.AddListener(SelectStage);
+
         StartCoroutine(GetPositionCoroutine());
+    }
+
+    private void SelectStage()
+    {
+        if (canSelectLevel)
+        {
+            MapUIManager.Instance.SetActualMapLevelToPlay(this);
+        }
     }
 
     private IEnumerator GetPositionCoroutine()
@@ -81,15 +95,29 @@ public class MapLevel : MonoBehaviour
         NextLevels.Add(levelGameObject);
     }
 
-    public void ActivateNextLevels()
+    public void ActivateNextLevelsInMap()
     {
         foreach (MapLevel mapLevel in NextLevels)
         {
-            mapLevel.GetComponent<Button>().interactable = true;
+            mapLevel.ActivateLevel();
 
             EventSystem.current.SetSelectedGameObject(mapLevel.gameObject);
         }
 
-        GetComponent<Button>().interactable = false;
+        canSelectLevel = false;
+    }
+
+    public void DisableMapLevel()
+    {
+        canSelectLevel = false;
+
+        targetImage.color = new Color(targetImage.color.r, targetImage.color.g, targetImage.color.b, 0.75f);
+    }
+
+    public void ActivateLevel()
+    {
+        canSelectLevel = true;
+
+        targetImage.color = new Color(targetImage.color.r, targetImage.color.g, targetImage.color.b, 1f);
     }
 }

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
@@ -11,7 +12,7 @@ public class MapGenerationUI : MonoBehaviour
     [Header("References")]
     [SerializeField] private MapLevel firstStageLevel;
     [SerializeField] private MapLevel lastStageLevel;
-    [SerializeField] private GameObject stageGameObject;
+    [SerializeField] private MapStage stageGameObject;
     [SerializeField] private RectTransform containerRectTransform;
     [SerializeField] private CanvasScaler canvasScaler;
 
@@ -77,22 +78,34 @@ public class MapGenerationUI : MonoBehaviour
 
     private void SpawnFirtsStage()
     {
-        GameObject stage = Instantiate(stageGameObject, containerRectTransform);
+        MapStage stage = Instantiate(stageGameObject, containerRectTransform);
 
         MapLevel level = Instantiate(firstStageLevel, stage.transform);
+
+        stage.AddMapLevelToStage(level);
 
         allLevelsSpawned.Add(level);
 
         lastStageLevelsSpawned.Add(level);
+
+        MapUIManager.Instance.AddSpawnedStage(stage);
+
+        MapUIManager.Instance.SetActualMapLevel(level);
+
+        EventSystem.current.SetSelectedGameObject(level.gameObject);
+
+        level.ActivateLevel();
 
         stagesSpawned++;
     }
 
     private void SpawnLastStage()
     {
-        GameObject stage = Instantiate(stageGameObject, containerRectTransform);
+        MapStage stage = Instantiate(stageGameObject, containerRectTransform);
 
         MapLevel level = Instantiate(lastStageLevel, stage.transform);
+
+        stage.AddMapLevelToStage(level);
 
         foreach (MapLevel mapLevel in lastStageLevelsSpawned)
         {
@@ -103,20 +116,24 @@ public class MapGenerationUI : MonoBehaviour
 
         allLevelsSpawned.Add(level);
 
+        MapUIManager.Instance.AddSpawnedStage(stage);
+
         stagesSpawned++;
     }
 
     private void SpawnRandomStage()
     {
-        GameObject stage = Instantiate(stageGameObject, containerRectTransform);
+        MapStage stage = Instantiate(stageGameObject, containerRectTransform);
+
+        MapUIManager.Instance.AddSpawnedStage(stage);
 
         stagesSpawned++;
 
-        SpawnRandomLevelTypesInStage(stage.transform);
+        SpawnRandomLevelTypesInStage(stage);
     }
 
 
-    private void SpawnRandomLevelTypesInStage(Transform stage)
+    private void SpawnRandomLevelTypesInStage(MapStage stage)
     {
         int randomLevelAmount = Random.Range(minimumLevelsByStage, maximumLevelsByStage + 1);
 
@@ -126,7 +143,9 @@ public class MapGenerationUI : MonoBehaviour
         {
             int randomLevelTypeIndex = RandomLevelSpawnIndex();
 
-            MapLevel levelSpawned = Instantiate(levelTipeList[randomLevelTypeIndex], stage);
+            MapLevel levelSpawned = Instantiate(levelTipeList[randomLevelTypeIndex], stage.transform);
+
+            stage.AddMapLevelToStage(levelSpawned);
 
             SetLevelConectors(levelSpawned, randomLevelAmount, i);
 
@@ -309,8 +328,6 @@ public class MapGenerationUI : MonoBehaviour
 
         if (randomProbability <= randomConectionProbability)
         {
-            Debug.Log("Random conection created - Random probability : " + randomConectionProbability + " Random roll : " + randomProbability);
-
             CreateConectionBtwn(lastLevelIndex, levelSpawned);
         }
     }

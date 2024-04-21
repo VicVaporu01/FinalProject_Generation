@@ -89,23 +89,11 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 0
+  m_Interactable: 1
   m_TargetGraphic: {fileID: 9160112315909547494}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 3643414122227950891}
-        m_TargetAssemblyTypeName: MapLevel, Assembly-CSharp
-        m_MethodName: ActivateNextLevels
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &3643414122227950891
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -120,7 +108,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectRectTransform: {fileID: 0}
   uILineRenderer: {fileID: 6756067210006458090}
+  mapButton: {fileID: 5205296581072431841}
+  mapLevelType: 0
   lineColor: {r: 0, g: 0, b: 0, a: 1}
+  canSelectLevel: 0
+  targetImage: {fileID: 9160112315909547494}
   PreviousLevels: []
   NextLevels: []
 --- !u!1 &5049041407232544489
@@ -384,7 +376,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.5019608}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

@@ -59,7 +59,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.5019608}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -230,18 +230,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectRectTransform: {fileID: 0}
   uILineRenderer: {fileID: 8662056081331403248}
-  testObjectives: []
-  objectCornersObject:
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
-  previousLevels: []
-  nextLevels: []
+  mapButton: {fileID: 2001089855965356717}
+  mapLevelType: 4
   lineColor: {r: 0, g: 0, b: 0, a: 1}
-  objectPositionVector2: {x: 0, y: 0}
-  lineOffSetOrigin: {x: 0, y: 0}
-  lineOffSetObjective: {x: 0, y: 0}
+  canSelectLevel: 0
+  targetImage: {fileID: 5875772620987197400}
+  PreviousLevels: []
+  NextLevels: []
 --- !u!1 &6030080942582970434
 GameObject:
   m_ObjectHideFlags: 0
