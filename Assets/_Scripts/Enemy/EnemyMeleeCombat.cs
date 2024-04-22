@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MeleeCombat : MonoBehaviour
+public class EnemyMeleeCombat : MonoBehaviour
 {
     [SerializeField] private Transform attackController;
     [SerializeField] private float attackRatio;
