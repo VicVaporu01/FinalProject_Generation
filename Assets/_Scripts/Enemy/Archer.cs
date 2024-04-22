@@ -6,6 +6,7 @@ using UnityEngine;
 public class Archer : Enemy
 {
     private EnemyDistanceCombat distanceCombatController;
+    [SerializeField] private GameObject aim;
     
     [SerializeField] private float attackCooldown = 0;
     [SerializeField] private float minDistanceValue = 10.0f, scapeDistance = 3.0f;
@@ -22,10 +23,22 @@ public class Archer : Enemy
     {
         base.DetectPlayer(followDistance, GetPlayer());
         base.FollowPlayer(GetPlayer());
+
+        aim.transform.position = transform.position;
+        
+        // Calculate the direction to the player
+        Vector2 directionToPlayer = GetPlayer().transform.position - transform.position;
+
+        // Calculate the angle to the player
+        float angleToPlayer = Mathf.Atan2(directionToPlayer.y, directionToPlayer.x) * Mathf.Rad2Deg;
+
+        // Rotate the archer to face the player
+        aim.transform.rotation = Quaternion.Euler(0, 0, angleToPlayer);
     }
 
     private void FixedUpdate()
     {
+        Flip();
         CalculateApproach(minDistanceValue);
 
         if (canAttack && attackCooldown<=0)

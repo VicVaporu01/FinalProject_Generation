@@ -24,6 +24,7 @@ public class Mage : Enemy
 
     private void FixedUpdate()
     {
+        Flip();
         CalculateApproach(minDistanceValue);
         if (health<= 2.5f && !canApproach && tpCooldown<=0)
         {

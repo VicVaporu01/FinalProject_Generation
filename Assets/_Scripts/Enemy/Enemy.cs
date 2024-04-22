@@ -8,7 +8,8 @@ public class Enemy : MonoBehaviour, IDamage
     private GameObject player;
 
     public float health, speed, damage;
-    public bool hasLineOfSight = false, canApproach = false, canAttack = false;
+    public bool hasLineOfSight = false, isFacingRight = true, 
+        canApproach = false, canAttack = false;
 
     public float followDistance;
     private float timePatrolling;
@@ -30,6 +31,26 @@ public class Enemy : MonoBehaviour, IDamage
         else
         {
             hasLineOfSight = false;
+        }
+    }
+
+    public void AimWeaponToPlayer()
+    {
+        
+    }
+
+    // This method is to flip the enemy when the player is on the opposite side
+    public void Flip()
+    {
+        Vector2 playerPosition = player.transform.position;
+        bool isPlayerRight = playerPosition.x > transform.position.x;
+        
+        // Is the player right and the enemy is not facing right, the enemy will flip
+        // Or if the player is left and the enemy is facing right, the enemy will flip
+        if ((isFacingRight && !isPlayerRight) || (!isFacingRight && isPlayerRight))
+        {
+            transform.Rotate(0,180,0);
+            isFacingRight = !isFacingRight;
         }
     }
 

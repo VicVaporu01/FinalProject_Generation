@@ -11,11 +11,16 @@ public class EnemyDistanceCombat : MonoBehaviour
     [SerializeField] private Transform shootPoint;
     [SerializeField] private EnemyBulletPool enemyBulletPool;
 
-    [SerializeField] private float bulletVelocity =5.0f;
+    [SerializeField] private float bulletVelocity =2.0f;
 
     private void Start()
     {
         player = GameObject.Find("Player").transform;
+    }
+
+    private void Update()
+    {
+        
     }
 
     public void Shoot()
@@ -25,6 +30,6 @@ public class EnemyDistanceCombat : MonoBehaviour
         
         // Calculate the direction of the bullet and shoot it
         Vector2 direction = player.position - shootPoint.position;
-        bullet.GetComponent<Rigidbody2D>().velocity = direction * bulletVelocity;
+        bullet.GetComponent<Rigidbody2D>().velocity = direction.normalized * bulletVelocity;
     }
 }
