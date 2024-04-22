@@ -51,9 +51,9 @@ public class SceneManagerObject : MonoBehaviour
 
     public IEnumerator ChangeSceneCoroutine(int sceneIndex)
     {
-        SceneTransitionUI.Instance.ExitSceneCross();
+        float transitionTime = SceneTransitionUI.Instance.ExitSceneCross();
 
-        yield return new WaitForSeconds(timeBtwnSceneTransitions);
+        yield return new WaitForSeconds(timeBtwnSceneTransitions + transitionTime);
 
         SceneManager.LoadScene(sceneIndex);
     }

@@ -38,12 +38,15 @@ public class SceneTransitionUI : MonoBehaviour
     }
 
     [ContextMenu("ExitScene")]
-    public void ExitSceneCross()
+    public float ExitSceneCross()
     {
         crossEffectObject.SetActive(true);
 
         LeanTween.moveY(topObject, 0f, timeToCloseCross).setEase(crossEaseType);
+
         LeanTween.moveY(botObject, 0f, timeToCloseCross).setEase(crossEaseType);
+
+        return timeToCloseCross;
     }
 
 
