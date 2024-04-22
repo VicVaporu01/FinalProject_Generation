@@ -28,6 +28,11 @@ public class MapUIManager : MonoBehaviour
     [SerializeField] private int actualMapStageIndex = 0;
     [SerializeField] private bool isPlayingALevel = false;
 
+    [Header("Level Control")]
+    [SerializeField] private int initialLevelIndex;
+    [SerializeField] private int finalLevelIndex;
+    public int[] playableLevelsIndexList;
+
     private void Awake()
     {
         if (Instance == null)
@@ -48,6 +53,7 @@ public class MapUIManager : MonoBehaviour
             StageCompleted();
         }
 
+        /*
         if (selectedGameObject != EventSystem.current.currentSelectedGameObject)
         {
             selectedGameObject = EventSystem.current.currentSelectedGameObject;
@@ -72,6 +78,7 @@ public class MapUIManager : MonoBehaviour
                 }
             }
         }
+        */
     }
 
     private bool IsObjectInRightBound(RectTransform rectTransform)
@@ -151,7 +158,33 @@ public class MapUIManager : MonoBehaviour
             actualMapLevel = mapLevel;
 
             mapStagesSpawned[actualMapStageIndex].DisableAllMapLevelsInStageExcept(actualMapLevel);
+
+            SceneManagerObject.Instance.LoadScene(mapLevel.GetLevelMapIndex());
+
+            Invoke(nameof(CloseMap), 0.5f);
         }
+    }
+
+    public MapLevel GetActualMapLevelToPlay()
+    {
+        return actualMapLevel;
+    }
+
+    public int GetRandomLevelToPlay()
+    {
+        return playableLevelsIndexList[Random.Range(0, playableLevelsIndexList.Length)];
+    }
+
+    public int GetInitialLevelIndex()
+    {
+        Debug.Log("Initial level index : " + initialLevelIndex);
+        return initialLevelIndex;
+    }
+
+    public int GetFinalLevelIndex()
+    {
+        Debug.Log("Final level index : " + finalLevelIndex);
+        return finalLevelIndex;
     }
 
     [ContextMenu("Open Map")]

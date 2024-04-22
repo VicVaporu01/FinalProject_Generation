@@ -14,13 +14,14 @@ public class MapLevel : MonoBehaviour
     [SerializeField] private Button mapButton;
 
     [Header("Parameters")]
-    [SerializeField] private MapLevelTypeEnum mapLevelType;
     [SerializeField] private Color lineColor;
     [SerializeField] private bool canSelectLevel = false;
     [SerializeField] private Image targetImage;
-    private Vector3[] levelCorners = new Vector3[4];
+    [SerializeField] private int levelToLoadIndex;
+    public MapLevelTypeEnum mapLevelType;
     public List<MapLevel> PreviousLevels;
     public List<MapLevel> NextLevels;
+    private Vector3[] levelCorners = new Vector3[4];
     private Vector2 objectPositionVector2;
 
     private void Start()
@@ -29,7 +30,36 @@ public class MapLevel : MonoBehaviour
 
         mapButton.onClick.AddListener(SelectStage);
 
+        SetLevelMapIndex();
+
         StartCoroutine(GetPositionCoroutine());
+    }
+
+    private void SetLevelMapIndex()
+    {
+        switch (mapLevelType)
+        {
+            case MapLevelTypeEnum.InitialLevel:
+                levelToLoadIndex = MapUIManager.Instance.GetInitialLevelIndex();
+                break;
+            case MapLevelTypeEnum.BossLevel:
+                levelToLoadIndex = MapUIManager.Instance.GetFinalLevelIndex();
+                break;
+            case MapLevelTypeEnum.NormalLevel:
+                levelToLoadIndex = MapUIManager.Instance.GetRandomLevelToPlay();
+                break;
+            case MapLevelTypeEnum.HardLevel:
+                levelToLoadIndex = MapUIManager.Instance.GetRandomLevelToPlay();
+                break;
+            case MapLevelTypeEnum.ShopLevel:
+                levelToLoadIndex = MapUIManager.Instance.GetRandomLevelToPlay();
+                break;
+        }
+    }
+
+    public int GetLevelMapIndex()
+    {
+        return levelToLoadIndex;
     }
 
     private void SelectStage()
