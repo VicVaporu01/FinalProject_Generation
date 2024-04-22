@@ -22,10 +22,13 @@ public class Archer : Enemy
     {
         base.DetectPlayer(followDistance, GetPlayer());
         base.FollowPlayer(GetPlayer());
+        
+        AimWeaponToPlayer();
     }
 
     private void FixedUpdate()
     {
+        Flip();
         CalculateApproach(minDistanceValue);
 
         if (canAttack && attackCooldown<=0)
