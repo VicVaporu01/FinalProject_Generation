@@ -6,6 +6,7 @@ public class Enemy : MonoBehaviour, IDamage
 {
     private Rigidbody2D enemyRB;
     private GameObject player;
+    [SerializeField] private GameObject aim, father;
 
     public float health, speed, damage;
     public bool hasLineOfSight = false, isFacingRight = true, 
@@ -36,7 +37,16 @@ public class Enemy : MonoBehaviour, IDamage
 
     public void AimWeaponToPlayer()
     {
+        aim.transform.position = transform.position;
         
+        // Calculate the direction to the player
+        Vector2 directionToPlayer = GetPlayer().transform.position - transform.position;
+
+        // Calculate the angle to the player
+        float angleToPlayer = Mathf.Atan2(directionToPlayer.y, directionToPlayer.x) * Mathf.Rad2Deg;
+
+        // Rotate the archer to face the player
+        aim.transform.rotation = Quaternion.Euler(0, 0, angleToPlayer);
     }
 
     // This method is to flip the enemy when the player is on the opposite side
@@ -127,7 +137,7 @@ public class Enemy : MonoBehaviour, IDamage
 
     public void Die()
     {
-        gameObject.SetActive(false);
+        father.SetActive(false);
     }
 
     public Rigidbody2D GetEnemyRB()

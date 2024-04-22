@@ -18,11 +18,6 @@ public class EnemyDistanceCombat : MonoBehaviour
         player = GameObject.Find("Player").transform;
     }
 
-    private void Update()
-    {
-        
-    }
-
     public void Shoot()
     {
         GameObject bullet = enemyBulletPool.RequestBullet();
