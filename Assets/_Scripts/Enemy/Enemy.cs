@@ -7,7 +7,6 @@ public class Enemy : MonoBehaviour, IDamage
     private Rigidbody2D enemyRB;
     private GameObject player;
 
-    public Transform eyes;
     public float health, speed, damage;
     public bool hasLineOfSight = false, canApproach = false, canAttack = false;
 
@@ -34,7 +33,7 @@ public class Enemy : MonoBehaviour, IDamage
         }
     }
 
-    public void FollowPlayer(GameObject player)
+    protected virtual void FollowPlayer(GameObject player)
     {
         if (hasLineOfSight && canApproach)
         {
@@ -47,8 +46,10 @@ public class Enemy : MonoBehaviour, IDamage
         }
     }
 
-    // This method is to calculate if the enemy can approach the player to
-    // avoid being too close
+    /*
+    * This method is to calculate if the enemy can approach the player to
+    * avoid being too close
+    */
     public void CalculateApproach(float minApproach)
     {
         float distanceEnemyPlayer = Vector2.Distance(transform.position, player.transform.position);
@@ -75,8 +76,10 @@ public class Enemy : MonoBehaviour, IDamage
         ReduceHealth(finalDamage);
     }
 
-    // This method is to calculate the final damage that the enemy will receive
-    // and can be overriden by the child classes
+    /*
+     * This method is to calculate the final damage that the enemy will receive
+     * and can be overriden by the child classes
+    */ 
     public virtual float CalculateFinalDamage(float damage, DamageType damageType)
     {
         Debug.Log("Enemy CalculateFinalDamage");
