@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1804071201435373137}
   - component: {fileID: 1804071201435373136}
   - component: {fileID: 1804071201435373143}
+  - component: {fileID: -3426785301411115135}
   m_Layer: 5
   m_Name: Stage
   m_TagString: Untagged
@@ -103,3 +104,15 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &-3426785301411115135
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1804071201435373141}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21133844a7695074a92f06ea246d6e2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

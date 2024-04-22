@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5205296581072431841}
   - component: {fileID: 3643414122227950891}
   m_Layer: 5
-  m_Name: NormalLevel
+  m_Name: HardLevel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -109,7 +109,7 @@ MonoBehaviour:
   objectRectTransform: {fileID: 0}
   uILineRenderer: {fileID: 6756067210006458090}
   mapButton: {fileID: 5205296581072431841}
-  mapLevelType: 0
+  mapLevelType: 2
   lineColor: {r: 0, g: 0, b: 0, a: 1}
   canSelectLevel: 0
   targetImage: {fileID: 9160112315909547494}
@@ -383,7 +383,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: c36f761cf42432941b9ebb29773c43ee, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e7d59ca3b501943479b11c4fba9f6c97, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
