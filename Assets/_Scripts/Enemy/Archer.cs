@@ -2,14 +2,16 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class Archer : Enemy
 {
     private EnemyDistanceCombat distanceCombatController;
-    
+
     [SerializeField] private float attackCooldown = 0;
-    [SerializeField] private float minDistanceValue = 10.0f, scapeDistance = 3.0f;
-    
+    [SerializeField] private float attackRateTime = 1.5f;
+    [SerializeField] private float scapeDistance = 3.0f;
+
     private void Start()
     {
         SetEnemyRB(GetComponent<Rigidbody2D>());
@@ -22,29 +24,38 @@ public class Archer : Enemy
     {
         base.DetectPlayer(followDistance, GetPlayer());
         base.FollowPlayer(GetPlayer());
-        
-        AimWeaponToPlayer();
+
+        if (hasLineOfSight)
+        {
+            AimWeaponToPlayer();
+        }
     }
 
     private void FixedUpdate()
     {
         Flip();
-        CalculateApproach(minDistanceValue);
+        CalculateApproach(minDistanceToAttack);
 
         if (canAttack && attackCooldown<=0)
         {
             distanceCombatController.Shoot();
-            attackCooldown = 1.5f;
+            attackCooldown = attackRateTime;
         }
         else
         {
             attackCooldown -= Time.deltaTime;
         }
 
+        // If the player is too close, scape and increase the attack rate time
         float enemyPlayerDistance = Vector2.Distance(transform.position, GetPlayer().transform.position);
         if (enemyPlayerDistance <= scapeDistance)
         {
             Scape();
+            attackRateTime = 5.0f;
+        }
+        else
+        {
+            attackRateTime = 1.5f;
         }
         
     }

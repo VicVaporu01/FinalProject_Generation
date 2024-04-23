@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -50,30 +51,13 @@ public class PlayerHealthController : MonoBehaviour, IDamage
         }
     }
 
-    // public void DealDamage()
-    // {
-    //     if (invincibleCounter <= 0)
-    //     {
-    //         currentHealth--;
-    //
-    //         if (currentHealth <= 0)
-    //         {
-    //             currentHealth = 0;
-    //
-    //             // Destroy(theSR);
-    //             gameObject.SetActive(false);
-    //         }
-    //         else
-    //         {
-    //             invincibleCounter = invincibleLength;
-    //             theSR.color = new Color(theSR.color.r, theSR.color.g, theSR.color.b, .5f);
-    //         }
-    //
-    //
-    //         UIHealthController.instance.UpdateHealthDisplay(currentHealth, maxHealth);
-    //     }
-    // }
-
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("EnemyBullet"))
+        {
+            TakeDamage(1.0f, DamageType.Physical);
+        }
+    }
 
     public void HealPlayer()
     {

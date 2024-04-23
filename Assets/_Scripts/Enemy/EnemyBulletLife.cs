@@ -33,4 +33,9 @@ public class EnemyBulletLife : MonoBehaviour
             gameObject.SetActive(false);
         }
     }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        gameObject.SetActive(false);
+    }
 }

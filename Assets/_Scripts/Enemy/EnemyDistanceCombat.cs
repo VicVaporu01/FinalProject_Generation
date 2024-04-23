@@ -9,13 +9,14 @@ public class EnemyDistanceCombat : MonoBehaviour
     private Transform player;
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private Transform shootPoint;
-    [SerializeField] private EnemyBulletPool enemyBulletPool;
+    private EnemyBulletPool enemyBulletPool;
 
     [SerializeField] private float bulletVelocity =2.0f;
 
     private void Start()
     {
         player = GameObject.Find("Player").transform;
+        enemyBulletPool = GameObject.Find("ArcherBulletPool").GetComponent<EnemyBulletPool>();
     }
 
     public void Shoot()
