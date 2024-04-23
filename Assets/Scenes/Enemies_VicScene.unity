@@ -2319,7 +2319,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2086165695}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -2711,9 +2711,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6324155071273615657, guid: 9347d8c6c98dbe64f8ad44925c345848, type: 3}
+      propertyPath: currentDifficulty
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6324155071273615663, guid: 9347d8c6c98dbe64f8ad44925c345848, type: 3}
       propertyPath: m_Name
       value: SpawnManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 6324155071273615663, guid: 9347d8c6c98dbe64f8ad44925c345848, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9347d8c6c98dbe64f8ad44925c345848, type: 3}
@@ -2730,7 +2738,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7634618776063544437, guid: b92b2062c54defe4196f5058f07638a9, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7634618776063544438, guid: b92b2062c54defe4196f5058f07638a9, type: 3}
       propertyPath: m_RootOrder
