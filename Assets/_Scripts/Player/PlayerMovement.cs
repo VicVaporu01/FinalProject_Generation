@@ -41,22 +41,30 @@ public class PlayerMovement : MonoBehaviour
         rb2D.velocity = moveDirection * movementSpeed;
         if (attack.WasPressedThisFrame() && attack.IsPressed())
         {
-            Attack();
+            MeleeAttack();
         }
         if (Input.GetKeyDown(KeyCode.P))
         {
             Damaged();
         }
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            RangeAttack();
+        }
     }
-    public void Attack()
+    public void MeleeAttack()
     {
         int attackAnim = Random.Range(0, 3);
         anims.SetTrigger("Attack");
         anims.SetInteger("AttackAnim", attackAnim);
-        Debug.Log(attackAnim);
+        // Debug.Log(attackAnim);
     }
     public void Damaged()
     {
         anims.SetTrigger("Damaged");
+    }
+    public void RangeAttack()
+    {
+        anims.SetTrigger("RangeAttack");
     }
 }

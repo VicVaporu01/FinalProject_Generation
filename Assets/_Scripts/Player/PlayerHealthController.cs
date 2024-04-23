@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem.XR;
 
-public class PlayerHealthController : MonoBehaviour
+public class PlayerHealthController : MonoBehaviour, IDamage
 {
+    private Animator playerAnimator;
+    private PlayerMovement playerMovement;
     public static PlayerHealthController instance;
 
     public int currentHealth, maxHealth;
@@ -22,6 +24,8 @@ public class PlayerHealthController : MonoBehaviour
 
     void Start()
     {
+        playerAnimator = GetComponent<Animator>();
+        playerMovement = GetComponent<PlayerMovement>();
         currentHealth = maxHealth;
 
         theSR = GetComponent<SpriteRenderer>();
@@ -29,6 +33,12 @@ public class PlayerHealthController : MonoBehaviour
 
     void Update()
     {
+        if (currentHealth<=0)
+        {
+            Die();
+        }
+        playerAnimator.SetInteger("Health", currentHealth);
+        
         if (invincibleCounter > 0)
         {
             invincibleCounter -= Time.deltaTime;
@@ -40,28 +50,30 @@ public class PlayerHealthController : MonoBehaviour
         }
     }
 
-    public void DealDamage()
-    {
-        if (invincibleCounter <= 0)
-        {
-            currentHealth--;
+    // public void DealDamage()
+    // {
+    //     if (invincibleCounter <= 0)
+    //     {
+    //         currentHealth--;
+    //
+    //         if (currentHealth <= 0)
+    //         {
+    //             currentHealth = 0;
+    //
+    //             // Destroy(theSR);
+    //             gameObject.SetActive(false);
+    //         }
+    //         else
+    //         {
+    //             invincibleCounter = invincibleLength;
+    //             theSR.color = new Color(theSR.color.r, theSR.color.g, theSR.color.b, .5f);
+    //         }
+    //
+    //
+    //         UIHealthController.instance.UpdateHealthDisplay(currentHealth, maxHealth);
+    //     }
+    // }
 
-            if (currentHealth <= 0)
-            {
-                currentHealth = 0;
-
-                // Destroy(theSR);
-                gameObject.SetActive(false);
-            }
-            else
-            {
-                invincibleCounter = invincibleLength;
-                theSR.color = new Color(theSR.color.r, theSR.color.g, theSR.color.b, .5f);
-            }
-
-            //UIController.instance.UpdateHealthDisplay();
-        }
-    }
 
     public void HealPlayer()
     {
@@ -71,6 +83,23 @@ public class PlayerHealthController : MonoBehaviour
             currentHealth = maxHealth;
         }
 
-        //UIController.instance.UpdateHealthDisplay();
+        UIHealthController.instance.UpdateHealthDisplay(currentHealth, maxHealth);
+    }
+
+    public void TakeDamage(float damage, DamageType damageType)
+    {
+        currentHealth -= (int)damage;
+
+        if (currentHealth <= 0)
+        {
+            currentHealth = 0;
+        }
+
+        UIHealthController.instance.UpdateHealthDisplay(currentHealth, maxHealth);
+    }
+
+    private void Die()
+    {
+        playerMovement.enabled = false;
     }
 }
