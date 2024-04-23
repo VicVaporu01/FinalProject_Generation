@@ -57,7 +57,7 @@ public class PlayerMovement : MonoBehaviour
         int attackAnim = Random.Range(0, 3);
         anims.SetTrigger("Attack");
         anims.SetInteger("AttackAnim", attackAnim);
-        Debug.Log(attackAnim);
+        // Debug.Log(attackAnim);
     }
     public void Damaged()
     {

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MeleeCombat : MonoBehaviour
+public class EnemyMeleeCombat : MonoBehaviour
 {
     [SerializeField] private Transform attackController;
     [SerializeField] private float attackRatio;
@@ -11,14 +11,14 @@ public class MeleeCombat : MonoBehaviour
 
     public void Hit()
     {
-        Debug.Log("Hitting player");
+        // Debug.Log("Hitting player");
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackController.position, attackRatio);
 
         foreach (Collider2D collider in hitEnemies)
         {
             if (collider.CompareTag("Player"))
             {
-                Debug.Log("collider: " + collider.name);
+                // Debug.Log("collider: " + collider.name);
                 IDamage objectHit = collider.GetComponent<IDamage>();
                 if (objectHit != null)
                 {
