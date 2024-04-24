@@ -10,6 +10,7 @@ public class CollectibleObject: MonoBehaviour
     public ParticleSystem selectionIndicator;
     private bool hasIndicator = false;
     public GameObject collectParticleObject;
+    public int coinCost = 10;
 
     private void Start()
     {
@@ -41,12 +42,24 @@ public class CollectibleObject: MonoBehaviour
 
     private void Collect()
     {
+        CoinSystem playerCoinSystem = FindObjectOfType<CoinSystem>();
+        PlayerStats playerStatistics = FindObjectOfType<PlayerStats>();
+
         if (hasIndicator)
         {
-            PlayerStats playerStatistics = FindObjectOfType<PlayerStats>();
-            playerStatistics.ModifyStatistics(speedStats, damangeStats, maxLifeStats);
-            Instantiate(collectParticleObject, transform.position, Quaternion.identity);
-            Destroy(gameObject); // Destruye este objeto
+            if(playerCoinSystem.currentCoins >= coinCost)
+            {
+                playerStatistics.ModifyStatistics(speedStats, damangeStats, maxLifeStats);
+                Instantiate(collectParticleObject, transform.position, Quaternion.identity);
+                playerCoinSystem.LoseCoins(coinCost);
+                Destroy(gameObject); // Destruye este objeto
+            }
+            else
+            {
+                Debug.Log("No tienes suficientes monedas para adquirir este injeto");
+            }
+
         }
+
     }
 }
