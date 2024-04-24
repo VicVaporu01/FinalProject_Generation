@@ -32,6 +32,7 @@ public class MapUIManager : MonoBehaviour
     [Header("Level Control")]
     [SerializeField] private int initialLevelIndex;
     [SerializeField] private int finalLevelIndex;
+    [SerializeField] private Sprite levelCompletedImage;
     public int[] playableLevelsIndexList;
 
     private void Awake()
@@ -49,11 +50,6 @@ public class MapUIManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            StageCompleted();
-        }
-
         if (isMapOpen)
         {
             if (selectedGameObject != EventSystem.current.currentSelectedGameObject)
@@ -132,6 +128,7 @@ public class MapUIManager : MonoBehaviour
         mapStagesSpawned.Add(mapStage);
     }
 
+    [ContextMenu("Stage Completed")]
     public void StageCompleted()
     {
         if (isPlayingALevel)
@@ -141,6 +138,8 @@ public class MapUIManager : MonoBehaviour
             mapStagesSpawned[actualMapStageIndex].DisableAllMapLevelsInStage();
 
             actualMapLevel.ActivateNextLevelsInMap();
+
+            actualMapLevel.ChangeBackgroundSprite(levelCompletedImage);
 
             actualMapStageIndex++;
 
@@ -196,7 +195,6 @@ public class MapUIManager : MonoBehaviour
         {
             mapCanvasGroup.blocksRaycasts = true;
             isMapOpen = true;
-            EventSystem.current.SetSelectedGameObject(actualMapLevel.gameObject);
         });
     }
 
