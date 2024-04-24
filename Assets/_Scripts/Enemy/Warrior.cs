@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public class Warrior : Enemy, IDamage
+public class Warrior : Enemy
 {
-    [SerializeField] private MeleeCombat meleeCombatController;
+    [SerializeField] private EnemyMeleeCombat meleeCombatController;
 
     [SerializeField] private float minDistanceValue;
     [SerializeField] private float timeToAttack = 1.5f;
@@ -16,7 +16,7 @@ public class Warrior : Enemy, IDamage
         // followDistance = 2.0f;
         SetEnemyRB(GetComponent<Rigidbody2D>());
         SetPlayer(GameObject.Find("Player"));
-        meleeCombatController = GetComponent<MeleeCombat>();
+        meleeCombatController = GetComponent<EnemyMeleeCombat>();
     }
 
     private void Update()
