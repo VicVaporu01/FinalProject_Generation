@@ -2,37 +2,38 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpawnManager : MonoBehaviour
+public class EnemySpawnManager : MonoBehaviour
 {
     [SerializeField] private GameObject[] enemies;
     [SerializeField] private List<Transform> spawnPoints;
     
-    [SerializeField] private Difficulty currentDifficulty;
     [SerializeField] private float spawnRate;
     
     private void Start()
     {
-        SetSpawnRate(currentDifficulty);
+        SetSpawnRate(GameManager.Instance.GiveDifficultyToLevel());
         InvokeRepeating("SpawnEnemy", 1.0f, spawnRate);
     }
     
-    public void SetDifficulty(Difficulty difficulty)
-    {
-        currentDifficulty = difficulty;
-    }
-    
-    private void SetSpawnRate(Difficulty difficulty)
+    private void SetSpawnRate(MapLevelTypeEnum difficulty)
     {
         switch (difficulty)
         {
-            case Difficulty.Easy:
+            case MapLevelTypeEnum.NormalLevel:
+                Debug.Log("Normal Level");
                 spawnRate = 3.0f;
                 break;
-            case Difficulty.Medium:
+            case MapLevelTypeEnum.MediumLevel:
+                Debug.Log("Medium Level");
                 spawnRate = 2.0f;
                 break;
-            case Difficulty.Hard:
+            case MapLevelTypeEnum.HardLevel:
+                Debug.Log("Hard Level");
                 spawnRate = 1.0f;
+                break;
+            default:
+                Debug.Log("Default Level");
+                spawnRate = 4.0f;
                 break;
         }
     }
@@ -46,11 +47,4 @@ public class SpawnManager : MonoBehaviour
         Instantiate(enemies[randomEnemy], spawnPoints[randomPosition].position, Quaternion.identity);
     }
     
-}
-
-public enum Difficulty
-{
-    Easy,
-    Medium,
-    Hard
 }

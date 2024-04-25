@@ -9,4 +9,5 @@ public enum MapLevelTypeEnum
     HardLevel = 2,
     InitialLevel = 3,
     BossLevel = 4,
+    MediumLevel = 5
 }
