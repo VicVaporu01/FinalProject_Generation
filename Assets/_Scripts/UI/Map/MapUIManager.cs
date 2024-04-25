@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -22,7 +21,7 @@ public class MapUIManager : MonoBehaviour
     [SerializeField] private LeanTweenType easeOpenMap;
     [SerializeField] private LeanTweenType easeCloseMap;
 
-    [Header("Map Controll Values")]
+    [Header("Map Control Values")]
     [SerializeField] private List<MapStage> mapStagesSpawned;
     [SerializeField] private MapLevel actualMapLevel;
     [SerializeField] private int actualMapStageIndex = 0;
