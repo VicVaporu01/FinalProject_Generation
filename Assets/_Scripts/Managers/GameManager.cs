@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField] private int currentHealth, maxHealth;
+    
     private static GameManager instance;
     
     public static GameManager Instance
@@ -25,6 +27,40 @@ public class GameManager : MonoBehaviour
             DontDestroyOnLoad(this);
         }
     }
+
+    private void Start()
+    {
+        currentHealth = maxHealth;
+    }
+
+    public int TakeDamage(float damage, DamageType damageType)
+    {
+        currentHealth -= (int)damage;
+
+        if (currentHealth <= 0)
+        {
+            currentHealth = 0;
+        }
+        
+        UIHealthController.Instance.UpdateHealthDisplay(currentHealth, maxHealth);
+
+        return currentHealth;
+    }
+
+    public int GetCurrentHealth()
+    {
+        return currentHealth;
+    }
+    
+    public int GetMaxHealth()
+    {
+        return maxHealth;
+    }
+    
+    // public void Set CurrentHealth(int health)
+    // {
+    //     currentHealth = health;
+    // }
 
     public MapLevelTypeEnum GiveDifficultyToLevel()
     {
