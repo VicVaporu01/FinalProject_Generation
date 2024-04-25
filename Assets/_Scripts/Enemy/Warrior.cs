@@ -8,7 +8,6 @@ public class Warrior : Enemy
 {
     [SerializeField] private EnemyMeleeCombat meleeCombatController;
 
-    [SerializeField] private float minDistanceValue;
     [SerializeField] private float timeToAttack = 1.5f;
 
     private void Start()
@@ -44,7 +43,7 @@ public class Warrior : Enemy
             timeToAttack -= Time.deltaTime;
         }
 
-        CalculateApproach(minDistanceValue);
+        CalculateApproach(minDistanceToAttack);
         if (!hasLineOfSight && GetTimePatrolling() >= 0)
         {
             // Debug.Log("Moviendose");

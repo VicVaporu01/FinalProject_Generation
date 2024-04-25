@@ -23,7 +23,7 @@ public class MapUIManager : MonoBehaviour
 
     [Header("Map Control Values")]
     [SerializeField] private List<MapStage> mapStagesSpawned;
-    [SerializeField] private MapLevel actualMapLevel;
+    [SerializeField] public MapLevel actualMapLevel;
     [SerializeField] private int actualMapStageIndex = 0;
     [SerializeField] private bool isPlayingALevel = false;
     private bool isMapOpen = true;

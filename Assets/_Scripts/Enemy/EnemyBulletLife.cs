@@ -7,8 +7,8 @@ public class EnemyBulletLife : MonoBehaviour
 {
     private Rigidbody2D bulletRB;
     [SerializeField] private float bulletVelocity;
-    
-    [SerializeField] private float lifeTime=3.0f;
+
+    [SerializeField] private float lifeTime = 3.0f;
 
     private void Start()
     {
@@ -29,6 +29,19 @@ public class EnemyBulletLife : MonoBehaviour
     {
         lifeTime -= Time.deltaTime;
         if (lifeTime <= 0)
+        {
+            gameObject.SetActive(false);
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.TryGetComponent(out IDamage damage))
+        {
+            damage.TakeDamage(1.0f, DamageType.Physical);
+            gameObject.SetActive(false);
+        }
+        else
         {
             gameObject.SetActive(false);
         }
