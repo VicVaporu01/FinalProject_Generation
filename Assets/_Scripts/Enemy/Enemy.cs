@@ -8,11 +8,14 @@ public class Enemy : MonoBehaviour, IDamage
     private GameObject player;
     [SerializeField] private GameObject aim, father;
 
-    public float health, speed, damage;
+    [Header("Enemy Stats")] 
+    public float health;
+    public float speed;
+    public float damage;
     public bool hasLineOfSight = false, isFacingRight = true, 
         canApproach = false, canAttack = false;
 
-    public float followDistance;
+    public float followDistance, minDistanceToAttack;
     private float timePatrolling;
     private Vector2 randomDirection;
     public float xRange, yRange;

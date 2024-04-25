@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,37 +8,33 @@ public class PlayerHealthController : MonoBehaviour, IDamage
 {
     private Animator playerAnimator;
     private PlayerMovement playerMovement;
-    public static PlayerHealthController instance;
 
-    public int currentHealth, maxHealth;
+    private int playerCurrentHealth, playerMaxHealth;
 
     public float invincibleLength;
     private float invincibleCounter;
 
     private SpriteRenderer theSR;
 
-    private void Awake()
-    {
-        instance = this;
-    }
-
-
     void Start()
     {
+        /*
+         * This is to get the health stored in the game manager and set it to the
+         * player to keep the information between scenes
+         */
+        playerMaxHealth = GameManager.Instance.GetMaxHealth();
+        playerCurrentHealth = GameManager.Instance.GetCurrentHealth();
+        
         playerAnimator = GetComponent<Animator>();
         playerMovement = GetComponent<PlayerMovement>();
-        currentHealth = maxHealth;
+        playerCurrentHealth = playerMaxHealth;
 
         theSR = GetComponent<SpriteRenderer>();
     }
 
     void Update()
     {
-        if (currentHealth<=0)
-        {
-            Die();
-        }
-        playerAnimator.SetInteger("Health", currentHealth);
+        playerAnimator.SetInteger("Health", playerCurrentHealth);
         
         if (invincibleCounter > 0)
         {
@@ -50,52 +47,24 @@ public class PlayerHealthController : MonoBehaviour, IDamage
         }
     }
 
-    // public void DealDamage()
+    // public void HealPlayer()
     // {
-    //     if (invincibleCounter <= 0)
+    //     playerCurrentHealth++;
+    //     if (playerCurrentHealth > playerMaxHealth)
     //     {
-    //         currentHealth--;
-    //
-    //         if (currentHealth <= 0)
-    //         {
-    //             currentHealth = 0;
-    //
-    //             // Destroy(theSR);
-    //             gameObject.SetActive(false);
-    //         }
-    //         else
-    //         {
-    //             invincibleCounter = invincibleLength;
-    //             theSR.color = new Color(theSR.color.r, theSR.color.g, theSR.color.b, .5f);
-    //         }
-    //
-    //
-    //         UIHealthController.instance.UpdateHealthDisplay(currentHealth, maxHealth);
+    //         playerCurrentHealth = playerMaxHealth;
     //     }
+    //
+    //     UIHealthController.instance.UpdateHealthDisplay(playerCurrentHealth, playerMaxHealth);
     // }
-
-
-    public void HealPlayer()
-    {
-        currentHealth++;
-        if (currentHealth > maxHealth)
-        {
-            currentHealth = maxHealth;
-        }
-
-        UIHealthController.instance.UpdateHealthDisplay(currentHealth, maxHealth);
-    }
 
     public void TakeDamage(float damage, DamageType damageType)
     {
-        currentHealth -= (int)damage;
-
-        if (currentHealth <= 0)
+        playerCurrentHealth = GameManager.Instance.TakeDamage(damage, damageType);
+        if (playerMaxHealth<=0)
         {
-            currentHealth = 0;
+            Die();
         }
-
-        UIHealthController.instance.UpdateHealthDisplay(currentHealth, maxHealth);
     }
 
     private void Die()
