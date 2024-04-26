@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class PlayerStats : MonoBehaviour
@@ -9,7 +8,10 @@ public class PlayerStats : MonoBehaviour
 
     public int speedStats; // player speed
     public int damangeStats; // player damage 
-    public int maxLifeStats; // player's maximun life
+    public int maxLifeStats; // player's maximum life
+
+    // Evento para notificar cambios en las estadísticas
+    public event Action<int, int, int> OnStatsChanged;
 
     // Start is called before the first frame update
     void Start()
@@ -39,6 +41,8 @@ public class PlayerStats : MonoBehaviour
         speedStats = Mathf.Min(speedStats + newSpeed, maxStatValue);
         damangeStats = Mathf.Min(damangeStats + newDamage, maxStatValue);
         maxLifeStats = Mathf.Min(maxLifeStats + newMaxLife, maxStatValue);
-    }
 
+        // Notificar al PauseMenu sobre los cambios en las estadísticas
+        OnStatsChanged?.Invoke(speedStats, damangeStats, maxLifeStats);
+    }
 }

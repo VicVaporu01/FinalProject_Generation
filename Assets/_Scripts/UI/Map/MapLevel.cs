@@ -11,17 +11,21 @@ public class MapLevel : MonoBehaviour
     [SerializeField] private RectTransform objectRectTransform;
     [SerializeField] private UILineRenderer uILineRenderer;
     [SerializeField] private Button mapButton;
+    [SerializeField] private Image backgroundImage;
+    [SerializeField] private Image iconImage;
 
     [Header("Parameters")]
     [SerializeField] private Color lineColor;
     [SerializeField] private bool canSelectLevel = false;
-    [SerializeField] private Image targetImage;
     [SerializeField] private int levelToLoadIndex;
     public MapLevelTypeEnum mapLevelType;
     public List<MapLevel> PreviousLevels;
     public List<MapLevel> NextLevels;
     private Vector3[] levelCorners = new Vector3[4];
     private Vector2 objectPositionVector2;
+
+    [Header("Image Values")]
+    [Range(0, 1)][SerializeField] private float hueDownValue;
 
     private void Start()
     {
@@ -140,13 +144,22 @@ public class MapLevel : MonoBehaviour
     {
         canSelectLevel = false;
 
-        targetImage.color = new Color(targetImage.color.r, targetImage.color.g, targetImage.color.b, 0.75f);
+        backgroundImage.color = new Color(backgroundImage.color.r * hueDownValue, backgroundImage.color.g * hueDownValue, backgroundImage.color.b * hueDownValue, 1f);
+
+        iconImage.color = new Color(iconImage.color.r * hueDownValue, iconImage.color.g * hueDownValue, iconImage.color.b * hueDownValue, 1f);
     }
 
     public void ActivateLevel()
     {
         canSelectLevel = true;
 
-        targetImage.color = new Color(targetImage.color.r, targetImage.color.g, targetImage.color.b, 1f);
+        backgroundImage.color = new Color(backgroundImage.color.r / hueDownValue, backgroundImage.color.g / hueDownValue, backgroundImage.color.b / hueDownValue, 1f);
+
+        iconImage.color = new Color(iconImage.color.r / hueDownValue, iconImage.color.g / hueDownValue, iconImage.color.b / hueDownValue, 1f);
+    }
+
+    public void ChangeBackgroundSprite(Sprite newBackgroundSprite)
+    {
+        backgroundImage.sprite = newBackgroundSprite;
     }
 }
