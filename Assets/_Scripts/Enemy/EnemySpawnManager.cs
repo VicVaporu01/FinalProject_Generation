@@ -77,10 +77,11 @@ public class EnemySpawnManager : MonoBehaviour
         if (enemiesCurrentAmount > 0)
         {
             enemiesCurrentAmount -= 1;
-        }
-        else
-        {
-            // Llamar metodo de Juan
+
+            if (enemiesCurrentAmount <= 0)
+            {
+                FindObjectOfType<ObjectSpawnManager>().SpawnRewardObjects();
+            }
         }
     }
 }
