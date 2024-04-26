@@ -155,6 +155,10 @@ MonoBehaviour:
   soundFXAudioSource: {fileID: 425783429}
   musicAudioSource: {fileID: 938520327}
   masterAudioMixer: {fileID: 24100000, guid: 0a0b9ddfd6557d648b9614e5248f6b50, type: 2}
+  timeToChangeMusic: 4
+  waitTimeToChangeMusicClip: 1.5
+  music1: {fileID: 8300000, guid: d88d7c7ecc8074340bbcbdcf8212547a, type: 3}
+  music2: {fileID: 8300000, guid: 95cf5658c99239344aae42966e7dafe9, type: 3}
 --- !u!4 &32183664
 Transform:
   m_ObjectHideFlags: 0
@@ -389,7 +393,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 22031245998223230, guid: 0a0b9ddfd6557d648b9614e5248f6b50, type: 2}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 0
+  m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
   Loop: 1
