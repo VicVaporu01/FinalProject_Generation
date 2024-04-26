@@ -60,6 +60,7 @@ public class PlayerHealthController : MonoBehaviour, IDamage
 
     public void TakeDamage(float damage, DamageType damageType)
     {
+        CinemachineMovimientoCamara.Instance.MoverCamara(5, 5, 0.5f);
         playerCurrentHealth = GameManager.Instance.TakeDamage(damage, damageType);
         if (playerMaxHealth<=0)
         {
