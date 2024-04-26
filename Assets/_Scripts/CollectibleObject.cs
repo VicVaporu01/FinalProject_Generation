@@ -56,7 +56,7 @@ public class CollectibleObject: MonoBehaviour
             }
             else
             {
-                Debug.Log("No tienes suficientes monedas para adquirir este injeto");
+                Debug.Log("No tienes suficientes monedas para adquirir este objeto");
             }
 
         }
