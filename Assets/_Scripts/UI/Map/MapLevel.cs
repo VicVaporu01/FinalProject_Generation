@@ -70,6 +70,8 @@ public class MapLevel : MonoBehaviour
         if (canSelectLevel)
         {
             MapUIManager.Instance.SetActualMapLevelToPlay(this);
+
+            EventSystem.current.SetSelectedGameObject(null);
         }
     }
 

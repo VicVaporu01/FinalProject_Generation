@@ -2,10 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.UI;
 
 public class OptionMenu : MonoBehaviour
 {
     [SerializeField] private AudioMixer audioMixer;
+    public Toggle toggleCameraShake;
+
+    private void Start()
+    {
+        // Asocia el método ActivarDesactivarCameraShake al evento onValueChanged del Toggle
+        toggleCameraShake.onValueChanged.AddListener(ActivarDesactivarCameraShake);
+    }
 
     public void CambiarVolumenMusic(float volumen)
     {
