@@ -1,20 +1,28 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class EnemySpawnManager : MonoBehaviour
 {
-    [SerializeField] private GameObject[] enemies;
     [SerializeField] private List<Transform> spawnPoints;
-    
+    [SerializeField] private EnemiesPool enemiesPool;
+
     [SerializeField] private float spawnRate;
-    
+    [SerializeField] private int enemiesMaxAmount;
+    [SerializeField] private int enemiesInvoked;
+    [SerializeField] private int enemiesCurrentAmount;
+
     private void Start()
     {
         SetSpawnRate(GameManager.Instance.GiveDifficultyToLevel());
         InvokeRepeating("SpawnEnemy", 1.0f, spawnRate);
+        enemiesPool = GameObject.Find("EnemiesPool").GetComponent<EnemiesPool>();
+
+        enemiesCurrentAmount = enemiesMaxAmount;
     }
-    
+
     private void SetSpawnRate(MapLevelTypeEnum difficulty)
     {
         switch (difficulty)
@@ -40,11 +48,39 @@ public class EnemySpawnManager : MonoBehaviour
 
     private void SpawnEnemy()
     {
-        int randomEnemy = Random.Range(0, enemies.Length);
-        int randomPosition = Random.Range(0, spawnPoints.Count);
+        if (enemiesCurrentAmount > 0 && enemiesInvoked < enemiesMaxAmount)
+        {
+            enemiesInvoked += 1;
+            int randomPosition = Random.Range(0, spawnPoints.Count);
 
-        Debug.Log("Spawn Rate: "+spawnRate);
-        Instantiate(enemies[randomEnemy], spawnPoints[randomPosition].position, Quaternion.identity);
+            Debug.Log("Spawn Rate: " + spawnRate);
+            GameObject enemy = enemiesPool.RequestEnemy();
+
+            if (enemy != null)
+            {
+                enemy.transform.position = spawnPoints[randomPosition].position;
+            }
+        }
+        else
+        {
+            Debug.Log("No se pueden invocar más enemigos");
+        }
     }
-    
+
+    public int GetEnemiesMaxAmount()
+    {
+        return enemiesMaxAmount;
+    }
+
+    public void SubtractEnemy()
+    {
+        if (enemiesCurrentAmount > 0)
+        {
+            enemiesCurrentAmount -= 1;
+        }
+        else
+        {
+            // Llamar metodo de Juan
+        }
+    }
 }

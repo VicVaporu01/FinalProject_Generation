@@ -116,7 +116,6 @@ public class Enemy : MonoBehaviour, IDamage
     */ 
     public virtual float CalculateFinalDamage(float damage, DamageType damageType)
     {
-        Debug.Log("Enemy CalculateFinalDamage");
         switch (damageType)
         {
             case DamageType.Physical:
@@ -140,6 +139,7 @@ public class Enemy : MonoBehaviour, IDamage
 
     public void Die()
     {
+        GameObject.Find("SpawnManager").GetComponent<EnemySpawnManager>().SubtractEnemy();
         father.SetActive(false);
     }
 
