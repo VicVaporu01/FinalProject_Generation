@@ -16,6 +16,8 @@ public class PlayerHealthController : MonoBehaviour, IDamage
 
     private SpriteRenderer theSR;
 
+    public event EventHandler PlayerDead;
+
     void Start()
     {
         /*
@@ -61,14 +63,16 @@ public class PlayerHealthController : MonoBehaviour, IDamage
     public void TakeDamage(float damage, DamageType damageType)
     {
         playerCurrentHealth = GameManager.Instance.TakeDamage(damage, damageType);
-        if (playerMaxHealth<=0)
+        if (playerCurrentHealth<=0)
         {
             Die();
+            PlayerDead?.Invoke(this, EventArgs.Empty);
         }
     }
 
     private void Die()
     {
         playerMovement.enabled = false;
+        
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PlayerMeleeAttack : MonoBehaviour
 {
-    //public event EventHandler PlayerDead;
+    
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Enemy"))
@@ -16,7 +16,6 @@ public class PlayerMeleeAttack : MonoBehaviour
             {
                 Debug.Log("Haciendo daño: 1 " + DamageType.Physical);
                 objectHit.TakeDamage(1, DamageType.Physical);
-                //PlayerDead?.Invoke(this, EventArgs.Empty);
             }
         }
     }

@@ -7,30 +7,36 @@ using System;
 public class MenuGameOver : MonoBehaviour
 {
     [SerializeField] private GameObject menuGameOver;
-    private PlayerMeleeAttack playerAttack;
+    private PlayerHealthController playerDying;
+    private SceneManagerObject sceneManager;
 
-    /*private void Start()
+    private void Start()
     {
-        playerAttack = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMeleeAttack>();
-        playerAttack.PlayerDead += MenuOn;
+        playerDying = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHealthController>();
+        playerDying.PlayerDead += MenuOn;
+        sceneManager = GameObject.FindObjectOfType<SceneManagerObject>();
     }
-    */
-    private void MenuOn(object sender, EventArgs e)
-    {
-        menuGameOver.SetActive(true);
-    }
+
     public void restart()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
+    private void MenuOn(object sender, EventArgs e)
+    {
+        menuGameOver.SetActive(true);
+        
+    }
+    
 
     public void MainMenu(string nombre)
     {
+        sceneManager.LoadNextScene();
         SceneManager.LoadScene(nombre);
     }
 
     public void Exit()
     {
+        sceneManager.LoadNextScene();
         UnityEditor.EditorApplication.isPlaying = false;
         Application.Quit();
     }
