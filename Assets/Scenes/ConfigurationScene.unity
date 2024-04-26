@@ -130,10 +130,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 8235361236294608520, guid: 0442ef75bfd4f244e97d9cbc412cbf29, type: 3}
-      propertyPath: maxHealth
-      value: 40
-      objectReference: {fileID: 0}
     - target: {fileID: 8235361236294608521, guid: 0442ef75bfd4f244e97d9cbc412cbf29, type: 3}
       propertyPath: m_Name
       value: GameManager
@@ -513,7 +509,7 @@ MonoBehaviour:
   actualMapStageIndex: 0
   isPlayingALevel: 0
   initialLevelIndex: 2
-  finalLevelIndex: 5
+  finalLevelIndex: 3
   levelCompletedImage: {fileID: 21300000, guid: 0eb74d116ad923d4c8b620d4ab598576, type: 3}
   playableLevelsIndexList: 03000000
 --- !u!114 &1320513195

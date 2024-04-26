@@ -24,9 +24,9 @@ public class MenuGameOver : MonoBehaviour
     private void MenuOn(object sender, EventArgs e)
     {
         menuGameOver.SetActive(true);
-        
+
     }
-    
+
 
     public void MainMenu(string nombre)
     {
@@ -36,7 +36,7 @@ public class MenuGameOver : MonoBehaviour
     public void Exit()
     {
         sceneManager.LoadNextScene();
-        UnityEditor.EditorApplication.isPlaying = false;
+        //UnityEditor.EditorApplication.isPlaying = false;
         Application.Quit();
     }
 }

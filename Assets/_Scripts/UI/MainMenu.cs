@@ -5,9 +5,22 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
+    private void Start()
+    {
+        if (MapUIManager.Instance != null)
+        {
+            Destroy(MapUIManager.Instance.gameObject);
+        }
+
+        if (GameManager.Instance != null)
+        {
+            Destroy(GameManager.Instance.gameObject);
+        }
+    }
+
     public void GameScene()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        SceneManagerObject.Instance.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
     public void Exit()
@@ -15,10 +28,4 @@ public class MainMenu : MonoBehaviour
         Debug.Log("Exit...");
         Application.Quit();
     }
-    
-    public void ChangeScene(string Escena)
-    {
-        SceneManager.LoadScene(Escena);
-    }
-    
 }
