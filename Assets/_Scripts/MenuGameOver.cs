@@ -30,8 +30,7 @@ public class MenuGameOver : MonoBehaviour
 
     public void MainMenu(string nombre)
     {
-        sceneManager.LoadNextScene();
-        SceneManager.LoadScene(nombre);
+        SceneManagerObject.Instance.LoadScene(0);
     }
 
     public void Exit()
