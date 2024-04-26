@@ -514,7 +514,7 @@ MonoBehaviour:
   isPlayingALevel: 0
   initialLevelIndex: 2
   finalLevelIndex: 5
-  levelCompletedImage: {fileID: 0}
+  levelCompletedImage: {fileID: 21300000, guid: 0eb74d116ad923d4c8b620d4ab598576, type: 3}
   playableLevelsIndexList: 03000000
 --- !u!114 &1320513195
 MonoBehaviour:
