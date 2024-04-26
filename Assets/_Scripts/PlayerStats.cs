@@ -1,48 +1,98 @@
 using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerStats : MonoBehaviour
 {
-    public int minStatValue = 1;
-    public int maxStatValue = 8;
+    [Header("Player Input")]
+    [SerializeField] private PlayerInput playerInput;
+    private InputAction interactAction;
 
-    public int speedStats; // player speed
-    public int damangeStats; // player damage 
-    public int maxLifeStats; // player's maximum life
+    [Header("Boundary Values")]
+    [SerializeField] private int minStatValue = 1;
+    [SerializeField] private int maxStatValue = 8;
 
-    // Evento para notificar cambios en las estadísticas
+    [Header("Object Boost Values")]
+    public int speedStats;
+    public int damangeStats;
+    public int maxLifeStats;
+
+    [Header("Interact Object Values")]
+    [SerializeField] private Vector3 interactRangeOffset;
+    [SerializeField] private Vector2 interactBoxValues;
+
     public event Action<int, int, int> OnStatsChanged;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
-
+        interactAction = playerInput.actions["Interact"];
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
-    public PlayerStats()
+    public void Start()
     {
         speedStats = minStatValue;
         damangeStats = minStatValue;
         maxLifeStats = minStatValue;
-
     }
+
+    private void OnEnable()
+    {
+        interactAction.started += PickUpObject;
+    }
+
+    private void OnDisable()
+    {
+        interactAction.started -= PickUpObject;
+    }
+
+    private void PickUpObject(InputAction.CallbackContext context)
+    {
+        RaycastHit2D[] objectsTouched = Physics2D.BoxCastAll(transform.position + interactRangeOffset, interactBoxValues, 0f, Vector2.down);
+
+        foreach (RaycastHit2D item in objectsTouched)
+        {
+            if (item.transform.gameObject.TryGetComponent(out CollectibleObject collectibleObject))
+            {
+                collectibleObject.Collect();
+            }
+
+            if (item.transform.gameObject.TryGetComponent(out ExitPortal exitPortal))
+            {
+                exitPortal.ExitLevel();
+            }
+        }
+    }
+
     public void ModifyStatistics(int newSpeed, int newDamage, int newMaxLife)
     {
-        newSpeed = Mathf.Max(Mathf.Min(newSpeed, maxStatValue), minStatValue);
-        newDamage = Mathf.Max(Mathf.Min(newDamage, maxStatValue), minStatValue);
-        newMaxLife = Mathf.Max(Mathf.Min(newMaxLife, maxStatValue), minStatValue);
+        speedStats = EvaluateStatistics(newSpeed, speedStats);
+        damangeStats = EvaluateStatistics(newDamage, damangeStats);
+        maxLifeStats = EvaluateStatistics(newMaxLife, maxLifeStats);
 
-        speedStats = Mathf.Min(speedStats + newSpeed, maxStatValue);
-        damangeStats = Mathf.Min(damangeStats + newDamage, maxStatValue);
-        maxLifeStats = Mathf.Min(maxLifeStats + newMaxLife, maxStatValue);
-
-        // Notificar al PauseMenu sobre los cambios en las estadísticas
+        // Notificar al PauseMenu sobre los cambios en las estadï¿½sticas
         OnStatsChanged?.Invoke(speedStats, damangeStats, maxLifeStats);
+    }
+
+    private int EvaluateStatistics(int newValue, int changeValue)
+    {
+        int nuevoTotal = changeValue + newValue;
+
+        if (nuevoTotal > maxStatValue)
+        {
+            nuevoTotal = maxStatValue;
+        }
+        else if (nuevoTotal < minStatValue)
+        {
+            nuevoTotal = minStatValue;
+        }
+
+        return nuevoTotal;
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+
+        Gizmos.DrawWireCube(transform.position + interactRangeOffset, interactBoxValues);
     }
 }

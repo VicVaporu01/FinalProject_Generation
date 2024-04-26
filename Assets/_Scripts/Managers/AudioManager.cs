@@ -6,16 +6,20 @@ using UnityEngine.Audio;
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance;
-    
+
     [Header("References")]
     [SerializeField] private AudioSource soundFXAudioSource;
     [SerializeField] private AudioSource musicAudioSource;
-    [SerializeField] private AudioMixer masterAudioMixer;   
+    [SerializeField] private AudioMixer masterAudioMixer;
 
     [Header("Strings Values")]
     private const string MASTER_VOLUME_STRING = "MasterVolume";
     private const string MUSIC_VOLUME_STRING = "MusicVolume";
     private const string SOUNDFX_VOLUME_STRING = "SoundFXVolume";
+
+    [Header("Music Volume Changes")]
+    [SerializeField] private float timeToChangeMusic;
+    [SerializeField] private float waitTimeToChangeMusicClip;
 
     private void Awake()
     {
@@ -66,6 +70,52 @@ public class AudioManager : MonoBehaviour
         masterAudioMixer.SetFloat(MASTER_VOLUME_STRING, masterVolume);
 
         PlayerPrefs.SetFloat(MASTER_VOLUME_STRING, masterVolume);
+    }
+
+    [ContextMenu("Stop Music")]
+    public void StopMusic()
+    {
+        musicAudioSource.Stop();
+    }
+
+    public void PlayMusic(AudioClip musicClip)
+    {
+        musicAudioSource.Stop();
+
+        musicAudioSource.clip = musicClip;
+
+        musicAudioSource.Play();
+    }
+
+    public void ChangeMusic(AudioClip musicClip)
+    {
+        float currentVolume = musicAudioSource.volume;
+
+        LeanTween.value(gameObject, currentVolume, 0f, timeToChangeMusic)
+            .setOnUpdate((float value) =>
+            {
+                musicAudioSource.volume = value;
+            }).setOnComplete(() =>
+            {
+                StartCoroutine(ChangeAudioClipWaitTime(musicClip));
+            });
+    }
+
+    private IEnumerator ChangeAudioClipWaitTime(AudioClip musicClip)
+    {
+        yield return new WaitForSeconds(waitTimeToChangeMusicClip);
+
+        float currentVolume = musicAudioSource.volume;
+
+        musicAudioSource.clip = musicClip;
+
+        musicAudioSource.Play();
+
+        LeanTween.value(gameObject, currentVolume, 1f, timeToChangeMusic)
+            .setOnUpdate((float value) =>
+            {
+                musicAudioSource.volume = value;
+            });
     }
 
 }
