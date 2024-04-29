@@ -44,8 +44,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eeea2208cb658c54596a27aa2c21d3ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentHealth: 0
-  maxHealth: 6
+  minStatValue: 1
+  speedStats: 1
+  damangeStats: 1
+  maxLifeStats: 1
+  magicDamageStats: 1
+  bulletAmountStats: 1
+  currentHealth: 6
+  maxHealth: 5
   collectableObjects:
   - {fileID: 3593639196240768436, guid: 9ddd82103908e2a48a9182afcd0ea5f4, type: 3}
   - {fileID: 8158415400464065124, guid: 8c9df9c7bfe761749a3f872f035b32a0, type: 3}

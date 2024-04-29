@@ -53,13 +53,11 @@ public class EnemySpawnManager : MonoBehaviour
 
     private void SpawnEnemy()
     {
-        Debug.Log("Enemies maxAmount: " + enemiesMaxAmount);
         if (enemiesCurrentAmount > 0 && enemiesInvoked < enemiesMaxAmount)
         {
             enemiesInvoked += 1;
             int randomPosition = Random.Range(0, spawnPoints.Count);
 
-            Debug.Log("Spawn Rate: " + spawnRate);
             GameObject enemy = enemiesPool.RequestEnemy();
 
             if (enemy != null)

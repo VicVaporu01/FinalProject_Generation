@@ -213,7 +213,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speedStats: 0
   damangeStats: 1
-  maxLifeStats: 0
+  maxLifeStats: 1
+  magicDamageStats: 0
+  bulletAmountStats: 0
   hoverIndicator: {fileID: 198858563819303747}
   spawnEffect: {fileID: 6534107055009438646}
   collectParticleObject: {fileID: 100004, guid: 757df604761b8ef42831192c70ee1099, type: 3}

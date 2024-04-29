@@ -9,12 +9,16 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private PlayerInput playerInput;
     private InputAction moveAction;
     private InputAction attack;
-    
+
+    [Header("References")]
+    [SerializeField] private PlayerStats playerStats;
 
     [Header("Movement")]
     [SerializeField] private Rigidbody2D rb2D;
     [SerializeField] private float movementSpeed;
     [SerializeField] private Vector2 moveDirection;
+    [SerializeField] private float minMoveSpeed;
+    [SerializeField] private float maxMoveSpeed;
 
     Animator anims;
 
@@ -25,6 +29,21 @@ public class PlayerMovement : MonoBehaviour
         moveAction = playerInput.actions["Move"];
         attack = playerInput.actions["Attack"];
         anims = GetComponent<Animator>();
+    }
+
+    private void OnEnable()
+    {
+        playerStats.OnStatsChanged += ChangeMovementSpeed;
+    }
+
+    private void OnDisable()
+    {
+        playerStats.OnStatsChanged -= ChangeMovementSpeed;
+    }
+
+    private void ChangeMovementSpeed(int newSpeed, int newDamage, int newMaxLife, int newMagicDamage, int newBulletAmountStats)
+    {
+        movementSpeed = playerStats.GetNewStatValue(newSpeed, maxMoveSpeed, minMoveSpeed);
     }
 
     private void Update()
