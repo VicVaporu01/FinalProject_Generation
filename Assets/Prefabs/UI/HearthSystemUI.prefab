@@ -135,9 +135,9 @@ MonoBehaviour:
   - {fileID: 7953709426197850158}
   - {fileID: 7953709425786962738}
   - {fileID: 7953709427361296592}
-  heartFull: {fileID: -47395863, guid: 079eeffb16ba3cf4bb91b7ea07442003, type: 3}
-  heartEmpty: {fileID: 1654930069, guid: 079eeffb16ba3cf4bb91b7ea07442003, type: 3}
-  heartHalf: {fileID: 839310480, guid: 079eeffb16ba3cf4bb91b7ea07442003, type: 3}
+  heartFull: {fileID: 635351613, guid: 9e51ec03726beae4297d2a5dfee1dcc8, type: 3}
+  heartEmpty: {fileID: 383213567, guid: 9e51ec03726beae4297d2a5dfee1dcc8, type: 3}
+  heartHalf: {fileID: 111432101, guid: 9e51ec03726beae4297d2a5dfee1dcc8, type: 3}
 --- !u!223 &7953709425817097829
 Canvas:
   m_ObjectHideFlags: 0
