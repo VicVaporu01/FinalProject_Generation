@@ -45,16 +45,24 @@ public class Warrior : Enemy
         }
 
         CalculateApproach(minDistanceToAttack);
-        // if (!hasLineOfSight && timePatrolling >= 0)
-        // {
-        //     timePatrolling -= Time.deltaTime;
-        //     GetEnemyRB().velocity = GetRandomDirection() * speed;
-        // }
-        // else
-        // {
-        //     base.GenerateRandomDirection();
-        //     timePatrolling = 5.0f;
-        // }
+        if (!hasLineOfSight && timePatrolling >= 0)
+        {
+            timePatrolling -= Time.deltaTime;
+            GetEnemyRB().velocity = GetRandomDirection() * speed;
+        }
+        else
+        {
+            base.GenerateRandomDirection();
+            timePatrolling = 5.0f;
+        }
+    }
+
+    private void OnCollisionStay2D(Collision2D other)
+    {
+        if (other.gameObject.CompareTag("Obstacle"))
+        {
+            GenerateRandomDirection();
+        }
     }
 
     public override float CalculateFinalDamage(float damage, DamageType damageType)
