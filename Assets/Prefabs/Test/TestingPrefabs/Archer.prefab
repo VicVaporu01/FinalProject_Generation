@@ -166,7 +166,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29efc5ed3f78e5f40ac8f986d8844bbd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  aim: {fileID: 4212389803983475406}
   father: {fileID: 4212389803508239147}
   health: 3
   speed: 2
@@ -177,8 +176,10 @@ MonoBehaviour:
   canAttack: 0
   followDistance: 8
   minDistanceToAttack: 8
-  xRange: 0
-  yRange: 0
+  timePatrolling: 0
+  xRange: 2
+  yRange: 2
+  bow: {fileID: 312396060}
   attackCooldown: 0
   attackRateTime: 1.5
   scapeDistance: 4
@@ -369,6 +370,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4212389804324385845}
   - component: {fileID: 4212389804324385844}
+  - component: {fileID: 312396060}
   m_Layer: 0
   m_Name: Bow
   m_TagString: Untagged
@@ -444,3 +446,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &312396060
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4212389804324385834}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18d2773dbae71a741a91e3df9e6b9a3a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  character: {fileID: 4212389803765972744}
+  aim: {fileID: 4212389803983475401}
+  enemyScript: {fileID: 4212389803765972758}

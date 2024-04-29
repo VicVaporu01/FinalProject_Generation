@@ -44,16 +44,16 @@ public class Warrior : Enemy
         }
 
         CalculateApproach(minDistanceToAttack);
-        if (!hasLineOfSight && GetTimePatrolling() >= 0)
+        if (!hasLineOfSight && timePatrolling >= 0)
         {
             // Debug.Log("Moviendose");
-            SetTimePatrolling((GetTimePatrolling() - Time.deltaTime));
+            timePatrolling -= Time.deltaTime;
             GetEnemyRB().velocity = GetRandomDirection() * speed;
         }
         else
         {
             base.GenerateRandomDirection();
-            SetTimePatrolling(5.0f);
+            timePatrolling = 5.0f;
         }
     }
 
