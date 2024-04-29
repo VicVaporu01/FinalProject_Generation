@@ -5,9 +5,13 @@ using UnityEngine;
 
 public class EnemyMeleeCombat : MonoBehaviour
 {
+    [SerializeField] private GameObject weapon;
     [SerializeField] private Transform attackController;
+    [SerializeField] private Transform aim;
+
     [SerializeField] private float attackRatio;
     // [SerializeField] private float attackDamage;
+
 
     public void Hit()
     {

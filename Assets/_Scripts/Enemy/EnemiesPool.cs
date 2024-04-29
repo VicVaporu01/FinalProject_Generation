@@ -7,18 +7,15 @@ public class EnemiesPool : MonoBehaviour
     [SerializeField] private List<GameObject> listEnemiesPrefabs;
     private GameObject[] enemyArray;
 
-    [SerializeField] private int arraySize;
+    private int arraySize;
 
-    private void Start()
+    public void AddEnemiesToPool()
     {
+        Debug.Log("Array size before: " + arraySize);
         arraySize = GameObject.Find("SpawnManager").GetComponent<EnemySpawnManager>().GetEnemiesMaxAmount();
+        Debug.Log("Array size after: " + arraySize);
         enemyArray = new GameObject[arraySize];
 
-        AddEnemiesToPool();
-    }
-
-    private void AddEnemiesToPool()
-    {
         for (int i = 0; i < enemyArray.Length; i++)
         {
             int randomEnemy = Random.Range(0, listEnemiesPrefabs.Count);
