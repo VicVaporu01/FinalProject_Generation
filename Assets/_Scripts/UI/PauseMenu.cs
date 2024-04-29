@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
+using UnityEngine.UI;
 
 public class PauseMenu : MonoBehaviour
 {
@@ -13,9 +14,13 @@ public class PauseMenu : MonoBehaviour
     public GameObject pauseScreen;
     public GameObject pauseOverlay;
     public GameObject statsPanel;
-    public TMP_Text speedText;
-    public TMP_Text damageText;
-    public TMP_Text maxLifeText;
+
+    public List<Image> speedSprites; // Lista de sprites para la velocidad
+    public List<Image> damageSprites; // Lista de sprites para el daño
+    public List<Image> maxLifeSprites; // Lista de sprites para la vida máxima
+
+    public Sprite spriteFull; // Sprite para representar una estadística completa
+    public Sprite spriteHalf; // Sprite para representar una estadística a la mitad
 
     public bool isPaused;
 
@@ -103,11 +108,33 @@ public class PauseMenu : MonoBehaviour
         if (playerStats != null)
         {
             // Mostrar las estadísticas en el panel de estadísticas
-            speedText.text = "Speed: " + playerStats.speedStats;
-            damageText.text = "Damage: " + playerStats.damangeStats;
-            maxLifeText.text = "Max Life: " + playerStats.maxLifeStats;
+            UpdateStatSprites(speedSprites, playerStats.speedStats);
+            UpdateStatSprites(damageSprites, playerStats.damangeStats);
+            UpdateStatSprites(maxLifeSprites, playerStats.maxLifeStats);
 
             statsPanel.SetActive(true); // Mostrar el panel de estadísticas
+        }
+    }
+
+    private void UpdateStatSprites(List<Image> statSprites, int statValue)
+    {
+        int fullSprites = statValue / 2;
+        int halfSprite = statValue % 2;
+
+        for (int i = 0; i < statSprites.Count; i++)
+        {
+            if (i < fullSprites)
+            {
+                statSprites[i].sprite = spriteFull;
+            }
+            else if (i == fullSprites && halfSprite == 1)
+            {
+                statSprites[i].sprite = spriteHalf;
+            }
+            else
+            {
+                statSprites[i].sprite = null; // Sprite vacío
+            }
         }
     }
 }
