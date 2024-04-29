@@ -5,7 +5,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour, IDamage
 {
     private Rigidbody2D enemyRB;
-    private GameObject player;
+    public GameObject player;
     [SerializeField] private GameObject father;
 
     [Header("Enemy Stats")] public float health;

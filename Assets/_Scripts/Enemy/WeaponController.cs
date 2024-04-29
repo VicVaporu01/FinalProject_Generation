@@ -16,17 +16,28 @@ public class WeaponController : MonoBehaviour
         }
     }
 
+    // public void AimWeaponToPlayer()
+    // {
+    //     aim.transform.position = character.transform.position;
+    //
+    //     // Calculate the direction to the player
+    //     Vector2 directionToPlayer = enemyScript.GetPlayer().transform.position - transform.position;
+    //
+    //     // Calculate the angle to the player
+    //     float angleToPlayer = Mathf.Atan2(directionToPlayer.y, directionToPlayer.x) * Mathf.Rad2Deg;
+    //
+    //     // Rotate the archer to face the player
+    //     aim.rotation = Quaternion.Euler(0, 0, angleToPlayer);
+    // }
+    
     public void AimWeaponToPlayer()
     {
         aim.transform.position = character.transform.position;
 
         // Calculate the direction to the player
-        Vector2 directionToPlayer = enemyScript.GetPlayer().transform.position - transform.position;
+        Vector2 playerDirection = enemyScript.GetPlayer().transform.position - aim.transform.position;
 
-        // Calculate the angle to the player
-        float angleToPlayer = Mathf.Atan2(directionToPlayer.y, directionToPlayer.x) * Mathf.Rad2Deg;
-
-        // Rotate the archer to face the player
-        aim.rotation = Quaternion.Euler(0, 0, angleToPlayer);
+        aim.transform.right = playerDirection;
     }
+    
 }
