@@ -38,8 +38,11 @@ public class EnemyBulletLife : MonoBehaviour
     {
         if (other.TryGetComponent(out IDamage damage))
         {
-            damage.TakeDamage(1.0f, DamageType.Physical);
-            gameObject.SetActive(false);
+            if (other.gameObject.CompareTag("Player"))
+            {
+                damage.TakeDamage(1.0f, DamageType.Physical);
+                gameObject.SetActive(false);
+            }
         }
         else
         {

@@ -6,6 +6,7 @@ using UnityEngine.Serialization;
 
 public class Archer : Enemy
 {
+    [SerializeField] private WeaponController bow;
     private EnemyDistanceCombat distanceCombatController;
 
     [SerializeField] private float attackCooldown = 0;
@@ -27,28 +28,44 @@ public class Archer : Enemy
 
         if (hasLineOfSight)
         {
-            AimWeaponToPlayer();
+            bow.AimWeaponToPlayer();
         }
     }
 
     private void FixedUpdate()
     {
-        Flip();
+        // To patrol
+        if (!hasLineOfSight && timePatrolling >= 0)
+        {
+            timePatrolling -= Time.deltaTime;
+            GetEnemyRB().velocity = GetRandomDirection() * speed;
+        }
+        else
+        {
+            base.GenerateRandomDirection();
+            timePatrolling = 5.0f;
+        }
+
+        if (hasLineOfSight)
+        {
+            Flip();
+        }
         CalculateApproach(minDistanceToAttack);
 
-        if (canAttack && attackCooldown<=0)
+        // If the enemy can attack, has line of sight and the attack cooldown is 0, then attack
+        if (canAttack && hasLineOfSight && attackCooldown <= 0)
         {
             distanceCombatController.Shoot();
             attackCooldown = attackRateTime;
         }
-        else
+        else if (attackCooldown > 0)
         {
             attackCooldown -= Time.deltaTime;
         }
 
         // If the player is too close, scape and increase the attack rate time
         float enemyPlayerDistance = Vector2.Distance(transform.position, GetPlayer().transform.position);
-        if (enemyPlayerDistance <= scapeDistance)
+        if (hasLineOfSight && (enemyPlayerDistance <= scapeDistance))
         {
             Scape();
             attackRateTime = 5.0f;
@@ -57,14 +74,20 @@ public class Archer : Enemy
         {
             attackRateTime = 1.5f;
         }
-        
+    }
+
+    private void OnCollisionStay2D(Collision2D other)
+    {
+        if (other.gameObject.CompareTag("Obstacle"))
+        {
+            GenerateRandomDirection();
+        }
     }
 
     private void Scape()
     {
         Vector2 scapeVector = transform.position - GetPlayer().transform.position;
-        
+
         GetEnemyRB().velocity = scapeVector.normalized * speed;
     }
-    
 }
