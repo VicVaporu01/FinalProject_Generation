@@ -6,6 +6,7 @@ using UnityEngine.Serialization;
 
 public class Warrior : Enemy
 {
+    [SerializeField] private WeaponController sword;
     [SerializeField] private EnemyMeleeCombat meleeCombatController;
 
     [SerializeField] private float timeToAttack = 1.5f;
@@ -22,17 +23,17 @@ public class Warrior : Enemy
     {
         base.DetectPlayer(followDistance, GetPlayer());
         base.FollowPlayer(GetPlayer());
+
+        float distanceToPlayer = Vector2.Distance(transform.position, GetPlayer().transform.position);
+        // This condition is to avoid the enemy's weapon getting mad when the player is too close
+        if (hasLineOfSight)
+        {
+            sword.AimWeaponToPlayer();
+        }
     }
 
     private void FixedUpdate()
     {
-        // This is to make the enemy look at its walking direction
-        if (GetEnemyRB().velocity != Vector2.zero)
-        {
-            Vector3 lookDirection = new Vector3(GetEnemyRB().velocity.x, GetEnemyRB().velocity.y, 0);
-            transform.up = lookDirection;
-        }
-
         if (canAttack && timeToAttack <= 0)
         {
             meleeCombatController.Hit();
@@ -44,17 +45,16 @@ public class Warrior : Enemy
         }
 
         CalculateApproach(minDistanceToAttack);
-        if (!hasLineOfSight && timePatrolling >= 0)
-        {
-            // Debug.Log("Moviendose");
-            timePatrolling -= Time.deltaTime;
-            GetEnemyRB().velocity = GetRandomDirection() * speed;
-        }
-        else
-        {
-            base.GenerateRandomDirection();
-            timePatrolling = 5.0f;
-        }
+        // if (!hasLineOfSight && timePatrolling >= 0)
+        // {
+        //     timePatrolling -= Time.deltaTime;
+        //     GetEnemyRB().velocity = GetRandomDirection() * speed;
+        // }
+        // else
+        // {
+        //     base.GenerateRandomDirection();
+        //     timePatrolling = 5.0f;
+        // }
     }
 
     public override float CalculateFinalDamage(float damage, DamageType damageType)
