@@ -71,6 +71,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05bd2f6e82f892043add301c623be9a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerStats: {fileID: 1058581465873877382}
+  attackDamage: 1
+  damageType: 0
+  maxAttackDamage: 5
+  minAttackDamage: 1
 --- !u!1 &1058581465873877400
 GameObject:
   m_ObjectHideFlags: 0
@@ -311,9 +316,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerInput: {fileID: 1058581465873877376}
+  playerStats: {fileID: 1058581465873877382}
   rb2D: {fileID: 1058581465873877378}
   movementSpeed: 5
   moveDirection: {x: 0, y: 0}
+  minMoveSpeed: 4
+  maxMoveSpeed: 7
 --- !u!95 &1058581465873877380
 Animator:
   serializedVersion: 5
@@ -347,7 +355,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5902e6c5b3f38c4eafe2c8348aa1697, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerStats: {fileID: 1058581465873877382}
   invincibleLength: 1
+  healTestValue: 1
 --- !u!114 &1058581465873877382
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -366,6 +376,8 @@ MonoBehaviour:
   speedStats: 1
   damangeStats: 1
   maxLifeStats: 1
+  magicDamageStats: 0
+  bulletAmountStats: 0
   interactRangeOffset: {x: 0, y: 0.3, z: 0}
   interactBoxValues: {x: 0.6, y: 1}
 --- !u!114 &1058581465873877401
@@ -408,7 +420,7 @@ MonoBehaviour:
   - {x: 0.15, y: -0.13, z: 0}
   m_ShapePathHash: 822327269
   m_Mesh: {fileID: 0}
-  m_InstanceId: 51546
+  m_InstanceId: -22064
   m_LocalBounds:
     m_Center: {x: 0, y: -0.044015124, z: 0}
     m_Extent: {x: 0.15, y: 0.08598487, z: 0}

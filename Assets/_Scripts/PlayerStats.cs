@@ -16,12 +16,14 @@ public class PlayerStats : MonoBehaviour
     public int speedStats;
     public int damangeStats;
     public int maxLifeStats;
+    public int magicDamageStats;
+    public int bulletAmountStats;
 
     [Header("Interact Object Values")]
     [SerializeField] private Vector3 interactRangeOffset;
     [SerializeField] private Vector2 interactBoxValues;
 
-    public event Action<int, int, int> OnStatsChanged;
+    public event Action<int, int, int, int, int> OnStatsChanged;
 
     private void Awake()
     {
@@ -30,9 +32,7 @@ public class PlayerStats : MonoBehaviour
 
     public void Start()
     {
-        speedStats = minStatValue;
-        damangeStats = minStatValue;
-        maxLifeStats = minStatValue;
+        LoadStatsValues();
     }
 
     private void OnEnable()
@@ -43,6 +43,16 @@ public class PlayerStats : MonoBehaviour
     private void OnDisable()
     {
         interactAction.started -= PickUpObject;
+    }
+
+    private void LoadStatsValues()
+    {
+        minStatValue = GameManager.Instance.minStatValue;
+        speedStats = GameManager.Instance.speedStats;
+        damangeStats = GameManager.Instance.damangeStats;
+        maxLifeStats = GameManager.Instance.maxLifeStats;
+        magicDamageStats = GameManager.Instance.magicDamageStats;
+        bulletAmountStats = GameManager.Instance.bulletAmountStats;
     }
 
     private void PickUpObject(InputAction.CallbackContext context)
@@ -63,14 +73,18 @@ public class PlayerStats : MonoBehaviour
         }
     }
 
-    public void ModifyStatistics(int newSpeed, int newDamage, int newMaxLife)
+    public void ModifyStatistics(int newSpeed, int newDamage, int newMaxLife, int newMagicDamage, int newBulletAmountStats)
     {
         speedStats = EvaluateStatistics(newSpeed, speedStats);
         damangeStats = EvaluateStatistics(newDamage, damangeStats);
         maxLifeStats = EvaluateStatistics(newMaxLife, maxLifeStats);
+        magicDamageStats = EvaluateStatistics(newMagicDamage, magicDamageStats);
+        bulletAmountStats = EvaluateStatistics(newBulletAmountStats, bulletAmountStats);
 
         // Notificar al PauseMenu sobre los cambios en las estad�sticas
-        OnStatsChanged?.Invoke(speedStats, damangeStats, maxLifeStats);
+        OnStatsChanged?.Invoke(speedStats, damangeStats, maxLifeStats, magicDamageStats, bulletAmountStats);
+
+        GameManager.Instance.ChangeStatsValues(speedStats, damangeStats, maxLifeStats, magicDamageStats, bulletAmountStats);
     }
 
     private int EvaluateStatistics(int newValue, int changeValue)
@@ -87,6 +101,32 @@ public class PlayerStats : MonoBehaviour
         }
 
         return nuevoTotal;
+    }
+
+
+    private float GetStatPercentage(int actualStat)
+    {
+        if (actualStat < minStatValue || actualStat > maxStatValue)
+        {
+            Debug.LogError("La estadistica está fuera del rango");
+        }
+
+        float range = maxStatValue - minStatValue;
+
+        float percentage = (actualStat - minStatValue) / range * 100;
+
+        return percentage;
+    }
+
+    public float GetNewStatValue(int actualStat, float maxValue, float minValue)
+    {
+        float percentage = GetStatPercentage(actualStat);
+
+        float valueRange = maxValue - minValue;
+
+        float newValue = minValue + (valueRange * (percentage / 100));
+
+        return newValue;
     }
 
     private void OnDrawGizmos()

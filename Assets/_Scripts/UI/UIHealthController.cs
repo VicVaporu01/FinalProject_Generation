@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,10 +8,9 @@ public class UIHealthController : MonoBehaviour
 {
     public List<Image> hearts; // Lista de corazones
     public Sprite heartFull, heartEmpty, heartHalf;
-    
+    public GameObject heartUIPrefab;
+    public RectTransform heartContainer;
     private static UIHealthController instance;
-
-
     public static UIHealthController Instance
     {
         get => instance;
@@ -19,22 +19,65 @@ public class UIHealthController : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance != null && Instance!= this)
+        if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
         }
         else
         {
             Instance = this;
-            DontDestroyOnLoad(this);
         }
     }
 
     private void Start()
     {
-        // Actualizar la IU con la vida maxima del jugador al inicio del juego
         int maxHealth = GameManager.Instance.GetMaxHealth();
-        UpdateHealthDisplay(maxHealth, maxHealth);
+
+        int currentHealth = GameManager.Instance.GetCurrentHealth();
+
+        CreateHearths(maxHealth);
+
+        UpdateHealthDisplay(currentHealth, maxHealth);
+    }
+
+    private void CreateHearths(int maxHealth)
+    {
+        float hearthAmount = MathF.Ceiling(maxHealth / 2f);
+
+        for (int i = 0; i < hearthAmount; i++)
+        {
+            CreateHeart();
+        }
+    }
+
+    private void CreateHeart()
+    {
+        GameObject hearthSpawned = Instantiate(heartUIPrefab, heartContainer);
+
+        hearts.Add(hearthSpawned.GetComponent<Image>());
+    }
+
+    public void ChangeHearths(int newMaxHealth)
+    {
+        int expectedHearts = (int)Mathf.Ceil(newMaxHealth / 2f);
+        int actualHeartAmount = hearts.Count;
+        int heartsToChange = expectedHearts - actualHeartAmount;
+
+        if (heartsToChange > 0)
+        {
+            for (int i = 0; i < heartsToChange; i++)
+            {
+                CreateHeart();
+            }
+        }
+        else if (heartsToChange < 0)
+        {
+            for (int i = 0; i < MathF.Abs(heartsToChange); i++)
+            {
+                Destroy(hearts[^1].gameObject);
+                hearts.RemoveAt(hearts.Count - 1);
+            }
+        }
     }
 
     public void UpdateHealthDisplay(int currentHealth, int maxHealth)

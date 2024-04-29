@@ -6,7 +6,16 @@ using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] private int currentHealth, maxHealth;
+    [Header("Player Stats")]
+    public int minStatValue;
+    public int speedStats;
+    public int damangeStats;
+    public int maxLifeStats;
+    public int magicDamageStats;
+    public int bulletAmountStats;
+
+    [SerializeField] private int currentHealth;
+    [SerializeField] private int maxHealth;
 
     private static GameManager instance;
 
@@ -29,11 +38,13 @@ public class GameManager : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(this);
         }
+
+        SetInitialStatsValues();
     }
 
     private void Start()
     {
-        currentHealth = maxHealth;
+        currentHealth = maxHealth + maxLifeStats;
     }
 
     public int TakeDamage(float damage, DamageType damageType)
@@ -45,7 +56,26 @@ public class GameManager : MonoBehaviour
             currentHealth = 0;
         }
 
-        UIHealthController.Instance.UpdateHealthDisplay(currentHealth, maxHealth);
+        UIHealthController.Instance.UpdateHealthDisplay(currentHealth, GetMaxHealth());
+
+        return currentHealth;
+    }
+
+    public int HealDamage(int healAmount)
+    {
+        int temporalCurrentHealth = currentHealth + healAmount;
+        int actualMaxHealth = GetMaxHealth();
+
+        if (temporalCurrentHealth > actualMaxHealth)
+        {
+            currentHealth = actualMaxHealth;
+        }
+        else
+        {
+            currentHealth = temporalCurrentHealth;
+        }
+
+        UIHealthController.Instance.UpdateHealthDisplay(currentHealth, actualMaxHealth);
 
         return currentHealth;
     }
@@ -57,7 +87,7 @@ public class GameManager : MonoBehaviour
 
     public int GetMaxHealth()
     {
-        return maxHealth;
+        return maxHealth + maxLifeStats;
     }
 
     // public void Set CurrentHealth(int health)
@@ -75,6 +105,39 @@ public class GameManager : MonoBehaviour
         int randomObjectIndex = Random.Range(0, collectableObjects.Length);
 
         return collectableObjects[randomObjectIndex];
+    }
+
+    private void SetInitialStatsValues()
+    {
+        speedStats = minStatValue;
+        damangeStats = minStatValue;
+        maxLifeStats = minStatValue;
+        magicDamageStats = minStatValue;
+        bulletAmountStats = minStatValue;
+    }
+
+    public void ChangeStatsValues(int newSpeed, int newDamage, int newMaxLife, int newMagicDamage, int newBulletAmountStats)
+    {
+        speedStats = newSpeed;
+        damangeStats = newDamage;
+        maxLifeStats = newMaxLife;
+        magicDamageStats = newMagicDamage;
+        bulletAmountStats = newBulletAmountStats;
+    }
+
+    public int ChangePlayerMaxHealth(int newMaxHealth)
+    {
+        int maxLifeDiference = newMaxHealth - maxLifeStats;
+
+        maxLifeStats = newMaxHealth;
+
+        currentHealth += maxLifeDiference;
+
+        UIHealthController.Instance.ChangeHearths(GetMaxHealth());
+
+        UIHealthController.Instance.UpdateHealthDisplay(currentHealth, GetMaxHealth());
+
+        return currentHealth;
     }
 
 }
