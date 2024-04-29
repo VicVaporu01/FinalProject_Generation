@@ -6,17 +6,17 @@ public class Enemy : MonoBehaviour, IDamage
 {
     private Rigidbody2D enemyRB;
     private GameObject player;
-    [SerializeField] private GameObject aim, father;
+    [SerializeField] private GameObject father;
 
-    [Header("Enemy Stats")] 
-    public float health;
+    [Header("Enemy Stats")] public float health;
     public float speed;
     public float damage;
-    public bool hasLineOfSight = false, isFacingRight = true, 
-        canApproach = false, canAttack = false;
+
+    public bool hasLineOfSight = false, isFacingRight = true;
+    public bool canApproach = false, canAttack = false;
 
     public float followDistance, minDistanceToAttack;
-    private float timePatrolling;
+    public float timePatrolling;
     private Vector2 randomDirection;
     public float xRange, yRange;
 
@@ -38,31 +38,17 @@ public class Enemy : MonoBehaviour, IDamage
         }
     }
 
-    public void AimWeaponToPlayer()
-    {
-        aim.transform.position = transform.position;
-        
-        // Calculate the direction to the player
-        Vector2 directionToPlayer = GetPlayer().transform.position - transform.position;
-
-        // Calculate the angle to the player
-        float angleToPlayer = Mathf.Atan2(directionToPlayer.y, directionToPlayer.x) * Mathf.Rad2Deg;
-
-        // Rotate the archer to face the player
-        aim.transform.rotation = Quaternion.Euler(0, 0, angleToPlayer);
-    }
-
     // This method is to flip the enemy when the player is on the opposite side
     public void Flip()
     {
         Vector2 playerPosition = player.transform.position;
         bool isPlayerRight = playerPosition.x > transform.position.x;
-        
+
         // Is the player right and the enemy is not facing right, the enemy will flip
         // Or if the player is left and the enemy is facing right, the enemy will flip
         if ((isFacingRight && !isPlayerRight) || (!isFacingRight && isPlayerRight))
         {
-            transform.Rotate(0,180,0);
+            transform.Rotate(0, 180, 0);
             isFacingRight = !isFacingRight;
         }
     }
@@ -81,9 +67,9 @@ public class Enemy : MonoBehaviour, IDamage
     }
 
     /*
-    * This method is to calculate if the enemy can approach the player to
-    * avoid being too close
-    */
+     * This method is to calculate if the enemy can approach the player to
+     * avoid being too close
+     */
     public void CalculateApproach(float minApproach)
     {
         float distanceEnemyPlayer = Vector2.Distance(transform.position, player.transform.position);
@@ -113,7 +99,7 @@ public class Enemy : MonoBehaviour, IDamage
     /*
      * This method is to calculate the final damage that the enemy will receive
      * and can be overriden by the child classes
-    */ 
+     */
     public virtual float CalculateFinalDamage(float damage, DamageType damageType)
     {
         switch (damageType)
@@ -161,16 +147,6 @@ public class Enemy : MonoBehaviour, IDamage
     public void SetPlayer(GameObject playerFound)
     {
         player = playerFound;
-    }
-
-    public float GetTimePatrolling()
-    {
-        return timePatrolling;
-    }
-
-    public void SetTimePatrolling(float time)
-    {
-        timePatrolling = time;
     }
 
     public Vector2 GetRandomDirection()
