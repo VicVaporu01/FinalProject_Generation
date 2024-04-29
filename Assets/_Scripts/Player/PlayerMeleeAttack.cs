@@ -5,15 +5,37 @@ using UnityEngine;
 
 public class PlayerMeleeAttack : MonoBehaviour
 {
-    
+    [Header("References")]
+    [SerializeField] private PlayerStats playerStats;
+
+    [Header("Damage Control")]
+    [SerializeField] private int attackDamage;
+    [SerializeField] private DamageType damageType;
+    [SerializeField] private int maxAttackDamage;
+    [SerializeField] private int minAttackDamage;
+
+    private void OnEnable()
+    {
+        playerStats.OnStatsChanged += ChangeAttackDamage;
+    }
+
+    private void OnDisable()
+    {
+        playerStats.OnStatsChanged -= ChangeAttackDamage;
+    }
+
+    private void ChangeAttackDamage(int newSpeed, int newDamage, int newMaxLife, int newMagicDamage, int newBulletAmountStats)
+    {
+        attackDamage = (int)MathF.Round(playerStats.GetNewStatValue(newDamage, maxAttackDamage, minAttackDamage));
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Enemy"))
         {
-            IDamage objectHit = other.gameObject.GetComponent<IDamage>();
-            if (objectHit != null)
+            if (other.TryGetComponent(out IDamage objectHit))
             {
-                objectHit.TakeDamage(1, DamageType.Physical);
+                objectHit.TakeDamage(attackDamage, damageType);
             }
         }
     }
