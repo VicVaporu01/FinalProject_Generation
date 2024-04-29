@@ -37,6 +37,7 @@ public class Archer : Enemy
         // To patrol
         if (!hasLineOfSight && timePatrolling >= 0)
         {
+            Debug.Log("Patrullando");
             timePatrolling -= Time.deltaTime;
             GetEnemyRB().velocity = GetRandomDirection() * speed;
         }

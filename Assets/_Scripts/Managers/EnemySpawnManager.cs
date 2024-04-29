@@ -9,16 +9,15 @@ public class EnemySpawnManager : MonoBehaviour
     [SerializeField] private List<Transform> spawnPoints;
     [SerializeField] private EnemiesPool enemiesPool;
 
-    [SerializeField] private float spawnRate;
-    [SerializeField] private int enemiesMaxAmount;
-    [SerializeField] private int enemiesInvoked;
-    [SerializeField] private int enemiesCurrentAmount;
+    private float spawnRate;
+    private int enemiesMaxAmount;
+    private int enemiesInvoked;
+    private int enemiesCurrentAmount;
 
     private void Start()
     {
         SetSpawnRate(GameManager.Instance.GiveDifficultyToLevel());
         InvokeRepeating("SpawnEnemy", 1.0f, spawnRate);
-        enemiesPool = GameObject.Find("EnemiesPool").GetComponent<EnemiesPool>();
 
         enemiesCurrentAmount = enemiesMaxAmount;
     }
@@ -29,25 +28,32 @@ public class EnemySpawnManager : MonoBehaviour
         {
             case MapLevelTypeEnum.NormalLevel:
                 Debug.Log("Normal Level");
+                enemiesMaxAmount = 3;
                 spawnRate = 3.0f;
                 break;
             case MapLevelTypeEnum.MediumLevel:
                 Debug.Log("Medium Level");
+                enemiesMaxAmount = 4;
                 spawnRate = 2.0f;
                 break;
             case MapLevelTypeEnum.HardLevel:
                 Debug.Log("Hard Level");
+                enemiesMaxAmount = 5;
                 spawnRate = 1.0f;
                 break;
             default:
                 Debug.Log("Default Level");
+                enemiesMaxAmount = 2;
                 spawnRate = 4.0f;
                 break;
         }
+
+        enemiesPool.AddEnemiesToPool();
     }
 
     private void SpawnEnemy()
     {
+        Debug.Log("Enemies maxAmount: " + enemiesMaxAmount);
         if (enemiesCurrentAmount > 0 && enemiesInvoked < enemiesMaxAmount)
         {
             enemiesInvoked += 1;
