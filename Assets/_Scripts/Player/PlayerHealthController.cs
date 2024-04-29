@@ -16,6 +16,8 @@ public class PlayerHealthController : MonoBehaviour, IDamage
 
     private SpriteRenderer theSR;
 
+    public event EventHandler PlayerDead;
+
     void Start()
     {
         /*
@@ -62,14 +64,16 @@ public class PlayerHealthController : MonoBehaviour, IDamage
     {
         CinemachineMovimientoCamara.Instance.MoverCamara(5, 5, 0.5f);
         playerCurrentHealth = GameManager.Instance.TakeDamage(damage, damageType);
-        if (playerMaxHealth<=0)
+        if (playerCurrentHealth<=0)
         {
             Die();
+            PlayerDead?.Invoke(this, EventArgs.Empty);
         }
     }
 
     private void Die()
     {
         playerMovement.enabled = false;
+        
     }
 }
