@@ -318,7 +318,7 @@ MonoBehaviour:
   playerInput: {fileID: 1058581465873877376}
   playerStats: {fileID: 1058581465873877382}
   rb2D: {fileID: 1058581465873877378}
-  movementSpeed: 5
+  movementSpeed: 4
   moveDirection: {x: 0, y: 0}
   minMoveSpeed: 4
   maxMoveSpeed: 7
@@ -420,7 +420,7 @@ MonoBehaviour:
   - {x: 0.15, y: -0.13, z: 0}
   m_ShapePathHash: 822327269
   m_Mesh: {fileID: 0}
-  m_InstanceId: -22064
+  m_InstanceId: 62508
   m_LocalBounds:
     m_Center: {x: 0, y: -0.044015124, z: 0}
     m_Extent: {x: 0.15, y: 0.08598487, z: 0}

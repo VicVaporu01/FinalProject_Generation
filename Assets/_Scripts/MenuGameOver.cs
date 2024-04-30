@@ -6,37 +6,49 @@ using System;
 
 public class MenuGameOver : MonoBehaviour
 {
-    [SerializeField] private GameObject menuGameOver;
+    [Header("References")]
+    [SerializeField] private GameObject menuGameOverObject;
+    [SerializeField] private CanvasGroup backGroundObject;
+    [SerializeField] private CanvasGroup youAreDeadImage;
+    [SerializeField] private CanvasGroup mainMenuButtonObject;
     private PlayerHealthController playerDying;
-    private SceneManagerObject sceneManager;
+
+    [Header("Animation Values")]
+    [SerializeField] private float timeToOpenMenu;
+    [SerializeField] private float timeToChangeBackgroundAlpha;
+    [SerializeField] private float timeToChangeImageAlpha;
+    [SerializeField] private float timeToChangeButtonAlpha;
+
 
     private void Start()
     {
         playerDying = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHealthController>();
         playerDying.PlayerDead += MenuOn;
-        sceneManager = GameObject.FindObjectOfType<SceneManagerObject>();
     }
 
-    public void restart()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    }
     private void MenuOn(object sender, EventArgs e)
     {
-        menuGameOver.SetActive(true);
-
+        StartCoroutine(StartGameOverMenuAnimation());
     }
 
-
-    public void MainMenu(string nombre)
+    public void MainMenu()
     {
         SceneManagerObject.Instance.LoadScene(0);
     }
 
-    public void Exit()
+    private IEnumerator StartGameOverMenuAnimation()
     {
-        sceneManager.LoadNextScene();
-        //UnityEditor.EditorApplication.isPlaying = false;
-        Application.Quit();
+        menuGameOverObject.SetActive(true);
+
+        yield return new WaitForSeconds(timeToOpenMenu);
+
+        LeanTween.alphaCanvas(backGroundObject, 1f, timeToChangeBackgroundAlpha).setOnComplete(() =>
+        {
+            LeanTween.alphaCanvas(youAreDeadImage, 1f, timeToChangeImageAlpha).setOnComplete(() =>
+            {
+                LeanTween.alphaCanvas(mainMenuButtonObject, 1f, timeToChangeButtonAlpha);
+            });
+        }
+        );
     }
 }

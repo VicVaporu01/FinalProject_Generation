@@ -41,6 +41,11 @@ public class PlayerMovement : MonoBehaviour
         playerStats.OnStatsChanged -= ChangeMovementSpeed;
     }
 
+    private void Start()
+    {
+        movementSpeed = playerStats.GetNewStatValue(GameManager.Instance.speedStats, maxMoveSpeed, minMoveSpeed);
+    }
+
     private void ChangeMovementSpeed(int newSpeed, int newDamage, int newMaxLife, int newMagicDamage, int newBulletAmountStats)
     {
         movementSpeed = playerStats.GetNewStatValue(newSpeed, maxMoveSpeed, minMoveSpeed);
@@ -85,5 +90,10 @@ public class PlayerMovement : MonoBehaviour
     public void RangeAttack()
     {
         anims.SetTrigger("RangeAttack");
+    }
+
+    public void StopPlayerMovement()
+    {
+        rb2D.velocity = new Vector2(0, 0);
     }
 }

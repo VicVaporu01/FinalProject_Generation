@@ -24,6 +24,11 @@ public class PlayerMeleeAttack : MonoBehaviour
         playerStats.OnStatsChanged -= ChangeAttackDamage;
     }
 
+    private void Start()
+    {
+        attackDamage = (int)MathF.Round(playerStats.GetNewStatValue(GameManager.Instance.damangeStats, maxAttackDamage, minAttackDamage));
+    }
+
     private void ChangeAttackDamage(int newSpeed, int newDamage, int newMaxLife, int newMagicDamage, int newBulletAmountStats)
     {
         attackDamage = (int)MathF.Round(playerStats.GetNewStatValue(newDamage, maxAttackDamage, minAttackDamage));
