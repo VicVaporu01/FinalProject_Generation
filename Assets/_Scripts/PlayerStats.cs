@@ -57,7 +57,7 @@ public class PlayerStats : MonoBehaviour
 
     private void PickUpObject(InputAction.CallbackContext context)
     {
-        RaycastHit2D[] objectsTouched = Physics2D.BoxCastAll(transform.position + interactRangeOffset, interactBoxValues, 0f, Vector2.down);
+        RaycastHit2D[] objectsTouched = Physics2D.BoxCastAll(transform.position + interactRangeOffset, interactBoxValues, 0f, Vector2.zero, 0f);
 
         foreach (RaycastHit2D item in objectsTouched)
         {
