@@ -8,6 +8,8 @@ public class CollectibleObject : MonoBehaviour
     [SerializeField] private int speedStats;
     [SerializeField] private int damangeStats;
     [SerializeField] private int maxLifeStats;
+    [SerializeField] private int magicDamageStats;
+    [SerializeField] private int bulletAmountStats;
 
     [Header("Object Collect Effects")]
     [SerializeField] private ParticleSystem hoverIndicator;
@@ -83,7 +85,7 @@ public class CollectibleObject : MonoBehaviour
 
     private void CollectObject(PlayerStats playerStatistics)
     {
-        playerStatistics.ModifyStatistics(speedStats, damangeStats, maxLifeStats);
+        playerStatistics.ModifyStatistics(speedStats, damangeStats, maxLifeStats, magicDamageStats, bulletAmountStats);
 
         Instantiate(collectParticleObject, transform.position, Quaternion.identity);
 
