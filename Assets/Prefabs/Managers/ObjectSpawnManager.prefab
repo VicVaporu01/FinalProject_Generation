@@ -146,7 +146,7 @@ MonoBehaviour:
   - {fileID: 8934033853779483679}
   - {fileID: 8934033854300343737}
   objectsSpawned: []
-  exitPortalPrefab: {fileID: 2593402789250874774, guid: 5d21da426ffe65147879ef654344c5ec, type: 3}
+  exitPortalPrefab: {fileID: 3871856142369468322, guid: f769480566166c840972319283e1ed78, type: 3}
   exitPortalSpawnPosition: {fileID: 8934033855330489144}
 --- !u!1 &8934033855330489287
 GameObject:
