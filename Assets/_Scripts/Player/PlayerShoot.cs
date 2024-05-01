@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 public class PlayerShoot : MonoBehaviour
@@ -28,14 +29,18 @@ public class PlayerShoot : MonoBehaviour
     [Header("Ammo Control")]
     [SerializeField] private int maxAmmoAmount;
     [SerializeField] private int actualAmmoAmount;
-    [SerializeField] private float timeToChargeAmmo;
-    [SerializeField] private float actualChargeTime;
+    public float timeToChargeAmmo;
+    private float actualChargeTime;
 
     [Header("Shoot Position")]
     [SerializeField] private Vector3 rightShootPosition;
     [SerializeField] private Vector3 leftShootPosition;
     [SerializeField] private Vector3 backShootPosition;
     [SerializeField] private Vector3 frontShootPosition;
+
+    [Header("Events")]
+    public UnityEvent<int> OnBulletAmountChange;
+    public UnityEvent<float> OnBulletRechargeChange;
 
     private void Awake()
     {
@@ -70,6 +75,8 @@ public class PlayerShoot : MonoBehaviour
         if (actualAmmoAmount > maxAmmoAmount)
         {
             actualAmmoAmount = maxAmmoAmount;
+
+            OnBulletAmountChange.Invoke(actualAmmoAmount);
         }
     }
 
@@ -79,11 +86,17 @@ public class PlayerShoot : MonoBehaviour
         {
             actualChargeTime += Time.deltaTime;
 
+            OnBulletRechargeChange.Invoke(actualChargeTime);
+
             if (actualChargeTime > timeToChargeAmmo)
             {
                 actualAmmoAmount++;
 
+                OnBulletAmountChange.Invoke(actualAmmoAmount);
+
                 actualChargeTime = 0;
+
+                OnBulletRechargeChange.Invoke(actualChargeTime);
             }
         }
     }
@@ -93,6 +106,8 @@ public class PlayerShoot : MonoBehaviour
         if (actualAmmoAmount > 0 && Time.time > timeLastShot + timeBtwnShots)
         {
             actualAmmoAmount--;
+
+            OnBulletAmountChange.Invoke(actualAmmoAmount);
 
             timeLastShot = Time.time;
 
