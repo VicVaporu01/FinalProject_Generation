@@ -353,6 +353,7 @@ MonoBehaviour:
   rb2D: {fileID: 1058581465873877378}
   movementSpeed: 4
   moveDirection: {x: 0, y: 0}
+  lastMoveDirection: {x: 0, y: 0}
   minMoveSpeed: 4
   maxMoveSpeed: 7
 --- !u!95 &1058581465873877380
@@ -453,7 +454,7 @@ MonoBehaviour:
   - {x: 0.15, y: -0.13, z: 0}
   m_ShapePathHash: 822327269
   m_Mesh: {fileID: 0}
-  m_InstanceId: -62434
+  m_InstanceId: -1376
   m_LocalBounds:
     m_Center: {x: 0, y: -0.044015124, z: 0}
     m_Extent: {x: 0.15, y: 0.08598487, z: 0}
@@ -469,6 +470,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb64df57927d16343807e98237e9b051, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerMovement: {fileID: 1058581465873877381}
   playerStats: {fileID: 1058581465873877382}
   animator: {fileID: 1058581465873877380}
   playerInput: {fileID: 1058581465873877376}
@@ -477,8 +479,13 @@ MonoBehaviour:
   minBulletDamage: 1
   bulletPrefab: {fileID: 6239234748968913836, guid: c4fef1f0c76a72747bb4c750d60164f4, type: 3}
   shootControllerTransform: {fileID: 949541465}
+  shootDelay: 0.3
   timeBtwnShots: 1
   maxAmmoAmount: 5
   actualAmmoAmount: 0
-  timeToChargeAmmo: 1
+  timeToChargeAmmo: 5
   actualChargeTime: 0
+  rightShootPosition: {x: 0.331, y: 0.357, z: 0}
+  leftShootPosition: {x: -0.331, y: 0.357, z: 0}
+  backShootPosition: {x: 0, y: 0.5, z: 0}
+  frontShootPosition: {x: 0, y: 0.341, z: 0}

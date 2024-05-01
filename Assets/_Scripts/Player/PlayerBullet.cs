@@ -10,6 +10,12 @@ public class PlayerBullet : MonoBehaviour
 
     [Header("Movement Values")]
     [SerializeField] private float movementSpeed;
+    [SerializeField] private float lifeTime;
+
+    private void Start()
+    {
+        Destroy(gameObject, lifeTime);
+    }
 
     private void Update()
     {
@@ -23,7 +29,13 @@ public class PlayerBullet : MonoBehaviour
             if (other.TryGetComponent(out IDamage objectHit))
             {
                 objectHit.TakeDamage(bulletDamage, damageType);
+                Destroy(gameObject);
             }
+        }
+
+        if (other.CompareTag("Obstacle"))
+        {
+            Destroy(gameObject);
         }
     }
 
