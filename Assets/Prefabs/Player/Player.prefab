@@ -356,6 +356,14 @@ MonoBehaviour:
   lastMoveDirection: {x: 0, y: 0}
   minMoveSpeed: 4
   maxMoveSpeed: 7
+  dirtStepSounds: []
+  waterStepSounds: []
+  grassStepSounds: []
+  boxStepDimentions: {x: 0.24, y: 0.09}
+  boxPositionOffset: {x: 0, y: -0.12, z: 0}
+  stepOnLayers:
+    serializedVersion: 2
+    m_Bits: 7184
 --- !u!95 &1058581465873877380
 Animator:
   serializedVersion: 5
@@ -454,7 +462,7 @@ MonoBehaviour:
   - {x: 0.15, y: -0.13, z: 0}
   m_ShapePathHash: 822327269
   m_Mesh: {fileID: 0}
-  m_InstanceId: -1376
+  m_InstanceId: -314050
   m_LocalBounds:
     m_Center: {x: 0, y: -0.044015124, z: 0}
     m_Extent: {x: 0.15, y: 0.08598487, z: 0}
@@ -484,8 +492,13 @@ MonoBehaviour:
   maxAmmoAmount: 5
   actualAmmoAmount: 0
   timeToChargeAmmo: 5
-  actualChargeTime: 0
   rightShootPosition: {x: 0.331, y: 0.357, z: 0}
   leftShootPosition: {x: -0.331, y: 0.357, z: 0}
   backShootPosition: {x: 0, y: 0.5, z: 0}
   frontShootPosition: {x: 0, y: 0.341, z: 0}
+  OnBulletAmountChange:
+    m_PersistentCalls:
+      m_Calls: []
+  OnBulletRechargeChange:
+    m_PersistentCalls:
+      m_Calls: []
