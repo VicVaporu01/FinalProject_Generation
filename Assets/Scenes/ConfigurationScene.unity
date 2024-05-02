@@ -460,7 +460,7 @@ Canvas:
   m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!224 &1320513193
 RectTransform:
@@ -512,6 +512,8 @@ MonoBehaviour:
   finalLevelIndex: 3
   levelCompletedImage: {fileID: 21300000, guid: 0eb74d116ad923d4c8b620d4ab598576, type: 3}
   playableLevelsIndexList: 03000000
+  timeToOpenMapStageComplete: 1
+  timeToCloseMapStageComplete: 1
 --- !u!114 &1320513195
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -533,7 +535,7 @@ MonoBehaviour:
   - {fileID: 3643414122227950891, guid: a2c2db8ab496fbf489e1408830a2580c, type: 3}
   - {fileID: 3643414122227950891, guid: 7078840d6ba653d48ad543f6187fc427, type: 3}
   - {fileID: 3643414122227950891, guid: 15692842710e415479f0c35b578f2778, type: 3}
-  shopSpawnProbability: 10
+  shopSpawnProbability: 15
   hardLevelProbability: 30
   stagesAmount: 20
   minimumLevelsByStage: 2
@@ -680,7 +682,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Content: {fileID: 1038944645}
-  m_Horizontal: 1
+  m_Horizontal: 0
   m_Vertical: 0
   m_MovementType: 1
   m_Elasticity: 0.1

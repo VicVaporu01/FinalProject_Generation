@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &949541464
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 949541465}
+  m_Layer: 8
+  m_Name: ShootController
+  m_TagString: Untagged
+  m_Icon: {fileID: 6519382022992737161, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &949541465
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 949541464}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1058581465873877390}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1058581465626041665
 GameObject:
   m_ObjectHideFlags: 0
@@ -95,6 +126,7 @@ GameObject:
   - component: {fileID: 1058581465873877382}
   - component: {fileID: 1058581465873877401}
   - component: {fileID: 3141891886827117559}
+  - component: {fileID: 487601594}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -115,6 +147,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1058581465626041678}
+  - {fileID: 949541465}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -318,8 +351,9 @@ MonoBehaviour:
   playerInput: {fileID: 1058581465873877376}
   playerStats: {fileID: 1058581465873877382}
   rb2D: {fileID: 1058581465873877378}
-  movementSpeed: 5
+  movementSpeed: 4
   moveDirection: {x: 0, y: 0}
+  lastMoveDirection: {x: 0, y: 0}
   minMoveSpeed: 4
   maxMoveSpeed: 7
 --- !u!95 &1058581465873877380
@@ -420,7 +454,38 @@ MonoBehaviour:
   - {x: 0.15, y: -0.13, z: 0}
   m_ShapePathHash: 822327269
   m_Mesh: {fileID: 0}
-  m_InstanceId: -22064
+  m_InstanceId: -1376
   m_LocalBounds:
     m_Center: {x: 0, y: -0.044015124, z: 0}
     m_Extent: {x: 0.15, y: 0.08598487, z: 0}
+--- !u!114 &487601594
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1058581465873877400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb64df57927d16343807e98237e9b051, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerMovement: {fileID: 1058581465873877381}
+  playerStats: {fileID: 1058581465873877382}
+  animator: {fileID: 1058581465873877380}
+  playerInput: {fileID: 1058581465873877376}
+  actualBulletDamage: 1
+  maxBulletDamage: 5
+  minBulletDamage: 1
+  bulletPrefab: {fileID: 6239234748968913836, guid: c4fef1f0c76a72747bb4c750d60164f4, type: 3}
+  shootControllerTransform: {fileID: 949541465}
+  shootDelay: 0.3
+  timeBtwnShots: 1
+  maxAmmoAmount: 5
+  actualAmmoAmount: 0
+  timeToChargeAmmo: 5
+  actualChargeTime: 0
+  rightShootPosition: {x: 0.331, y: 0.357, z: 0}
+  leftShootPosition: {x: -0.331, y: 0.357, z: 0}
+  backShootPosition: {x: 0, y: 0.5, z: 0}
+  frontShootPosition: {x: 0, y: 0.341, z: 0}

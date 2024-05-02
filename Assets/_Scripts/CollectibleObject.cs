@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using TMPro.Examples;
 
 public class CollectibleObject : MonoBehaviour
 {
@@ -20,9 +22,12 @@ public class CollectibleObject : MonoBehaviour
     [Header("Price Values")]
     [SerializeField] private int coinCost;
     [SerializeField] private bool isFree = true;
+    [SerializeField] private TextMeshPro costText;
+    [SerializeField] private GameObject textCostObject;
 
     [Header("References")]
     [SerializeField] private GameObject shadowGameObject;
+    [SerializeField] private GameObject lightGameObject;
     private SpriteRenderer spriteRenderer;
 
     [Header("Reward Object")]
@@ -33,6 +38,8 @@ public class CollectibleObject : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
 
         Invoke(nameof(EnableObjectVisuals), timeToSpawnObject);
+
+        costText.text = coinCost.ToString();
     }
 
     private void EnableObjectVisuals()
@@ -40,6 +47,8 @@ public class CollectibleObject : MonoBehaviour
         spriteRenderer.enabled = true;
 
         shadowGameObject.SetActive(true);
+
+        lightGameObject.SetActive(true);
     }
 
 
@@ -107,6 +116,11 @@ public class CollectibleObject : MonoBehaviour
     public void ChangeObjectFreeValue(bool state)
     {
         isFree = state;
+
+        if (!isFree)
+        {
+            textCostObject.SetActive(true);
+        }
     }
 
     public void SetObjectRewardParent(ObjectSpawnManager objectSpawnManagerParameter)

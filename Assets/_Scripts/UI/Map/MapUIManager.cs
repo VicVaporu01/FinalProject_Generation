@@ -34,6 +34,10 @@ public class MapUIManager : MonoBehaviour
     [SerializeField] private Sprite levelCompletedImage;
     public int[] playableLevelsIndexList;
 
+    [Header("Change Stage Values")]
+    [SerializeField] private float timeToOpenMapStageComplete;
+    [SerializeField] private float timeToCloseMapStageComplete;
+
     private void Awake()
     {
         if (Instance == null)
@@ -142,7 +146,7 @@ public class MapUIManager : MonoBehaviour
 
             actualMapStageIndex++;
 
-            Invoke(nameof(OpenMap), 1.5f);
+            Invoke(nameof(OpenMap), timeToOpenMapStageComplete);
         }
     }
 
@@ -163,7 +167,7 @@ public class MapUIManager : MonoBehaviour
 
             SceneManagerObject.Instance.LoadScene(mapLevel.GetLevelMapIndex());
 
-            Invoke(nameof(CloseMap), 0.5f);
+            Invoke(nameof(CloseMap), timeToCloseMapStageComplete);
         }
     }
 

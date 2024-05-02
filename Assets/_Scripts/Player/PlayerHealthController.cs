@@ -10,18 +10,17 @@ public class PlayerHealthController : MonoBehaviour, IDamage
     [SerializeField] private PlayerStats playerStats;
     private Animator playerAnimator;
     private PlayerMovement playerMovement;
+    private SpriteRenderer theSR;
 
     [Header("Health Values")]
     private int playerCurrentHealth;
-
     public float invincibleLength;
     private float invincibleCounter;
+    private bool isPlayerDeath = false;
 
-    private SpriteRenderer theSR;
-
-    public event EventHandler PlayerDead;
-
+    [Header("Events")]
     [SerializeField] private int healTestValue;
+    public event EventHandler PlayerDead;
 
     void Start()
     {
@@ -69,20 +68,27 @@ public class PlayerHealthController : MonoBehaviour, IDamage
 
     public void TakeDamage(float damage, DamageType damageType)
     {
-        CinemachineMovimientoCamara.Instance.MoverCamara(5, 5, 0.5f);
-
-        playerCurrentHealth = GameManager.Instance.TakeDamage(damage, damageType);
-
-        if (playerCurrentHealth <= 0)
+        if (!isPlayerDeath)
         {
-            Die();
+            CinemachineMovimientoCamara.Instance.MoverCamara(5, 5, 0.5f);
 
-            PlayerDead?.Invoke(this, EventArgs.Empty);
+            playerCurrentHealth = GameManager.Instance.TakeDamage(damage, damageType);
+
+            if (playerCurrentHealth <= 0)
+            {
+                Die();
+
+                PlayerDead?.Invoke(this, EventArgs.Empty);
+            }
         }
     }
 
     private void Die()
     {
+        playerMovement.StopPlayerMovement();
+
         playerMovement.enabled = false;
+
+        isPlayerDeath = true;
     }
 }

@@ -4,24 +4,6 @@ using UnityEngine;
 
 public class ExitPortal : MonoBehaviour
 {
-    [SerializeField] private ParticleSystem hoverIndicator;
-
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            hoverIndicator.Play();
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            hoverIndicator.Stop();
-        }
-    }
-
     public void ExitLevel()
     {
         PlayerMovement playerMovement = FindObjectOfType<PlayerMovement>();
