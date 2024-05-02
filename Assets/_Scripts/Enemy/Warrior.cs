@@ -34,7 +34,7 @@ public class Warrior : Enemy
 
     private void FixedUpdate()
     {
-        if (canAttack && timeToAttack <= 0)
+        if (hasLineOfSight && canAttack && timeToAttack <= 0)
         {
             meleeCombatController.Hit();
             timeToAttack = 1.5f;
