@@ -7,11 +7,15 @@ using UnityEngine;
 public class Ninja : Enemy
 {
     private AIAgent aiAgent;
-
+    private Animator animator;
+    
     [SerializeField] private float attackCooldown = 0;
     [SerializeField] private float attackRateTime = 1.5f;
     [SerializeField] private float maxMeleeCombat = 1.5f;
     [SerializeField] private float maxDistanceCombat = 4.0f;
+    [SerializeField] private float velocity;
+    
+    private int hash_isFacingRight, hash_velocity, hash_attacked;
 
     private void Start()
     {
@@ -19,6 +23,12 @@ public class Ninja : Enemy
         SetPlayer(GameObject.Find("Player"));
 
         aiAgent = GetComponent<AIAgent>();
+        animator = GetComponent<Animator>();
+        
+        //  Getting the hash of the parameters
+        hash_isFacingRight = Animator.StringToHash("isFacingRight");
+        hash_velocity = Animator.StringToHash("velocity");
+        hash_attacked = Animator.StringToHash("attacked");
     }
 
     private void Update()
@@ -28,6 +38,23 @@ public class Ninja : Enemy
 
     private void FixedUpdate()
     {
+        // To know if the enemy is facing right or left
+        if (hasLineOfSight)
+        {
+            Flip();
+        }
+        
+        // To set the animator parameter
+        animator.SetFloat(hash_velocity, velocity);
+        if (isFacingRight)
+        {
+            animator.SetBool(hash_isFacingRight, true);
+        }
+        else
+        {
+            animator.SetBool(hash_isFacingRight, false);
+        }
+        
         if (hasLineOfSight)
         {
             aiAgent.canMove = false;
