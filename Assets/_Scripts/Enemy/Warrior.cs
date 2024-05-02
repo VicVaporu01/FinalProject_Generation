@@ -6,17 +6,26 @@ using UnityEngine.Serialization;
 
 public class Warrior : Enemy
 {
+    private Animator animator;
     [SerializeField] private WeaponController sword;
     [SerializeField] private EnemyMeleeCombat meleeCombatController;
 
     [SerializeField] private float timeToAttack = 1.5f;
+    [SerializeField] private float velocity;
+    private int hash_isFacingRight, hash_velocity, hash_attacked;
 
     private void Start()
     {
+        animator = GetComponent<Animator>();
         // followDistance = 2.0f;
         SetEnemyRB(GetComponent<Rigidbody2D>());
         SetPlayer(GameObject.Find("Player"));
         meleeCombatController = GetComponent<EnemyMeleeCombat>();
+
+        //  Getting the hash of the parameters
+        hash_isFacingRight = Animator.StringToHash("isFacingRight");
+        hash_velocity = Animator.StringToHash("velocity");
+        hash_attacked = Animator.StringToHash("attacked");
     }
 
     private void Update()
@@ -34,7 +43,25 @@ public class Warrior : Enemy
 
     private void FixedUpdate()
     {
-        if (canAttack && timeToAttack <= 0)
+        // To know if the enemy is facing right or left
+        if (hasLineOfSight)
+        {
+            Flip();
+        }
+
+        // To set the animator parameter
+        animator.SetFloat(hash_velocity, velocity);
+        if (isFacingRight)
+        {
+            animator.SetBool(hash_isFacingRight, true);
+        }
+        else
+        {
+            animator.SetBool(hash_isFacingRight, false);
+        }
+
+
+        if (hasLineOfSight && canAttack && timeToAttack <= 0)
         {
             meleeCombatController.Hit();
             timeToAttack = 1.5f;
@@ -55,6 +82,8 @@ public class Warrior : Enemy
             base.GenerateRandomDirection();
             timePatrolling = 5.0f;
         }
+        
+        velocity = enemyRB.velocity.magnitude;
     }
 
     private void OnCollisionStay2D(Collision2D other)
@@ -68,6 +97,7 @@ public class Warrior : Enemy
     public override float CalculateFinalDamage(float damage, DamageType damageType)
     {
         // Debug.Log("Warrior CalculateFinalDamage");
+        animator.SetTrigger(hash_attacked);
         switch (damageType)
         {
             case DamageType.Physical:

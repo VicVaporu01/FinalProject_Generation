@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour, IDamage
 {
-    private Rigidbody2D enemyRB;
+    public Rigidbody2D enemyRB;
     public GameObject player;
     [SerializeField] private GameObject father;
 
@@ -17,7 +17,7 @@ public class Enemy : MonoBehaviour, IDamage
 
     public float followDistance, minDistanceToAttack;
     public float timePatrolling;
-    private Vector2 randomDirection;
+    public Vector2 randomDirection;
     public float xRange, yRange;
 
     public void DetectPlayer(float followDistance, GameObject player)
@@ -48,7 +48,8 @@ public class Enemy : MonoBehaviour, IDamage
         // Or if the player is left and the enemy is facing right, the enemy will flip
         if ((isFacingRight && !isPlayerRight) || (!isFacingRight && isPlayerRight))
         {
-            transform.Rotate(0, 180, 0);
+            // transform.Rotate(0, 180, 0);
+            enemyRB.velocity = Vector2.zero;
             isFacingRight = !isFacingRight;
         }
     }
@@ -88,6 +89,14 @@ public class Enemy : MonoBehaviour, IDamage
     public void GenerateRandomDirection()
     {
         randomDirection = new Vector2(Random.Range(-xRange, xRange), Random.Range(-yRange, yRange)).normalized;
+        if (!hasLineOfSight && randomDirection.x > 0)
+        {
+            isFacingRight = true;
+        }
+        else if (!hasLineOfSight && randomDirection.x < 0)
+        {
+            isFacingRight = false;
+        }
     }
 
     public void TakeDamage(float damage, DamageType damageType)
