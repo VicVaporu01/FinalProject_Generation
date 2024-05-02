@@ -9,6 +9,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private PlayerInput playerInput;
     private InputAction moveAction;
     private InputAction attack;
+    private InputAction pauseAction;
+    private InputAction backAction;
 
     [Header("References")]
     [SerializeField] private PlayerStats playerStats;
@@ -37,17 +39,24 @@ public class PlayerMovement : MonoBehaviour
     {
         moveAction = playerInput.actions["Move"];
         attack = playerInput.actions["Attack"];
+        pauseAction = playerInput.actions["Pause"];
+        backAction = playerInput.actions["Back"];
+
         anims = GetComponent<Animator>();
     }
 
     private void OnEnable()
     {
         playerStats.OnStatsChanged += ChangeMovementSpeed;
+        pauseAction.started += PauseUnpause;
+        backAction.started += CloseMap;
     }
 
     private void OnDisable()
     {
         playerStats.OnStatsChanged -= ChangeMovementSpeed;
+        pauseAction.started -= PauseUnpause;
+        backAction.started -= CloseMap;
     }
 
     private void Start()
@@ -147,6 +156,27 @@ public class PlayerMovement : MonoBehaviour
             }
         }
         */
+    }
+
+
+    private void CloseMap(InputAction.CallbackContext context)
+    {
+        PauseMenu pauseMenu = FindObjectOfType<PauseMenu>();
+
+        if (pauseMenu != null)
+        {
+            pauseMenu.CloseMap();
+        }
+    }
+
+    private void PauseUnpause(InputAction.CallbackContext context)
+    {
+        PauseMenu pauseMenu = FindObjectOfType<PauseMenu>();
+
+        if (pauseMenu != null)
+        {
+            pauseMenu.PauseUnpause();
+        }
     }
 
     private void OnDrawGizmos()
