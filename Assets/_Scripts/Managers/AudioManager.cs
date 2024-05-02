@@ -20,6 +20,7 @@ public class AudioManager : MonoBehaviour
     [Header("Music Volume Changes")]
     [SerializeField] private float timeToChangeMusic;
     [SerializeField] private float waitTimeToChangeMusicClip;
+    public bool isAudioMuted = false;
 
     private void Awake()
     {
@@ -116,6 +117,15 @@ public class AudioManager : MonoBehaviour
             {
                 musicAudioSource.volume = value;
             });
+    }
+
+    public void ChangeMuteState()
+    {
+        isAudioMuted = !isAudioMuted;
+
+        musicAudioSource.mute = isAudioMuted;
+
+        soundFXAudioSource.mute = isAudioMuted;
     }
 
 }

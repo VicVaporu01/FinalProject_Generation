@@ -29,11 +29,15 @@ public class MenuGameOver : MonoBehaviour
 
     private void MenuOn(object sender, EventArgs e)
     {
+        PauseMenu.canPause = false;
+
         StartCoroutine(StartGameOverMenuAnimation());
     }
 
     public void MainMenu()
     {
+        PauseMenu.canPause = true;
+
         SceneManagerObject.Instance.LoadScene(0);
     }
 

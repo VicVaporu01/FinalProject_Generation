@@ -4,67 +4,70 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
+using System;
 
 public class PauseMenu : MonoBehaviour
 {
-    public static PauseMenu instance;
-
-    public string mainMenu;
-
+    [Header("References")]
     public GameObject pauseScreen;
     public GameObject pauseOverlay;
     public GameObject statsPanel;
+    [SerializeField] private GameObject optionsMenuObject;
+    [SerializeField] private GameObject resumeButtonObject;
+    [SerializeField] private GameObject mapButtonObject;
+    [SerializeField] private GameObject backOptionsMenuObject;
 
+    [Header("Stats Panel View")]
     public List<Image> speedSprites;
     public List<Image> damageSprites;
     public List<Image> maxLifeSprites;
-    public List<Image> magicDamageSprites; 
-    public List<Image> bulletAmountSprites; 
+    public List<Image> magicDamageSprites;
+    public List<Image> bulletAmountSprites;
 
+    [Header("Sprites Stats")]
     public Sprite spriteFull;
     public Sprite spriteHalf;
-    public Sprite spriteEmpty; 
+    public Sprite spriteEmpty;
 
-
-    public bool isPaused;
-
-    private string currentScene;
-
-    void Awake()
-    {
-        instance = this;
-    }
+    public bool isPaused = false;
+    public static bool canPause = true;
+    public int mainMenuIndex;
 
     void Start()
     {
-        currentScene = SceneManager.GetActiveScene().name;
         statsPanel.SetActive(false);
     }
 
-    void Update()
+    public void CloseMap()
     {
-        if (Input.GetButtonDown("Menu"))
+        if (isPaused && MapUIManager.Instance.isMapOpen)
         {
-            PauseUnpause();
+            MapUIManager.Instance.CloseMap();
+
+            EventSystem.current.SetSelectedGameObject(mapButtonObject);
         }
     }
 
     public void PauseUnpause()
     {
-        isPaused = !isPaused;
-        pauseScreen.SetActive(isPaused);
-        pauseOverlay.SetActive(isPaused);
-        Time.timeScale = isPaused ? 0f : 1f;
-
-        TogglePlayerComponents(!isPaused);
-
-        if (isPaused)
+        if (canPause)
         {
-            MostrarEstadisticas();
-        }
-        else
-        {
-            statsPanel.SetActive(false);
+            isPaused = !isPaused;
+            pauseScreen.SetActive(isPaused);
+            pauseOverlay.SetActive(isPaused);
+            Time.timeScale = isPaused ? 0f : 1f;
+
+            if (isPaused)
+            {
+                MostrarEstadisticas();
+                EventSystem.current.SetSelectedGameObject(resumeButtonObject);
+            }
+            else
+            {
+                statsPanel.SetActive(false);
+            }
         }
     }
 
@@ -94,8 +97,9 @@ public class PauseMenu : MonoBehaviour
 
     public void MainMenu()
     {
-        SceneManager.LoadScene(mainMenu);
         Time.timeScale = 1f;
+
+        SceneManagerObject.Instance.LoadScene(mainMenuIndex);
     }
 
     private void MostrarEstadisticas()
@@ -107,8 +111,8 @@ public class PauseMenu : MonoBehaviour
             UpdateStatSprites(speedSprites, playerStats.speedStats);
             UpdateStatSprites(damageSprites, playerStats.damangeStats);
             UpdateStatSprites(maxLifeSprites, playerStats.maxLifeStats);
-            UpdateStatSprites(magicDamageSprites, playerStats.magicDamageStats); // Mostrar estadística de magicDamage
-            UpdateStatSprites(bulletAmountSprites, playerStats.bulletAmountStats); // Mostrar estadística de bulletAmount
+            UpdateStatSprites(magicDamageSprites, playerStats.magicDamageStats); // Mostrar estadï¿½stica de magicDamage
+            UpdateStatSprites(bulletAmountSprites, playerStats.bulletAmountStats); // Mostrar estadï¿½stica de bulletAmount
 
             statsPanel.SetActive(true);
         }
@@ -131,8 +135,25 @@ public class PauseMenu : MonoBehaviour
             }
             else
             {
-                statSprites[i].sprite = spriteEmpty; // Mostrar un sprite vacío
+                statSprites[i].sprite = spriteEmpty; // Mostrar un sprite vacï¿½o
             }
+        }
+    }
+
+    public void OpenOptionsMenu()
+    {
+        pauseScreen.SetActive(false);
+
+        optionsMenuObject.SetActive(true);
+
+        EventSystem.current.SetSelectedGameObject(backOptionsMenuObject);
+    }
+
+    public void OpenMap()
+    {
+        if (MapUIManager.Instance != null)
+        {
+            MapUIManager.Instance.OpenMap();
         }
     }
 
