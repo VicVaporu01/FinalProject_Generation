@@ -21,6 +21,14 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float minMoveSpeed;
     [SerializeField] private float maxMoveSpeed;
 
+    [Header("Steps Sounds")]
+    [SerializeField] private AudioClip[] dirtStepSounds;
+    [SerializeField] private AudioClip[] waterStepSounds;
+    [SerializeField] private AudioClip[] grassStepSounds;
+    [SerializeField] private Vector2 boxStepDimentions;
+    [SerializeField] private Vector3 boxPositionOffset;
+    [SerializeField] private LayerMask stepOnLayers;
+
     Animator anims;
 
     public float MovementSpeed { get => movementSpeed; set => movementSpeed = value; }
@@ -102,5 +110,49 @@ public class PlayerMovement : MonoBehaviour
     public Vector2 GetLasMovement()
     {
         return lastMoveDirection;
+    }
+
+    public void ChooseStepSoundEffect()
+    {
+        /*
+        Collider2D[] objectsTouched = Physics2D.OverlapBoxAll(transform.position + boxPositionOffset, boxStepDimentions, 0f, stepOnLayers, 0f, 0f);
+
+        foreach (Collider2D objectTouched in objectsTouched)
+        {
+            if (objectTouched.gameObject.layer == LayerMask.NameToLayer("Water"))
+            {
+                int randomWaterStepSoundIndex = Random.Range(0, waterStepSounds.Length);
+
+                AudioManager.Instance.PlaySoundEffect(waterStepSounds[randomWaterStepSoundIndex]);
+
+                return;
+            }
+
+            if (objectTouched.gameObject.layer == LayerMask.NameToLayer("Grass"))
+            {
+                int randomGrassStepSound = Random.Range(0, grassStepSounds.Length);
+
+                AudioManager.Instance.PlaySoundEffect(grassStepSounds[randomGrassStepSound]);
+
+                return;
+            }
+
+            if (objectTouched.gameObject.layer == LayerMask.NameToLayer("Dirt"))
+            {
+                int randomDirtStepSound = Random.Range(0, dirtStepSounds.Length);
+
+                AudioManager.Instance.PlaySoundEffect(dirtStepSounds[randomDirtStepSound]);
+
+                return;
+            }
+        }
+        */
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+
+        Gizmos.DrawWireCube(transform.position + boxPositionOffset, boxStepDimentions);
     }
 }
