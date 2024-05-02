@@ -17,6 +17,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Rigidbody2D rb2D;
     [SerializeField] private float movementSpeed;
     [SerializeField] private Vector2 moveDirection;
+    [SerializeField] private Vector2 lastMoveDirection;
     [SerializeField] private float minMoveSpeed;
     [SerializeField] private float maxMoveSpeed;
 
@@ -41,6 +42,11 @@ public class PlayerMovement : MonoBehaviour
         playerStats.OnStatsChanged -= ChangeMovementSpeed;
     }
 
+    private void Start()
+    {
+        movementSpeed = playerStats.GetNewStatValue(GameManager.Instance.speedStats, maxMoveSpeed, minMoveSpeed);
+    }
+
     private void ChangeMovementSpeed(int newSpeed, int newDamage, int newMaxLife, int newMagicDamage, int newBulletAmountStats)
     {
         movementSpeed = playerStats.GetNewStatValue(newSpeed, maxMoveSpeed, minMoveSpeed);
@@ -56,6 +62,7 @@ public class PlayerMovement : MonoBehaviour
         {
             anims.SetFloat("LastMovX", moveDirection.x);
             anims.SetFloat("LastMovY", moveDirection.y);
+            lastMoveDirection = new Vector2(moveDirection.x, moveDirection.y);
         }
         rb2D.velocity = moveDirection * movementSpeed;
         if (attack.WasPressedThisFrame() && attack.IsPressed())
@@ -85,5 +92,15 @@ public class PlayerMovement : MonoBehaviour
     public void RangeAttack()
     {
         anims.SetTrigger("RangeAttack");
+    }
+
+    public void StopPlayerMovement()
+    {
+        rb2D.velocity = new Vector2(0, 0);
+    }
+
+    public Vector2 GetLasMovement()
+    {
+        return lastMoveDirection;
     }
 }

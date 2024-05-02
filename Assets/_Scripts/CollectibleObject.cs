@@ -23,6 +23,7 @@ public class CollectibleObject : MonoBehaviour
 
     [Header("References")]
     [SerializeField] private GameObject shadowGameObject;
+    [SerializeField] private GameObject lightGameObject;
     private SpriteRenderer spriteRenderer;
 
     [Header("Reward Object")]
@@ -40,6 +41,8 @@ public class CollectibleObject : MonoBehaviour
         spriteRenderer.enabled = true;
 
         shadowGameObject.SetActive(true);
+
+        lightGameObject.SetActive(true);
     }
 
 
