@@ -2,36 +2,67 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class OptionMenu : MonoBehaviour
 {
-    [SerializeField] private AudioMixer audioMixer;
-    public Toggle toggleCameraShake;
+    [Header("Mute Sound Button")]
+    [SerializeField] private Sprite mutedSoundSprite;
+    [SerializeField] private Sprite unMutedSoundSprite;
+    [SerializeField] private Image muteSoundImage;
+
+    [Header("References")]
+    [SerializeField] private GameObject optionsButtonGameObject;
+    [SerializeField] private GameObject optionsMenuGameObject;
+    [SerializeField] private GameObject pauseMenuGameObject;
 
     private void Start()
     {
-        // Asocia el método ActivarDesactivarCameraShake al evento onValueChanged del Toggle
-        toggleCameraShake.onValueChanged.AddListener(ActivarDesactivarCameraShake);
+        CheckAudioState();
     }
 
-    public void CambiarVolumenMusic(float volumen)
+    public void ChangeMasterVolume(float masterVolume)
     {
-        audioMixer.SetFloat("MusicVolume", volumen);
+        AudioManager.Instance.ChangeMasterVolume(masterVolume);
     }
 
-    public void CambiarVolumenSFX(float volumen)
+    public void ChangeMusicVolume(float musicVolume)
     {
-        audioMixer.SetFloat("SFXVolume", volumen);
+        AudioManager.Instance.ChangeMusicVolume(musicVolume);
     }
 
-    public void ActivarDesactivarCameraShake(bool activar)
+    public void ChangeSoundFXVolume(float soundFXVolume)
     {
-        // Lógica para activar o desactivar la cámara shake
-        Cinemachine.CinemachineFreeLook[] freeLookCameras = FindObjectsOfType<Cinemachine.CinemachineFreeLook>();
-        foreach (var camera in freeLookCameras)
+        AudioManager.Instance.ChangeSoundEffectVolume(soundFXVolume);
+    }
+
+    public void MuteAudio()
+    {
+        AudioManager.Instance.ChangeMuteState();
+
+        CheckAudioState();
+    }
+
+    private void CheckAudioState()
+    {
+        if (AudioManager.Instance.isAudioMuted)
         {
-            camera.m_RecenterToTargetHeading.m_enabled = activar;
+            muteSoundImage.sprite = mutedSoundSprite;
+        }
+        else
+        {
+            muteSoundImage.sprite = unMutedSoundSprite;
         }
     }
+
+    public void BackToPauseMenuButton()
+    {
+        optionsMenuGameObject.SetActive(false);
+
+        pauseMenuGameObject.SetActive(true);
+
+        EventSystem.current.SetSelectedGameObject(optionsButtonGameObject);
+    }
+
 }

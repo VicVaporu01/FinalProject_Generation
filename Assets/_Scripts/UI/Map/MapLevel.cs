@@ -67,7 +67,7 @@ public class MapLevel : MonoBehaviour
 
     private void SelectStage()
     {
-        if (canSelectLevel)
+        if (canSelectLevel && !MapUIManager.Instance.isPlayingALevel)
         {
             MapUIManager.Instance.SetActualMapLevelToPlay(this);
 
