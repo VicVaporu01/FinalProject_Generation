@@ -41,6 +41,12 @@ public class EnemySpawnManager : MonoBehaviour
                 enemiesMaxAmount = 5;
                 spawnRate = 1.0f;
                 break;
+            case MapLevelTypeEnum.ShopLevel:
+                Debug.Log("Shop Level");
+                enemiesMaxAmount = 0;
+                spawnRate = 100.0f;
+                SpawnShopBehaviour();
+                break;
             default:
                 Debug.Log("Default Level");
                 enemiesMaxAmount = 2;
@@ -86,6 +92,16 @@ public class EnemySpawnManager : MonoBehaviour
             {
                 FindObjectOfType<ObjectSpawnManager>().SpawnRewardObjects();
             }
+        }
+    }
+
+    private void SpawnShopBehaviour()
+    {
+        ShopSpawnManager shopSpawnManager = FindObjectOfType<ShopSpawnManager>();
+
+        if (shopSpawnManager != null)
+        {
+            shopSpawnManager.SpawnShop();
         }
     }
 }
