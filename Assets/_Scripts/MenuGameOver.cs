@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System;
+using UnityEngine.EventSystems;
 
 public class MenuGameOver : MonoBehaviour
 {
@@ -46,7 +47,10 @@ public class MenuGameOver : MonoBehaviour
         {
             LeanTween.alphaCanvas(youAreDeadImage, 1f, timeToChangeImageAlpha).setOnComplete(() =>
             {
-                LeanTween.alphaCanvas(mainMenuButtonObject, 1f, timeToChangeButtonAlpha);
+                LeanTween.alphaCanvas(mainMenuButtonObject, 1f, timeToChangeButtonAlpha).setOnComplete(() =>
+                {
+                    EventSystem.current.SetSelectedGameObject(mainMenuButtonObject.gameObject);
+                });
             });
         }
         );
