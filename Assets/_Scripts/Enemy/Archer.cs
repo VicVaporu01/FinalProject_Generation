@@ -15,8 +15,8 @@ public class Archer : Enemy
     [SerializeField] private float scapeDistance = 3.0f;
 
     [SerializeField] private float velocity;
-    
-    private int hash_isFacingRight, hash_velocity, hash_attacked;
+
+    private int hash_isFacingRight, hash_velocity, hash_attacked, hash_hit;
 
     private void Start()
     {
@@ -25,11 +25,12 @@ public class Archer : Enemy
         SetPlayer(GameObject.Find("Player"));
 
         distanceCombatController = GetComponentInChildren<EnemyDistanceCombat>();
-        
+
         //  Getting the hash of the parameters
         hash_isFacingRight = Animator.StringToHash("isFacingRight");
         hash_velocity = Animator.StringToHash("velocity");
         hash_attacked = Animator.StringToHash("attacked");
+        hash_hit = Animator.StringToHash("hit");
     }
 
     private void Update()
@@ -49,7 +50,7 @@ public class Archer : Enemy
         {
             Flip();
         }
-        
+
         // To set the animator parameter
         animator.SetFloat(hash_velocity, velocity);
         if (isFacingRight)
@@ -60,7 +61,7 @@ public class Archer : Enemy
         {
             animator.SetBool(hash_isFacingRight, false);
         }
-        
+
         CalculateApproach(minDistanceToAttack);
         // To patrol
         if (!hasLineOfSight && timePatrolling >= 0)
@@ -74,15 +75,18 @@ public class Archer : Enemy
             base.GenerateRandomDirection();
             timePatrolling = 5.0f;
         }
-        
+
         // If the enemy can attack, has line of sight and the attack cooldown is 0, then attack
         if (canAttack && hasLineOfSight && attackCooldown <= 0)
         {
+            GetEnemyRB().velocity = Vector2.zero;
+            animator.SetBool(hash_hit, true);
             distanceCombatController.Shoot();
             attackCooldown = attackRateTime;
         }
         else if (attackCooldown > 0)
         {
+            animator.SetBool(hash_hit, false);
             attackCooldown -= Time.deltaTime;
         }
 
@@ -97,7 +101,7 @@ public class Archer : Enemy
         {
             attackRateTime = 1.5f;
         }
-        
+
         velocity = enemyRB.velocity.magnitude;
     }
 
@@ -108,7 +112,7 @@ public class Archer : Enemy
             GenerateRandomDirection();
         }
     }
-    
+
     public override float CalculateFinalDamage(float damage, DamageType damageType)
     {
         // Debug.Log("Archer CalculateFinalDamage");
