@@ -86,15 +86,8 @@ public class PlayerMovement : MonoBehaviour
         {
             MeleeAttack();
         }
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            Damaged();
-        }
-        if (Input.GetKeyDown(KeyCode.O))
-        {
-            RangeAttack();
-        }
     }
+    
     public void MeleeAttack()
     {
         int attackAnim = Random.Range(0, 3);
