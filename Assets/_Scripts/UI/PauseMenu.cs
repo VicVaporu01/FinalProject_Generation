@@ -92,12 +92,6 @@ public class PauseMenu : MonoBehaviour
         }
     }
 
-    public void RestartLevel()
-    {
-        SceneManager.LoadScene(currentScene);
-        Time.timeScale = 1f;
-    }
-
     public void MainMenu()
     {
         SceneManager.LoadScene(mainMenu);
