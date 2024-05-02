@@ -12,7 +12,7 @@ public class Warrior : Enemy
 
     [SerializeField] private float timeToAttack = 1.5f;
     [SerializeField] private float velocity;
-    private int hash_isFacingRight, hash_velocity, hash_attacked;
+    private int hash_isFacingRight, hash_velocity, hash_attacked, hash_hit;
 
     private void Start()
     {
@@ -26,6 +26,7 @@ public class Warrior : Enemy
         hash_isFacingRight = Animator.StringToHash("isFacingRight");
         hash_velocity = Animator.StringToHash("velocity");
         hash_attacked = Animator.StringToHash("attacked");
+        hash_hit = Animator.StringToHash("hit");
     }
 
     private void Update()
@@ -63,11 +64,14 @@ public class Warrior : Enemy
 
         if (hasLineOfSight && canAttack && timeToAttack <= 0)
         {
+            GetEnemyRB().velocity = Vector2.zero;
+            animator.SetBool(hash_hit, true);
             meleeCombatController.Hit();
             timeToAttack = 1.5f;
         }
         else if (timeToAttack >= 0)
         {
+            animator.SetBool(hash_hit, false);
             timeToAttack -= Time.deltaTime;
         }
 
@@ -82,7 +86,7 @@ public class Warrior : Enemy
             base.GenerateRandomDirection();
             timePatrolling = 5.0f;
         }
-        
+
         velocity = enemyRB.velocity.magnitude;
     }
 
