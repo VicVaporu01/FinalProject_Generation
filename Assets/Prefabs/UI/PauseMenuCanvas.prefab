@@ -3040,6 +3040,7 @@ GameObject:
   - component: {fileID: 3680665110636569313}
   - component: {fileID: 3680665110636569326}
   - component: {fileID: 3680665110636569327}
+  - component: {fileID: 493865454352926680}
   m_Layer: 5
   m_Name: PauseMenuCanvas
   m_TagString: Untagged
@@ -3088,6 +3089,7 @@ MonoBehaviour:
   resumeButtonObject: {fileID: 159819883424217215}
   mapButtonObject: {fileID: 6158699074605494676}
   backOptionsMenuObject: {fileID: 3178239368538984425}
+  pauseMenuCanvasGroup: {fileID: 493865454352926680}
   speedSprites:
   - {fileID: 3680665111522333194}
   - {fileID: 3680665111145231876}
@@ -3116,6 +3118,7 @@ MonoBehaviour:
   spriteFull: {fileID: -172368896, guid: 9e51ec03726beae4297d2a5dfee1dcc8, type: 3}
   spriteHalf: {fileID: 1606514252, guid: 9e51ec03726beae4297d2a5dfee1dcc8, type: 3}
   spriteEmpty: {fileID: -208055091, guid: 9e51ec03726beae4297d2a5dfee1dcc8, type: 3}
+  isPaused: 0
   mainMenuIndex: 0
 --- !u!114 &3680665110636569317
 MonoBehaviour:
@@ -3197,6 +3200,18 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!225 &493865454352926680
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3680665110636569324}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &3680665110746373402
 GameObject:
   m_ObjectHideFlags: 0
