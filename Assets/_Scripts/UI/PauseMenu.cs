@@ -15,12 +15,16 @@ public class PauseMenu : MonoBehaviour
     public GameObject pauseOverlay;
     public GameObject statsPanel;
 
-    public List<Image> speedSprites; // Lista de sprites para la velocidad
-    public List<Image> damageSprites; // Lista de sprites para el daño
-    public List<Image> maxLifeSprites; // Lista de sprites para la vida máxima
+    public List<Image> speedSprites;
+    public List<Image> damageSprites;
+    public List<Image> maxLifeSprites;
+    public List<Image> magicDamageSprites; 
+    public List<Image> bulletAmountSprites; 
 
-    public Sprite spriteFull; // Sprite para representar una estadística completa
-    public Sprite spriteHalf; // Sprite para representar una estadística a la mitad
+    public Sprite spriteFull;
+    public Sprite spriteHalf;
+    public Sprite spriteEmpty; 
+
 
     public bool isPaused;
 
@@ -34,7 +38,7 @@ public class PauseMenu : MonoBehaviour
     void Start()
     {
         currentScene = SceneManager.GetActiveScene().name;
-        statsPanel.SetActive(false); // Ocultar el panel de estadísticas al inicio
+        statsPanel.SetActive(false);
     }
 
     void Update()
@@ -56,11 +60,11 @@ public class PauseMenu : MonoBehaviour
 
         if (isPaused)
         {
-            MostrarEstadisticas(); // Mostrar las estadísticas al pausar
+            MostrarEstadisticas();
         }
         else
         {
-            statsPanel.SetActive(false); // Ocultar el panel de estadísticas al despausar
+            statsPanel.SetActive(false);
         }
     }
 
@@ -102,17 +106,17 @@ public class PauseMenu : MonoBehaviour
 
     private void MostrarEstadisticas()
     {
-        // Obtener el componente PlayerStats
         PlayerStats playerStats = FindObjectOfType<PlayerStats>();
 
         if (playerStats != null)
         {
-            // Mostrar las estadísticas en el panel de estadísticas
             UpdateStatSprites(speedSprites, playerStats.speedStats);
             UpdateStatSprites(damageSprites, playerStats.damangeStats);
             UpdateStatSprites(maxLifeSprites, playerStats.maxLifeStats);
+            UpdateStatSprites(magicDamageSprites, playerStats.magicDamageStats); // Mostrar estadística de magicDamage
+            UpdateStatSprites(bulletAmountSprites, playerStats.bulletAmountStats); // Mostrar estadística de bulletAmount
 
-            statsPanel.SetActive(true); // Mostrar el panel de estadísticas
+            statsPanel.SetActive(true);
         }
     }
 
@@ -133,8 +137,9 @@ public class PauseMenu : MonoBehaviour
             }
             else
             {
-                statSprites[i].sprite = null; // Sprite vacío
+                statSprites[i].sprite = spriteEmpty; // Mostrar un sprite vacío
             }
         }
     }
+
 }

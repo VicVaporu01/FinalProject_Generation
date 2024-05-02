@@ -81,11 +81,12 @@ public class PlayerStats : MonoBehaviour
         magicDamageStats = EvaluateStatistics(newMagicDamage, magicDamageStats);
         bulletAmountStats = EvaluateStatistics(newBulletAmountStats, bulletAmountStats);
 
-        // Notificar al PauseMenu sobre los cambios en las estad�sticas
+        // Notificar al PauseMenu sobre los cambios en las estadísticas
         OnStatsChanged?.Invoke(speedStats, damangeStats, maxLifeStats, magicDamageStats, bulletAmountStats);
 
         GameManager.Instance.ChangeStatsValues(speedStats, damangeStats, maxLifeStats, magicDamageStats, bulletAmountStats);
     }
+
 
     private int EvaluateStatistics(int newValue, int changeValue)
     {
