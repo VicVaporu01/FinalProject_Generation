@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem.XR;
+using Random = UnityEngine.Random;
 
 public class PlayerHealthController : MonoBehaviour, IDamage
 {
@@ -21,6 +22,10 @@ public class PlayerHealthController : MonoBehaviour, IDamage
     [Header("Events")]
     [SerializeField] private int healTestValue;
     public event EventHandler PlayerDead;
+
+    [Header("Sounds")]
+    [SerializeField] private AudioClip[] takeDamageSounds;
+    [SerializeField] private AudioClip playerDeadSound;
 
     void Start()
     {
@@ -82,6 +87,8 @@ public class PlayerHealthController : MonoBehaviour, IDamage
             }
             else
             {
+                AudioManager.Instance.PlaySoundEffect(takeDamageSounds[Random.Range(0, takeDamageSounds.Length)]);
+
                 playerAnimator.SetTrigger("Damaged");
             }
         }
@@ -89,6 +96,8 @@ public class PlayerHealthController : MonoBehaviour, IDamage
 
     private void Die()
     {
+        AudioManager.Instance.PlaySoundEffect(playerDeadSound);
+
         playerMovement.StopPlayerMovement();
 
         playerMovement.enabled = false;

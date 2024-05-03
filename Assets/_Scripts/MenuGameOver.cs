@@ -20,6 +20,9 @@ public class MenuGameOver : MonoBehaviour
     [SerializeField] private float timeToChangeImageAlpha;
     [SerializeField] private float timeToChangeButtonAlpha;
 
+    [Header("Sounds")]
+    [SerializeField] private AudioClip gameOverSound;
+
 
     private void Start()
     {
@@ -31,12 +34,18 @@ public class MenuGameOver : MonoBehaviour
     {
         PauseMenu.canPause = false;
 
+        AudioManager.Instance.PlaySoundEffect(gameOverSound);
+
+        AudioManager.Instance.StopMusic();
+
         StartCoroutine(StartGameOverMenuAnimation());
     }
 
     public void MainMenu()
     {
         PauseMenu.canPause = true;
+
+        AudioManager.Instance.ClickForwardSound();
 
         SceneManagerObject.Instance.LoadScene(0);
     }

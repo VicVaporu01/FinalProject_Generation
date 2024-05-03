@@ -38,21 +38,29 @@ public class OptionsMenuMainScreen : MonoBehaviour
 
     public void ChangeMasterVolume(float masterVolume)
     {
+        AudioManager.Instance.ClickForwardSound();
+
         AudioManager.Instance.ChangeMasterVolume(masterVolume);
     }
 
     public void ChangeMusicVolume(float musicVolume)
     {
+        AudioManager.Instance.ClickForwardSound();
+
         AudioManager.Instance.ChangeMusicVolume(musicVolume);
     }
 
     public void ChangeSoundFXVolume(float soundFXVolume)
     {
+        AudioManager.Instance.ClickForwardSound();
+
         AudioManager.Instance.ChangeSoundEffectVolume(soundFXVolume);
     }
 
     public void MuteAudio()
     {
+        AudioManager.Instance.ClickForwardSound();
+
         AudioManager.Instance.ChangeMuteState();
 
         CheckAudioState();
@@ -72,6 +80,8 @@ public class OptionsMenuMainScreen : MonoBehaviour
 
     public void BackToMainMenu()
     {
+        AudioManager.Instance.ClickBackwardsSound();
+
         optionsMenuGameObject.SetActive(false);
 
         mainMenuGameObject.SetActive(true);

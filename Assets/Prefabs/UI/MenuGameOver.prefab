@@ -445,6 +445,7 @@ MonoBehaviour:
   timeToChangeBackgroundAlpha: 2
   timeToChangeImageAlpha: 1
   timeToChangeButtonAlpha: 1
+  gameOverSound: {fileID: 8300000, guid: dc55b1ac6c062694abbde6a253a9249e, type: 3}
 --- !u!1 &8699078845236332483
 GameObject:
   m_ObjectHideFlags: 0

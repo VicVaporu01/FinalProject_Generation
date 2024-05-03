@@ -22,16 +22,22 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private float waitTimeToChangeMusicClip;
     public bool isAudioMuted = false;
 
+    [Header("Sounds")]
+    [SerializeField] private AudioClip clickForward;
+    [SerializeField] private AudioClip clickBackwards;
+    [SerializeField] private AudioClip enterLevelSound;
+    [SerializeField] private AudioClip spawnObjectsSound;
+
     private void Awake()
     {
-        if (Instance == null)
+        if (Instance != null && Instance != this)
         {
-            Instance = this;
-            DontDestroyOnLoad(this);
+            Destroy(gameObject);
         }
         else
         {
-            Destroy(gameObject);
+            Instance = this;
+            DontDestroyOnLoad(this);
         }
     }
 
@@ -126,6 +132,26 @@ public class AudioManager : MonoBehaviour
         musicAudioSource.mute = isAudioMuted;
 
         soundFXAudioSource.mute = isAudioMuted;
+    }
+
+    public void ClickForwardSound()
+    {
+        PlaySoundEffect(clickForward);
+    }
+
+    public void ClickBackwardsSound()
+    {
+        PlaySoundEffect(clickBackwards);
+    }
+
+    public void EnterLevelSound()
+    {
+        PlaySoundEffect(enterLevelSound);
+    }
+
+    public void SpawnObjectsSound()
+    {
+        PlaySoundEffect(spawnObjectsSound);
     }
 
 }
