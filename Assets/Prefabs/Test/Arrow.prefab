@@ -122,6 +122,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletVelocity: 0
   lifeTime: 3
+  bulletHit: {fileID: 8300000, guid: 4ed8c4717049c384ca3c8f2fa22f14f6, type: 3}
 --- !u!61 &6052778306751560732
 BoxCollider2D:
   m_ObjectHideFlags: 0

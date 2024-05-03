@@ -26,6 +26,10 @@ public class Enemy : MonoBehaviour, IDamage
     [SerializeField] private GameObject appleColectableObject;
     [SerializeField] private float spawnAppleProbability = 10;
 
+    [Header("Sound Effects")]
+    [SerializeField] private AudioClip[] getHitSounds;
+    [SerializeField] private AudioClip[] deathSounds;
+
     public void DetectPlayer(float followDistance, GameObject player)
     {
         // Just to see the ray
@@ -134,7 +138,13 @@ public class Enemy : MonoBehaviour, IDamage
         health -= damage;
         if (health <= 0)
         {
+            AudioManager.Instance.PlaySoundEffect(deathSounds[Random.Range(0, deathSounds.Length)]);
+
             Die();
+        }
+        else
+        {
+            AudioManager.Instance.PlaySoundEffect(getHitSounds[Random.Range(0, getHitSounds.Length)]);
         }
     }
 

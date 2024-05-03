@@ -25,10 +25,6 @@ public class PlayerStats : MonoBehaviour
 
     public event Action<int, int, int, int, int> OnStatsChanged;
 
-    [Header("Sounds")]
-    [SerializeField] private AudioClip pickUpSound;
-    [SerializeField] private AudioClip enterPortalSound;
-
     private void Awake()
     {
         interactAction = playerInput.actions["Interact"];
@@ -67,15 +63,11 @@ public class PlayerStats : MonoBehaviour
         {
             if (item.transform.gameObject.TryGetComponent(out CollectibleObject collectibleObject))
             {
-                AudioManager.Instance.PlaySoundEffect(pickUpSound);
-
                 collectibleObject.Collect();
             }
 
             if (item.transform.gameObject.TryGetComponent(out ExitPortal exitPortal))
             {
-                AudioManager.Instance.PlaySoundEffect(enterPortalSound);
-
                 exitPortal.ExitLevel();
             }
         }

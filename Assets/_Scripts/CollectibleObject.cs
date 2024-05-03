@@ -37,6 +37,9 @@ public class CollectibleObject : MonoBehaviour
     [SerializeField] private int healAmount;
     [SerializeField] private bool isAnApple = false;
 
+    [Header("Sounds")]
+    [SerializeField] private AudioClip pickUpSound;
+
     private void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -116,6 +119,8 @@ public class CollectibleObject : MonoBehaviour
                 playerHealthController.HealPlayer(healAmount);
             }
         }
+
+        AudioManager.Instance.PlaySoundEffect(pickUpSound);
 
         Destroy(gameObject);
     }

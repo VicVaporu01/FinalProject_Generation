@@ -47,6 +47,8 @@ public class PauseMenu : MonoBehaviour
         {
             MapUIManager.Instance.CloseMap();
 
+            AudioManager.Instance.ClickBackwardsSound();
+
             EventSystem.current.SetSelectedGameObject(mapButtonObject);
 
             pauseMenuCanvasGroup.interactable = true;
@@ -66,9 +68,11 @@ public class PauseMenu : MonoBehaviour
             {
                 MostrarEstadisticas();
                 EventSystem.current.SetSelectedGameObject(resumeButtonObject);
+                AudioManager.Instance.ClickBackwardsSound();
             }
             else
             {
+                AudioManager.Instance.ClickForwardSound();
                 statsPanel.SetActive(false);
             }
         }
@@ -103,6 +107,8 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 1f;
 
         SceneManagerObject.Instance.LoadScene(mainMenuIndex);
+
+        AudioManager.Instance.ClickBackwardsSound();
     }
 
     private void MostrarEstadisticas()
@@ -150,6 +156,8 @@ public class PauseMenu : MonoBehaviour
         optionsMenuObject.SetActive(true);
 
         EventSystem.current.SetSelectedGameObject(backOptionsMenuObject);
+
+        AudioManager.Instance.ClickForwardSound();
     }
 
     public void OpenMap()
@@ -159,6 +167,8 @@ public class PauseMenu : MonoBehaviour
             pauseMenuCanvasGroup.interactable = false;
 
             MapUIManager.Instance.OpenMap();
+
+            AudioManager.Instance.ClickForwardSound();
         }
     }
 

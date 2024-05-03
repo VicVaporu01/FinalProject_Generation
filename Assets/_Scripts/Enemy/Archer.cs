@@ -18,6 +18,9 @@ public class Archer : Enemy
 
     private int hash_isFacingRight, hash_velocity, hash_attacked, hash_hit;
 
+    [Header("Sound Effects")]
+    [SerializeField] private AudioClip shootArrow;
+
     private void Start()
     {
         animator = GetComponent<Animator>();
@@ -82,6 +85,7 @@ public class Archer : Enemy
             animator.SetBool(hash_hit, true);
             distanceCombatController.Shoot("Archer");
             attackCooldown = attackRateTime;
+            AudioManager.Instance.PlaySoundEffect(shootArrow);
         }
         else if (attackCooldown > 0)
         {

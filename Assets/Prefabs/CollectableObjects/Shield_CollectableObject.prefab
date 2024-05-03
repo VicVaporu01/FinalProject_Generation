@@ -177,6 +177,9 @@ MonoBehaviour:
   shadowGameObject: {fileID: 3863325911177217721}
   lightGameObject: {fileID: 7236267354387664395}
   objectSpawnManager: {fileID: 0}
+  healAmount: 0
+  isAnApple: 0
+  pickUpSound: {fileID: 8300000, guid: 3709e702b313ec9408eb57abcb6f107c, type: 3}
 --- !u!1 &3863325911177217721
 GameObject:
   m_ObjectHideFlags: 0

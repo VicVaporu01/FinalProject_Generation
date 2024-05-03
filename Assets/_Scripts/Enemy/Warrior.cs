@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
+using Random = UnityEngine.Random;
 
 public class Warrior : Enemy
 {
@@ -13,6 +14,9 @@ public class Warrior : Enemy
     [SerializeField] private float timeToAttack = 1.5f;
     [SerializeField] private float velocity;
     private int hash_isFacingRight, hash_velocity, hash_attacked, hash_hit;
+
+    [Header("Sound Effects")]
+    [SerializeField] private AudioClip[] swordHitSound;
 
     private void Start()
     {
@@ -68,6 +72,7 @@ public class Warrior : Enemy
             animator.SetBool(hash_hit, true);
             meleeCombatController.Hit();
             timeToAttack = 1.5f;
+            AudioManager.Instance.PlaySoundEffect(swordHitSound[Random.Range(0, swordHitSound.Length)]);
         }
         else if (timeToAttack >= 0)
         {

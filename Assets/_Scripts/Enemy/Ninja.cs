@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Ninja : Enemy
 {
@@ -19,6 +20,10 @@ public class Ninja : Enemy
     [SerializeField] private float velocity;
 
     private int hash_isFacingRight, hash_velocity, hash_attacked, hash_hit;
+
+    [Header("Sound Effects")]
+    [SerializeField] private AudioClip[] shootShurikenSound;
+    [SerializeField] private AudioClip knifeHitSound;
 
     private void Start()
     {
@@ -83,7 +88,7 @@ public class Ninja : Enemy
             animator.SetBool(hash_hit, true);
             AttackPlayer();
             attackCooldown = attackRateTime;
-        }   
+        }
         else if (attackCooldown > 0)
         {
             animator.SetBool(hash_hit, false);
@@ -121,11 +126,13 @@ public class Ninja : Enemy
         if (distanceToPlayer <= maxMeleeCombat)
         {
             // Atacar cuerpo a cuerpo
+            AudioManager.Instance.PlaySoundEffect(knifeHitSound);
             meleeCombatController.Hit();
         }
         else
         {
             // Atacar a distancia
+            AudioManager.Instance.PlaySoundEffect(shootShurikenSound[Random.Range(0, shootShurikenSound.Length)]);
             distanceCombatController.Shoot("Ninja");
         }
     }

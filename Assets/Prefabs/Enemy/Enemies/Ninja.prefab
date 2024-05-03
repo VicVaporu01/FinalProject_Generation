@@ -428,6 +428,12 @@ MonoBehaviour:
   dieEffectGameObject: {fileID: 100006, guid: bcaff8fc36e95584bb27cc3cf7c6cb14, type: 3}
   appleColectableObject: {fileID: 3333324403671312255, guid: d8aba7183269afa418f656037ce8edd0, type: 3}
   spawnAppleProbability: 10
+  getHitSounds:
+  - {fileID: 8300000, guid: 1d57dc609feb3f14ea150f6ba441b693, type: 3}
+  - {fileID: 8300000, guid: 85bca55070883e848a7bcd6647e47392, type: 3}
+  deathSounds:
+  - {fileID: 8300000, guid: 53927622fb148fc438d47ddf89a69aca, type: 3}
+  - {fileID: 8300000, guid: e04cf789ed2f2fd47a8fe41a451e2e5a, type: 3}
   knife: {fileID: 7756592542596710638}
   meleeCombatController: {fileID: 0}
   attackCooldown: 0
@@ -435,6 +441,10 @@ MonoBehaviour:
   maxMeleeCombat: 1.5
   maxDistanceCombat: 5
   velocity: 0
+  shootShurikenSound:
+  - {fileID: 8300000, guid: 0eb4d497632ce2941ad26b2aca2bab31, type: 3}
+  - {fileID: 8300000, guid: ede00b1715ea421488b44f62d3ba18ca, type: 3}
+  knifeHitSound: {fileID: 8300000, guid: 50edd718ce2fe714bbcdf0ded5d8541f, type: 3}
 --- !u!50 &7756592543307330199
 Rigidbody2D:
   serializedVersion: 4

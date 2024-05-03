@@ -121,6 +121,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1425b5ad23cbdf4479e84a61b3d10e68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  activatePortalEffect: {fileID: 1247311384876784, guid: 4adffb0018aeda44e9263f901167af1f, type: 3}
+  enterPortalSound: {fileID: 8300000, guid: 167df39fba1233b49bab42e8313c839f, type: 3}
 --- !u!61 &6713642976561320504
 BoxCollider2D:
   m_ObjectHideFlags: 0

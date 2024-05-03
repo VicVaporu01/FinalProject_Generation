@@ -187,11 +187,18 @@ MonoBehaviour:
   dieEffectGameObject: {fileID: 100006, guid: bcaff8fc36e95584bb27cc3cf7c6cb14, type: 3}
   appleColectableObject: {fileID: 3333324403671312255, guid: d8aba7183269afa418f656037ce8edd0, type: 3}
   spawnAppleProbability: 10
+  getHitSounds:
+  - {fileID: 8300000, guid: 1d57dc609feb3f14ea150f6ba441b693, type: 3}
+  - {fileID: 8300000, guid: 85bca55070883e848a7bcd6647e47392, type: 3}
+  deathSounds:
+  - {fileID: 8300000, guid: 53927622fb148fc438d47ddf89a69aca, type: 3}
+  - {fileID: 8300000, guid: e04cf789ed2f2fd47a8fe41a451e2e5a, type: 3}
   bow: {fileID: 312396060}
   attackCooldown: 0
   attackRateTime: 1.5
   scapeDistance: 4
   velocity: 0
+  shootArrow: {fileID: 8300000, guid: ab82c400bede88a4ca538977c9d1751b, type: 3}
 --- !u!212 &4212389803765972759
 SpriteRenderer:
   m_ObjectHideFlags: 0
