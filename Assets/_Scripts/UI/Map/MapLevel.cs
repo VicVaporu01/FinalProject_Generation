@@ -27,6 +27,7 @@ public class MapLevel : MonoBehaviour
     [Header("Image Values")]
     [Range(0, 1)][SerializeField] private float hueDownValue;
 
+
     private void Start()
     {
         objectRectTransform = GetComponent<RectTransform>();
@@ -69,6 +70,8 @@ public class MapLevel : MonoBehaviour
     {
         if (canSelectLevel && !MapUIManager.Instance.isPlayingALevel)
         {
+            AudioManager.Instance.EnterLevelSound();
+
             MapUIManager.Instance.SetActualMapLevelToPlay(this);
 
             EventSystem.current.SetSelectedGameObject(null);

@@ -42,6 +42,9 @@ public class PlayerShoot : MonoBehaviour
     public UnityEvent<int> OnBulletAmountChange;
     public UnityEvent<float> OnBulletRechargeChange;
 
+    [Header("Sounds")]
+    [SerializeField] private AudioClip shootSound;
+
     private void Awake()
     {
         shootAction = playerInput.actions["Shoot"];
@@ -119,6 +122,8 @@ public class PlayerShoot : MonoBehaviour
 
     public void Shoot()
     {
+        AudioManager.Instance.PlaySoundEffect(shootSound);
+
         SetShootTransform();
 
         PlayerBullet playerBullet = Instantiate(bulletPrefab, shootControllerTransform.position, shootControllerTransform.rotation);

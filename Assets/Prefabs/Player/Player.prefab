@@ -107,6 +107,9 @@ MonoBehaviour:
   damageType: 0
   maxAttackDamage: 4
   minAttackDamage: 1
+  hitSounds:
+  - {fileID: 8300000, guid: eb17f5e2a6d27e3498a32d2b771da3d1, type: 3}
+  - {fileID: 8300000, guid: 2c72290d2605a464dab0121b6b641751, type: 3}
 --- !u!1 &1058581465873877400
 GameObject:
   m_ObjectHideFlags: 0
@@ -234,10 +237,6 @@ MonoBehaviour:
     m_ActionName: Basic/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: 851c1e7e-d6a4-4ead-b5e8-7aa1eab5b928
-    m_ActionName: Basic/Aim[/Keyboard/upArrow,/Keyboard/downArrow,/Keyboard/leftArrow,/Keyboard/rightArrow]
-  - m_PersistentCalls:
-      m_Calls: []
     m_ActionId: 606ba462-b72c-45a3-a438-47237868978e
     m_ActionName: Basic/Interact[/Keyboard/e]
   - m_PersistentCalls:
@@ -284,6 +283,18 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: fce3b382-625c-4473-a79b-77cba7037d20
     m_ActionName: UI/TrackedDeviceOrientation
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 14edfcf2-263e-4107-a004-f5fa5deb3906
+    m_ActionName: Basic/Shoot[/Keyboard/z,/Mouse/rightButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 8b6dd1db-eb00-4cba-abc8-e0246229988c
+    m_ActionName: Basic/Pause[/Keyboard/p]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 95d678d3-a248-4905-840b-74c4d00f519a
+    m_ActionName: Basic/Back[/Keyboard/backspace,/Keyboard/b]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Basic
@@ -392,6 +403,11 @@ MonoBehaviour:
   playerStats: {fileID: 1058581465873877382}
   invincibleLength: 1
   healTestValue: 1
+  takeDamageSounds:
+  - {fileID: 8300000, guid: 85bca55070883e848a7bcd6647e47392, type: 3}
+  - {fileID: 8300000, guid: ae927b9852fb2884a9cb826d8a13b429, type: 3}
+  - {fileID: 8300000, guid: 064074c40f4810a45b0e91a007aad026, type: 3}
+  playerDeadSound: {fileID: 8300000, guid: c073bf14ff1b6b54a9ac5a34de3f76e9, type: 3}
 --- !u!114 &1058581465873877382
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -414,6 +430,8 @@ MonoBehaviour:
   bulletAmountStats: 0
   interactRangeOffset: {x: 0, y: 0.3, z: 0}
   interactBoxValues: {x: 0.6, y: 1}
+  pickUpSound: {fileID: 8300000, guid: 3709e702b313ec9408eb57abcb6f107c, type: 3}
+  enterPortalSound: {fileID: 8300000, guid: 167df39fba1233b49bab42e8313c839f, type: 3}
 --- !u!114 &1058581465873877401
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -456,7 +474,7 @@ MonoBehaviour:
   - {x: 0.15, y: -0.13, z: 0}
   m_ShapePathHash: 822327269
   m_Mesh: {fileID: 0}
-  m_InstanceId: 115080
+  m_InstanceId: -596768
   m_LocalBounds:
     m_Center: {x: 0, y: -0.044015124, z: 0}
     m_Extent: {x: 0.15, y: 0.08598487, z: 0}
@@ -496,3 +514,4 @@ MonoBehaviour:
   OnBulletRechargeChange:
     m_PersistentCalls:
       m_Calls: []
+  shootSound: {fileID: 8300000, guid: 1e7d5db4fd1843049a24efabf2f9a2e9, type: 3}

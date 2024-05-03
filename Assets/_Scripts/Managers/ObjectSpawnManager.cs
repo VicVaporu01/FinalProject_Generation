@@ -33,6 +33,10 @@ public class ObjectSpawnManager : MonoBehaviour
                 objectsSpawned.Add(randomObject);
             }
         }
+
+        AudioManager.Instance.SpawnObjectsSound();
+
+        CinemachineMovimientoCamara.Instance.MoverCamara(10, 10, 0.75f);
     }
 
     public void RewardObjectCollected(CollectibleObject collectibleObjectPicked)

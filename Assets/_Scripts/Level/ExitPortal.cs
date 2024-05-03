@@ -11,6 +11,8 @@ public class ExitPortal : MonoBehaviour
         if (playerMovement != null)
         {
             playerMovement.enabled = false;
+
+            playerMovement.StopPlayerMovement();
         }
 
         MapUIManager.Instance.StageCompleted();

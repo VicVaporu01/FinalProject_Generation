@@ -305,5 +305,10 @@ MonoBehaviour:
   soundFXAudioSource: {fileID: 2169575964128266524}
   musicAudioSource: {fileID: 2169575963363841694}
   masterAudioMixer: {fileID: 24100000, guid: 0a0b9ddfd6557d648b9614e5248f6b50, type: 2}
-  timeToChangeMusic: 4
-  waitTimeToChangeMusicClip: 1.5
+  timeToChangeMusic: 2
+  waitTimeToChangeMusicClip: 0.5
+  isAudioMuted: 0
+  clickForward: {fileID: 8300000, guid: 57b2c984c5a8f4444bbdf10016832720, type: 3}
+  clickBackwards: {fileID: 8300000, guid: 7036fb9ac257d6744a9c7c8bd8cf1873, type: 3}
+  enterLevelSound: {fileID: 8300000, guid: 7483e41bd2e49d64db80d51d2883a52f, type: 3}
+  spawnObjectsSound: {fileID: 8300000, guid: e56fcae6b83d9a741b4a973e959de392, type: 3}
