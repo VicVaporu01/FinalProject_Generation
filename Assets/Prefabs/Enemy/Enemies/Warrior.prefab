@@ -48,7 +48,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   character: {fileID: 7051996225688811691}
   aim: {fileID: 7051996224898350339}
-  enemyScript: {fileID: 7051996225688811689}
 --- !u!212 &433282782360578491
 SpriteRenderer:
   m_ObjectHideFlags: 0

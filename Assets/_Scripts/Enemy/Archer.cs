@@ -24,7 +24,7 @@ public class Archer : Enemy
         SetEnemyRB(GetComponent<Rigidbody2D>());
         SetPlayer(GameObject.Find("Player"));
 
-        distanceCombatController = GetComponentInChildren<EnemyDistanceCombat>();
+        distanceCombatController = GetComponent<EnemyDistanceCombat>();
 
         //  Getting the hash of the parameters
         hash_isFacingRight = Animator.StringToHash("isFacingRight");
@@ -40,7 +40,7 @@ public class Archer : Enemy
 
         if (hasLineOfSight)
         {
-            bow.AimWeaponToPlayer();
+            bow.AimWeaponToPlayer("Archer");
         }
     }
 
@@ -66,7 +66,6 @@ public class Archer : Enemy
         // To patrol
         if (!hasLineOfSight && timePatrolling >= 0)
         {
-            Debug.Log("Patrullando");
             timePatrolling -= Time.deltaTime;
             GetEnemyRB().velocity = GetRandomDirection() * speed;
         }
