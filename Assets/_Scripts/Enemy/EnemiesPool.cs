@@ -11,9 +11,7 @@ public class EnemiesPool : MonoBehaviour
 
     public void AddEnemiesToPool()
     {
-        Debug.Log("Array size before: " + arraySize);
         arraySize = GameObject.Find("SpawnManager").GetComponent<EnemySpawnManager>().GetEnemiesMaxAmount();
-        Debug.Log("Array size after: " + arraySize);
         enemyArray = new GameObject[arraySize];
 
         for (int i = 0; i < enemyArray.Length; i++)

@@ -38,7 +38,7 @@ public class Warrior : Enemy
         // This condition is to avoid the enemy's weapon getting mad when the player is too close
         if (hasLineOfSight)
         {
-            sword.AimWeaponToPlayer();
+            sword.AimWeaponToPlayer("Warrior");
         }
     }
 
