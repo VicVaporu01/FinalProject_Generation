@@ -80,7 +80,7 @@ public class Archer : Enemy
         {
             GetEnemyRB().velocity = Vector2.zero;
             animator.SetBool(hash_hit, true);
-            distanceCombatController.Shoot();
+            distanceCombatController.Shoot("Archer");
             attackCooldown = attackRateTime;
         }
         else if (attackCooldown > 0)

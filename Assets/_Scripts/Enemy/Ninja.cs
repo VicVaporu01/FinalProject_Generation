@@ -126,7 +126,7 @@ public class Ninja : Enemy
         else
         {
             // Atacar a distancia
-            distanceCombatController.Shoot();
+            distanceCombatController.Shoot("Ninja");
         }
     }
 }
