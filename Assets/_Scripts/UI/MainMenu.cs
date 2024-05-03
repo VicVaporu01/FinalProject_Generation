@@ -13,6 +13,11 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private GameObject backMenuObject;
     [SerializeField] private GameObject playButtonObject;
 
+    [Header("How To Play")]
+    [SerializeField] private GameObject returnHowToPlayButton;
+    [SerializeField] private GameObject howToPlayButton;
+    [SerializeField] private GameObject howToPlayPanel;
+
     private void Start()
     {
         if (MapUIManager.Instance != null)
@@ -63,5 +68,23 @@ public class MainMenu : MonoBehaviour
     {
         Debug.Log("Exit...");
         Application.Quit();
+    }
+
+    public void OpenHowToPlayPanel()
+    {
+        mainMenuObject.SetActive(false);
+
+        howToPlayPanel.SetActive(true);
+
+        EventSystem.current.SetSelectedGameObject(returnHowToPlayButton);
+    }
+
+    public void ReturnToMainMenuFromHowToPlay()
+    {
+        mainMenuObject.SetActive(true);
+
+        howToPlayPanel.SetActive(false);
+
+        EventSystem.current.SetSelectedGameObject(howToPlayButton);
     }
 }

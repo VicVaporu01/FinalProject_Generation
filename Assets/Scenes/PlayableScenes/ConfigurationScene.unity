@@ -741,8 +741,10 @@ MonoBehaviour:
   - {fileID: 3643414122227950891, guid: a2c2db8ab496fbf489e1408830a2580c, type: 3}
   - {fileID: 3643414122227950891, guid: 7078840d6ba653d48ad543f6187fc427, type: 3}
   - {fileID: 3643414122227950891, guid: 15692842710e415479f0c35b578f2778, type: 3}
+  - {fileID: 3643414122227950891, guid: 568e8170189f7f946bb0c4ef3d758d76, type: 3}
   shopSpawnProbability: 15
-  hardLevelProbability: 30
+  hardLevelProbability: 20
+  mediumLevelProbability: 30
   stagesAmount: 8
   minimumLevelsByStage: 2
   maximumLevelsByStage: 4

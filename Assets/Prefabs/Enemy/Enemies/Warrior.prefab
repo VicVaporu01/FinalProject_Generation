@@ -273,6 +273,8 @@ MonoBehaviour:
   yRange: 10
   coinsAmountGived: 15
   dieEffectGameObject: {fileID: 100006, guid: bcaff8fc36e95584bb27cc3cf7c6cb14, type: 3}
+  appleColectableObject: {fileID: 3333324403671312255, guid: d8aba7183269afa418f656037ce8edd0, type: 3}
+  spawnAppleProbability: 10
   sword: {fileID: 1333192251}
   meleeCombatController: {fileID: 0}
   timeToAttack: 1.5

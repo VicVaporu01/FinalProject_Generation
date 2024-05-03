@@ -50,6 +50,7 @@ MonoBehaviour:
   maxLifeStats: 1
   magicDamageStats: 1
   bulletAmountStats: 1
+  coinsAmount: 50
   currentHealth: 6
   maxHealth: 6
   collectableObjects:

@@ -23,6 +23,8 @@ public class Enemy : MonoBehaviour, IDamage
     [Header("Effects")]
     [SerializeField] private int coinsAmountGived;
     [SerializeField] private GameObject dieEffectGameObject;
+    [SerializeField] private GameObject appleColectableObject;
+    [SerializeField] private float spawnAppleProbability = 10;
 
     public void DetectPlayer(float followDistance, GameObject player)
     {
@@ -142,6 +144,8 @@ public class Enemy : MonoBehaviour, IDamage
 
         Instantiate(dieEffectGameObject, transform.position, Quaternion.identity);
 
+        TrySpawnApple();
+
         CoinSystem playerCoinSystem = FindAnyObjectByType<CoinSystem>();
 
         if (playerCoinSystem != null)
@@ -150,6 +154,16 @@ public class Enemy : MonoBehaviour, IDamage
         }
 
         father.SetActive(false);
+    }
+
+    private void TrySpawnApple()
+    {
+        float appleSpawnProbability = Random.Range(0, 100);
+
+        if (appleSpawnProbability <= spawnAppleProbability)
+        {
+            Instantiate(appleColectableObject, transform.position, Quaternion.identity);
+        }
     }
 
     public Rigidbody2D GetEnemyRB()

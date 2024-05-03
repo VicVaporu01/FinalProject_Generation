@@ -20,6 +20,7 @@ public class MapGenerationUI : MonoBehaviour
     [SerializeField] private List<MapLevel> levelTipeList;
     [Range(0, 100)][SerializeField] private float shopSpawnProbability;
     [Range(0, 100)][SerializeField] private float hardLevelProbability;
+    [Range(0, 100)][SerializeField] private float mediumLevelProbability;
 
     [Header("Spawn Control")]
     [Range(3, 20)][SerializeField] private int stagesAmount;
@@ -170,6 +171,10 @@ public class MapGenerationUI : MonoBehaviour
         else if (randomLevelProbability >= shopSpawnProbability && randomLevelProbability < shopSpawnProbability + hardLevelProbability)
         {
             return 2;
+        }
+        else if (randomLevelProbability >= shopSpawnProbability + hardLevelProbability && randomLevelProbability < shopSpawnProbability + hardLevelProbability + mediumLevelProbability)
+        {
+            return 3;
         }
         else
         {

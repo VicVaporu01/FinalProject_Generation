@@ -33,6 +33,10 @@ public class CollectibleObject : MonoBehaviour
     [Header("Reward Object")]
     [SerializeField] private ObjectSpawnManager objectSpawnManager;
 
+    [Header("Apple")]
+    [SerializeField] private int healAmount;
+    [SerializeField] private bool isAnApple = false;
+
     private void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -101,6 +105,16 @@ public class CollectibleObject : MonoBehaviour
         if (objectSpawnManager != null)
         {
             objectSpawnManager.RewardObjectCollected(this);
+        }
+
+        if (isAnApple)
+        {
+            PlayerHealthController playerHealthController = FindAnyObjectByType<PlayerHealthController>();
+
+            if (playerHealthController != null)
+            {
+                playerHealthController.HealPlayer(healAmount);
+            }
         }
 
         Destroy(gameObject);

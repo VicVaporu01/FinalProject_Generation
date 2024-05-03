@@ -426,6 +426,8 @@ MonoBehaviour:
   yRange: 0
   coinsAmountGived: 20
   dieEffectGameObject: {fileID: 100006, guid: bcaff8fc36e95584bb27cc3cf7c6cb14, type: 3}
+  appleColectableObject: {fileID: 3333324403671312255, guid: d8aba7183269afa418f656037ce8edd0, type: 3}
+  spawnAppleProbability: 10
   knife: {fileID: 7756592542596710638}
   meleeCombatController: {fileID: 0}
   attackCooldown: 0
