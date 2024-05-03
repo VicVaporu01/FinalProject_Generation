@@ -55,6 +55,9 @@ public class MapLevel : MonoBehaviour
             case MapLevelTypeEnum.HardLevel:
                 levelToLoadIndex = MapUIManager.Instance.GetRandomLevelToPlay();
                 break;
+            case MapLevelTypeEnum.MediumLevel:
+                levelToLoadIndex = MapUIManager.Instance.GetRandomLevelToPlay();
+                break;
             case MapLevelTypeEnum.ShopLevel:
                 levelToLoadIndex = MapUIManager.Instance.GetRandomLevelToPlay();
                 break;

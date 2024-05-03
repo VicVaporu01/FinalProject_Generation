@@ -183,7 +183,8 @@ public class MapUIManager : MonoBehaviour
 
     public int GetRandomLevelToPlay()
     {
-        return playableLevelsIndexList[Random.Range(0, playableLevelsIndexList.Length)];
+        int playableLevelIndex = playableLevelsIndexList[Random.Range(0, playableLevelsIndexList.Length)];
+        return playableLevelIndex;
     }
 
     public int GetInitialLevelIndex()
