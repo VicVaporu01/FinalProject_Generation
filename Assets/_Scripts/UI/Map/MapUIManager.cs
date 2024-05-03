@@ -12,6 +12,7 @@ public class MapUIManager : MonoBehaviour
     [SerializeField] private CanvasGroup mapCanvasGroup;
     [SerializeField] private GameObject selectedGameObject;
     [SerializeField] private RectTransform selectedGameObjectRectTransform;
+    [SerializeField] private VictoryMenu victoryMenu;
 
     [Header("Animation Values")]
     [SerializeField] private float stepValue;
@@ -139,13 +140,18 @@ public class MapUIManager : MonoBehaviour
 
             mapStagesSpawned[actualMapStageIndex].DisableAllMapLevelsInStage();
 
-            actualMapLevel.ActivateNextLevelsInMap();
+            int levelsActivated = actualMapLevel.ActivateNextLevelsInMap();
 
             actualMapLevel.ChangeBackgroundSprite(levelCompletedImage);
 
             actualMapStageIndex++;
 
             Invoke(nameof(OpenMap), timeToOpenMapStageComplete);
+
+            if (levelsActivated <= 0)
+            {
+                victoryMenu.StartVictoryPanel();
+            }
         }
     }
 

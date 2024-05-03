@@ -1,11 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Audio;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class OptionMenu : MonoBehaviour
+public class OptionsMenuMainScreen : MonoBehaviour
 {
     [Header("Mute Sound Button")]
     [SerializeField] private Sprite mutedSoundSprite;
@@ -15,7 +15,7 @@ public class OptionMenu : MonoBehaviour
     [Header("References")]
     [SerializeField] private GameObject optionsButtonGameObject;
     [SerializeField] private GameObject optionsMenuGameObject;
-    [SerializeField] private GameObject pauseMenuGameObject;
+    [SerializeField] private GameObject mainMenuGameObject;
 
     [Header("Sliders")]
     [SerializeField] private Slider masterVolumeSlider;
@@ -70,11 +70,11 @@ public class OptionMenu : MonoBehaviour
         }
     }
 
-    public void BackToPauseMenuButton()
+    public void BackToMainMenu()
     {
         optionsMenuGameObject.SetActive(false);
 
-        pauseMenuGameObject.SetActive(true);
+        mainMenuGameObject.SetActive(true);
 
         EventSystem.current.SetSelectedGameObject(optionsButtonGameObject);
     }
