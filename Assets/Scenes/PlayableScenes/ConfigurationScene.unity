@@ -715,9 +715,9 @@ MonoBehaviour:
   isPlayingALevel: 0
   isMapOpen: 1
   initialLevelIndex: 2
-  finalLevelIndex: 3
+  finalLevelIndex: 6
   levelCompletedImage: {fileID: 21300000, guid: 0eb74d116ad923d4c8b620d4ab598576, type: 3}
-  playableLevelsIndexList: 03000000
+  playableLevelsIndexList: 0200000003000000040000000500000006000000
   timeToOpenMapStageComplete: 1
   timeToCloseMapStageComplete: 1
 --- !u!114 &1320513195
