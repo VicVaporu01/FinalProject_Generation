@@ -129,16 +129,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b071a38d37124dd4aa56251d375531d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedStats: -1
+  speedStats: 0
   damangeStats: 2
   maxLifeStats: 0
-  magicDamageStats: 0
+  magicDamageStats: -1
   bulletAmountStats: 0
   hoverIndicator: {fileID: 4418430205125117007}
   spawnEffect: {fileID: 7295507781889469626}
   collectParticleObject: {fileID: 100004, guid: 757df604761b8ef42831192c70ee1099, type: 3}
   timeToSpawnObject: 0.4
-  coinCost: 10
+  coinCost: 120
   isFree: 1
   costText: {fileID: 5669328778922088845}
   textCostObject: {fileID: 9069798218844908109}

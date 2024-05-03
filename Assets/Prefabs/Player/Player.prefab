@@ -105,7 +105,7 @@ MonoBehaviour:
   playerStats: {fileID: 1058581465873877382}
   attackDamage: 1
   damageType: 0
-  maxAttackDamage: 5
+  maxAttackDamage: 4
   minAttackDamage: 1
 --- !u!1 &1058581465873877400
 GameObject:
@@ -355,15 +355,7 @@ MonoBehaviour:
   moveDirection: {x: 0, y: 0}
   lastMoveDirection: {x: 0, y: 0}
   minMoveSpeed: 4
-  maxMoveSpeed: 6.5
-  dirtStepSounds: []
-  waterStepSounds: []
-  grassStepSounds: []
-  boxStepDimentions: {x: 0.24, y: 0.09}
-  boxPositionOffset: {x: 0, y: -0.12, z: 0}
-  stepOnLayers:
-    serializedVersion: 2
-    m_Bits: 3088
+  maxMoveSpeed: 6
 --- !u!95 &1058581465873877380
 Animator:
   serializedVersion: 5
@@ -434,7 +426,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b13cef141d534334f969ad92fab8d5c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingCoins: 100
   currentCoins: 100
   OnCoinsChanged:
     m_PersistentCalls:
@@ -465,7 +456,7 @@ MonoBehaviour:
   - {x: 0.15, y: -0.13, z: 0}
   m_ShapePathHash: 822327269
   m_Mesh: {fileID: 0}
-  m_InstanceId: 95518
+  m_InstanceId: 115080
   m_LocalBounds:
     m_Center: {x: 0, y: -0.044015124, z: 0}
     m_Extent: {x: 0.15, y: 0.08598487, z: 0}
@@ -486,7 +477,7 @@ MonoBehaviour:
   animator: {fileID: 1058581465873877380}
   playerInput: {fileID: 1058581465873877376}
   actualBulletDamage: 1
-  maxBulletDamage: 5
+  maxBulletDamage: 3
   minBulletDamage: 1
   bulletPrefab: {fileID: 6239234748968913836, guid: c4fef1f0c76a72747bb4c750d60164f4, type: 3}
   shootControllerTransform: {fileID: 949541465}

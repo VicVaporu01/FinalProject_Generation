@@ -83,7 +83,7 @@ public class Ninja : Enemy
             animator.SetBool(hash_hit, true);
             AttackPlayer();
             attackCooldown = attackRateTime;
-        }
+        }   
         else if (attackCooldown > 0)
         {
             animator.SetBool(hash_hit, false);

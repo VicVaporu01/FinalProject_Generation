@@ -20,6 +20,10 @@ public class Enemy : MonoBehaviour, IDamage
     public Vector2 randomDirection;
     public float xRange, yRange;
 
+    [Header("Effects")]
+    [SerializeField] private int coinsAmountGived;
+    [SerializeField] private GameObject dieEffectGameObject;
+
     public void DetectPlayer(float followDistance, GameObject player)
     {
         // Just to see the ray
@@ -135,6 +139,16 @@ public class Enemy : MonoBehaviour, IDamage
     public void Die()
     {
         GameObject.Find("SpawnManager").GetComponent<EnemySpawnManager>().SubtractEnemy();
+
+        Instantiate(dieEffectGameObject, transform.position, Quaternion.identity);
+
+        CoinSystem playerCoinSystem = FindAnyObjectByType<CoinSystem>();
+
+        if (playerCoinSystem != null)
+        {
+            playerCoinSystem.GainCoins(coinsAmountGived);
+        }
+
         father.SetActive(false);
     }
 

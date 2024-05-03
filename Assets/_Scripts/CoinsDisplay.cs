@@ -9,7 +9,7 @@ public class CoinsDisplay : MonoBehaviour
     public TextMeshProUGUI coinsText;
     [SerializeField] private CoinSystem playerCoinSystem;
 
-    private void Start()
+    private void Awake()
     {
         playerCoinSystem = FindObjectOfType<CoinSystem>();
 

@@ -41,6 +41,11 @@ public class EnemySpawnManager : MonoBehaviour
                 enemiesMaxAmount = 5;
                 spawnRate = 1.0f;
                 break;
+            case MapLevelTypeEnum.BossLevel:
+                Debug.Log("Boss Level");
+                enemiesMaxAmount = 10;
+                spawnRate = 2.0f;
+                break;
             case MapLevelTypeEnum.ShopLevel:
                 Debug.Log("Shop Level");
                 enemiesMaxAmount = 0;

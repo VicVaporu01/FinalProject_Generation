@@ -333,7 +333,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b071a38d37124dd4aa56251d375531d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedStats: 0
+  speedStats: -1
   damangeStats: 0
   maxLifeStats: 2
   magicDamageStats: 0

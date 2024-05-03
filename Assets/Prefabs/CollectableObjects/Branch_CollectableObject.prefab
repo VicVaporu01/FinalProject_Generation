@@ -162,15 +162,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speedStats: 0
-  damangeStats: 1
+  damangeStats: 0
   maxLifeStats: 0
-  magicDamageStats: 1
+  magicDamageStats: 0
   bulletAmountStats: 1
   hoverIndicator: {fileID: 5824781756237837225}
   spawnEffect: {fileID: 7245978650486932721}
   collectParticleObject: {fileID: 100004, guid: 757df604761b8ef42831192c70ee1099, type: 3}
   timeToSpawnObject: 0.4
-  coinCost: 40
+  coinCost: 120
   isFree: 1
   costText: {fileID: 6608228884209135104}
   textCostObject: {fileID: 1292719032476668155}

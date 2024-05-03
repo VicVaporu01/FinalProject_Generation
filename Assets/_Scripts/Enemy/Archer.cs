@@ -94,7 +94,7 @@ public class Archer : Enemy
         if (hasLineOfSight && (enemyPlayerDistance <= scapeDistance))
         {
             Scape();
-            attackRateTime = 5.0f;
+            attackRateTime = 3.0f;
         }
         else
         {

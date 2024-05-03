@@ -259,7 +259,7 @@ MonoBehaviour:
   player: {fileID: 0}
   father: {fileID: 7051996226404478905}
   health: 3
-  speed: 1
+  speed: 2
   damage: 0
   hasLineOfSight: 0
   isFacingRight: 1
@@ -271,6 +271,8 @@ MonoBehaviour:
   randomDirection: {x: 0, y: 0}
   xRange: 10
   yRange: 10
+  coinsAmountGived: 15
+  dieEffectGameObject: {fileID: 100006, guid: bcaff8fc36e95584bb27cc3cf7c6cb14, type: 3}
   sword: {fileID: 1333192251}
   meleeCombatController: {fileID: 0}
   timeToAttack: 1.5

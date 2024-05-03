@@ -420,13 +420,13 @@ MonoBehaviour:
   speedStats: 0
   damangeStats: 0
   maxLifeStats: 1
-  magicDamageStats: 0
+  magicDamageStats: 1
   bulletAmountStats: 0
   hoverIndicator: {fileID: 3170110197873287376}
   spawnEffect: {fileID: 7486760822304832983}
   collectParticleObject: {fileID: 100004, guid: 757df604761b8ef42831192c70ee1099, type: 3}
   timeToSpawnObject: 0.4
-  coinCost: 30
+  coinCost: 150
   isFree: 1
   costText: {fileID: 637874684104686335}
   textCostObject: {fileID: 395300478246926679}

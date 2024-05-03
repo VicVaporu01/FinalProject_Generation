@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     public int maxLifeStats;
     public int magicDamageStats;
     public int bulletAmountStats;
+    public int coinsAmount = 50;
 
     [SerializeField] private int currentHealth;
     [SerializeField] private int maxHealth;
