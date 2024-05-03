@@ -342,7 +342,7 @@ MonoBehaviour:
   mapButton: {fileID: 2001089855965356717}
   backgroundImage: {fileID: 5875772620987197400}
   iconImage: {fileID: 2784194416926333312}
-  lineColor: {r: 0, g: 0, b: 0, a: 1}
+  lineColor: {r: 1, g: 1, b: 1, a: 1}
   canSelectLevel: 0
   levelToLoadIndex: 0
   mapLevelType: 4

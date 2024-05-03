@@ -3138,6 +3138,9 @@ MonoBehaviour:
   optionsButtonGameObject: {fileID: 7077468982585538582}
   optionsMenuGameObject: {fileID: 3680665111036200848}
   pauseMenuGameObject: {fileID: 3680665109434653327}
+  masterVolumeSlider: {fileID: 3680665110276014296}
+  musicVolumeSlider: {fileID: 6825512126932769858}
+  soundFXVolumeSlider: {fileID: 3398645286797826458}
 --- !u!223 &3680665110636569313
 Canvas:
   m_ObjectHideFlags: 0

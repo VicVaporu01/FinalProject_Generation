@@ -63,3 +63,4 @@ MonoBehaviour:
   - {fileID: 7808167988502686720, guid: f3690a2b66cda2249968dd90f2ba8032, type: 3}
   - {fileID: 3453319286799841036, guid: 45e09f81c33e40a4bb2db0542dba28f5, type: 3}
   - {fileID: 5668788963349108072, guid: c08d3060c13d7fd49b430098ab2d88b1, type: 3}
+  finalObjectReward: {fileID: 2139218003891987851, guid: 3681af739c4567a499911f55842020b1, type: 3}

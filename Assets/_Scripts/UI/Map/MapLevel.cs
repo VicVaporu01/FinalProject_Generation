@@ -130,16 +130,22 @@ public class MapLevel : MonoBehaviour
         NextLevels.Add(levelGameObject);
     }
 
-    public void ActivateNextLevelsInMap()
+    public int ActivateNextLevelsInMap()
     {
+        int activatedLevelsAmount = 0;
+
         foreach (MapLevel mapLevel in NextLevels)
         {
             mapLevel.ActivateLevel();
 
             EventSystem.current.SetSelectedGameObject(mapLevel.gameObject);
+
+            activatedLevelsAmount++;
         }
 
         canSelectLevel = false;
+
+        return activatedLevelsAmount;
     }
 
     public void DisableMapLevel()

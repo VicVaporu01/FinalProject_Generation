@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour
     }
 
     public CollectibleObject[] collectableObjects;
-
+    public CollectibleObject finalObjectReward;
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -105,6 +105,11 @@ public class GameManager : MonoBehaviour
         int randomObjectIndex = Random.Range(0, collectableObjects.Length);
 
         return collectableObjects[randomObjectIndex];
+    }
+
+    public CollectibleObject GetFinalReward()
+    {
+        return finalObjectReward;
     }
 
     private void SetInitialStatsValues()
