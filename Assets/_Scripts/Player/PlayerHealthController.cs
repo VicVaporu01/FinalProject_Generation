@@ -80,6 +80,10 @@ public class PlayerHealthController : MonoBehaviour, IDamage
 
                 PlayerDead?.Invoke(this, EventArgs.Empty);
             }
+            else
+            {
+                playerAnimator.SetTrigger("Damaged");
+            }
         }
     }
 

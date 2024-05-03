@@ -18,6 +18,7 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] private GameObject resumeButtonObject;
     [SerializeField] private GameObject mapButtonObject;
     [SerializeField] private GameObject backOptionsMenuObject;
+    [SerializeField] private CanvasGroup pauseMenuCanvasGroup;
 
     [Header("Stats Panel View")]
     public List<Image> speedSprites;
@@ -47,6 +48,8 @@ public class PauseMenu : MonoBehaviour
             MapUIManager.Instance.CloseMap();
 
             EventSystem.current.SetSelectedGameObject(mapButtonObject);
+
+            pauseMenuCanvasGroup.interactable = true;
         }
     }
 
@@ -153,6 +156,8 @@ public class PauseMenu : MonoBehaviour
     {
         if (MapUIManager.Instance != null)
         {
+            pauseMenuCanvasGroup.interactable = false;
+
             MapUIManager.Instance.OpenMap();
         }
     }
