@@ -11,7 +11,8 @@ public class MapUIManager : MonoBehaviour
     [SerializeField] private RectTransform contentRectTransform;
     [SerializeField] private CanvasGroup mapCanvasGroup;
     [SerializeField] private GameObject selectedGameObject;
-    private RectTransform selectedGameObjectRectTransform;
+    [SerializeField] private RectTransform selectedGameObjectRectTransform;
+    [SerializeField] private VictoryMenu victoryMenu;
 
     [Header("Animation Values")]
     [SerializeField] private float stepValue;
@@ -71,11 +72,11 @@ public class MapUIManager : MonoBehaviour
                 {
                     if (IsObjectInRightBound(selectedGameObjectRectTransform))
                     {
-                        LeanTween.moveX(contentRectTransform, contentRectTransform.anchoredPosition.x - stepValue, timeToComplete);
+                        LeanTween.moveX(contentRectTransform, contentRectTransform.anchoredPosition.x - stepValue, timeToComplete).setIgnoreTimeScale(true);
                     }
                     else
                     {
-                        LeanTween.moveX(contentRectTransform, contentRectTransform.anchoredPosition.x + stepValue, timeToComplete);
+                        LeanTween.moveX(contentRectTransform, contentRectTransform.anchoredPosition.x + stepValue, timeToComplete).setIgnoreTimeScale(true);
                     }
                 }
             }
@@ -139,13 +140,18 @@ public class MapUIManager : MonoBehaviour
 
             mapStagesSpawned[actualMapStageIndex].DisableAllMapLevelsInStage();
 
-            actualMapLevel.ActivateNextLevelsInMap();
+            int levelsActivated = actualMapLevel.ActivateNextLevelsInMap();
 
             actualMapLevel.ChangeBackgroundSprite(levelCompletedImage);
 
             actualMapStageIndex++;
 
             Invoke(nameof(OpenMap), timeToOpenMapStageComplete);
+
+            if (levelsActivated <= 0)
+            {
+                victoryMenu.StartVictoryPanel();
+            }
         }
     }
 

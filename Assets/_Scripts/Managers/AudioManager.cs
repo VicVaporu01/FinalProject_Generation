@@ -13,9 +13,9 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioMixer masterAudioMixer;
 
     [Header("Strings Values")]
-    private const string MASTER_VOLUME_STRING = "MasterVolume";
-    private const string MUSIC_VOLUME_STRING = "MusicVolume";
-    private const string SOUNDFX_VOLUME_STRING = "SoundFXVolume";
+    public const string MASTER_VOLUME_STRING = "MasterVolume";
+    public const string MUSIC_VOLUME_STRING = "MusicVolume";
+    public const string SOUNDFX_VOLUME_STRING = "SoundFXVolume";
 
     [Header("Music Volume Changes")]
     [SerializeField] private float timeToChangeMusic;
