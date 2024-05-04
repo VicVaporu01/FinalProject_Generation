@@ -170,7 +170,7 @@ MonoBehaviour:
   spawnEffect: {fileID: 3689160324346711824}
   collectParticleObject: {fileID: 100004, guid: 757df604761b8ef42831192c70ee1099, type: 3}
   timeToSpawnObject: 0.4
-  coinCost: 50
+  coinCost: 30
   isFree: 1
   costText: {fileID: 7717808179847082346}
   textCostObject: {fileID: 4884318448991461}

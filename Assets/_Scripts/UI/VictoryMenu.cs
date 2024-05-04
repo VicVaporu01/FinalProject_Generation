@@ -69,6 +69,8 @@ public class VictoryMenu : MonoBehaviour
 
     public void BackToMainMenuVictory()
     {
+        EventSystem.current.SetSelectedGameObject(null);
+
         SceneManagerObject.Instance.LoadScene(0);
     }
 

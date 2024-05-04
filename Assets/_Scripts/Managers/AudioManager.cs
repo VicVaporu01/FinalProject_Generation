@@ -136,7 +136,7 @@ public class AudioManager : MonoBehaviour
 
     public void ClickForwardSound()
     {
-        PlaySoundEffect(clickForward);
+       PlaySoundEffect(clickForward);
     }
 
     public void ClickBackwardsSound()

@@ -274,7 +274,7 @@ MonoBehaviour:
   coinsAmountGived: 15
   dieEffectGameObject: {fileID: 100006, guid: bcaff8fc36e95584bb27cc3cf7c6cb14, type: 3}
   appleColectableObject: {fileID: 3333324403671312255, guid: d8aba7183269afa418f656037ce8edd0, type: 3}
-  spawnAppleProbability: 10
+  spawnAppleProbability: 20
   getHitSounds:
   - {fileID: 8300000, guid: 1d57dc609feb3f14ea150f6ba441b693, type: 3}
   - {fileID: 8300000, guid: 85bca55070883e848a7bcd6647e47392, type: 3}

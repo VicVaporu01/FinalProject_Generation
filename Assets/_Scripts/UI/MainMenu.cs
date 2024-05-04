@@ -49,6 +49,8 @@ public class MainMenu : MonoBehaviour
 
     public void GameScene()
     {
+        EventSystem.current.SetSelectedGameObject(null);
+
         AudioManager.Instance.ClickForwardSound();
 
         AudioManager.Instance.ChangeMusic(mapMenuMusic);

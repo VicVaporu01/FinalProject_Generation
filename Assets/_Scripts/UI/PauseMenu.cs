@@ -104,9 +104,9 @@ public class PauseMenu : MonoBehaviour
 
     public void MainMenu()
     {
-        Debug.Log("MainMenu");
-
         Time.timeScale = 1f;
+
+        EventSystem.current.SetSelectedGameObject(null);
 
         SceneManagerObject.Instance.LoadScene(mainMenuIndex);
 

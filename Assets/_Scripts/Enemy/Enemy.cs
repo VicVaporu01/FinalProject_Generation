@@ -154,6 +154,8 @@ public class Enemy : MonoBehaviour, IDamage
 
         Instantiate(dieEffectGameObject, transform.position, Quaternion.identity);
 
+        transform.localPosition = new Vector3(0, 0, 0);
+
         TrySpawnApple();
 
         CoinSystem playerCoinSystem = FindAnyObjectByType<CoinSystem>();

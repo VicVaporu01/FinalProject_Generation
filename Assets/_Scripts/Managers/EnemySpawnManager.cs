@@ -9,10 +9,10 @@ public class EnemySpawnManager : MonoBehaviour
     [SerializeField] private List<Transform> spawnPoints;
     [SerializeField] private EnemiesPool enemiesPool;
 
-    private float spawnRate;
-    private int enemiesMaxAmount;
-    private int enemiesInvoked;
-    private int enemiesCurrentAmount;
+    [SerializeField] private float spawnRate;
+    [SerializeField] private int enemiesMaxAmount;
+    [SerializeField] private int enemiesInvoked;
+    [SerializeField] private int enemiesCurrentAmount;
 
     private void Start()
     {

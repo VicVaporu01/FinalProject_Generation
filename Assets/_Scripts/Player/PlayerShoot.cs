@@ -10,6 +10,7 @@ public class PlayerShoot : MonoBehaviour
     [Header("References")]
     [SerializeField] private PlayerMovement playerMovement;
     [SerializeField] private PlayerStats playerStats;
+    [SerializeField] private PlayerHealthController playerHealthController;
     [SerializeField] private Animator animator;
     [SerializeField] private PlayerInput playerInput;
     private InputAction shootAction;
@@ -106,7 +107,7 @@ public class PlayerShoot : MonoBehaviour
 
     private void TryToShoot(InputAction.CallbackContext context)
     {
-        if (actualAmmoAmount > 0 && Time.time > timeLastShot + timeBtwnShots)
+        if (!playerHealthController.isPlayerDeath && actualAmmoAmount > 0 && Time.time > timeLastShot + timeBtwnShots)
         {
             actualAmmoAmount--;
 
@@ -139,7 +140,7 @@ public class PlayerShoot : MonoBehaviour
 
         shootControllerTransform.localPosition = frontShootPosition;
 
-        if (MathF.Abs(lastPlayerMovement.x) > 0 && MathF.Abs(lastPlayerMovement.x) < 1)
+        if (MathF.Abs(lastPlayerMovement.x) > 0.7 && MathF.Abs(lastPlayerMovement.x) < 1)
         {
             if (lastPlayerMovement.x > 0)
             {

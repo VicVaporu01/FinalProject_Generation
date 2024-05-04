@@ -22,6 +22,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Vector2 lastMoveDirection;
     [SerializeField] private float minMoveSpeed;
     [SerializeField] private float maxMoveSpeed;
+    private bool canMove = true;
 
     Animator anims;
 
@@ -63,17 +64,20 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        moveDirection = moveAction.ReadValue<Vector2>();
-
-        anims.SetFloat("MovementX", moveDirection.x);
-        anims.SetFloat("MovementY", moveDirection.y);
-        if (moveDirection.x != 0 || moveDirection.y != 0)
+        if (canMove)
         {
-            anims.SetFloat("LastMovX", moveDirection.x);
-            anims.SetFloat("LastMovY", moveDirection.y);
-            lastMoveDirection = new Vector2(moveDirection.x, moveDirection.y);
+            moveDirection = moveAction.ReadValue<Vector2>();
+
+            anims.SetFloat("MovementX", moveDirection.x);
+            anims.SetFloat("MovementY", moveDirection.y);
+            if (moveDirection.x != 0 || moveDirection.y != 0)
+            {
+                anims.SetFloat("LastMovX", moveDirection.x);
+                anims.SetFloat("LastMovY", moveDirection.y);
+                lastMoveDirection = new Vector2(moveDirection.x, moveDirection.y);
+            }
+            rb2D.velocity = moveDirection * movementSpeed;
         }
-        rb2D.velocity = moveDirection * movementSpeed;
         if (attack.WasPressedThisFrame() && attack.IsPressed())
         {
             MeleeAttack();
@@ -99,6 +103,8 @@ public class PlayerMovement : MonoBehaviour
     public void StopPlayerMovement()
     {
         rb2D.velocity = new Vector2(0, 0);
+
+        canMove = false;
     }
 
     public Vector2 GetLasMovement()

@@ -11,6 +11,9 @@ public class OptionsMenuMainScreen : MonoBehaviour
     [SerializeField] private Sprite mutedSoundSprite;
     [SerializeField] private Sprite unMutedSoundSprite;
     [SerializeField] private Image muteSoundImage;
+    private bool isChangingMasterVolumeFirstTime = true;
+    private bool isChangingMusicVolumeFirstTime = true;
+    private bool isChangingSoundFXVolumeFirstTime = true;
 
     [Header("References")]
     [SerializeField] private GameObject optionsButtonGameObject;
@@ -24,6 +27,10 @@ public class OptionsMenuMainScreen : MonoBehaviour
 
     private void Start()
     {
+        isChangingMasterVolumeFirstTime = true;
+        isChangingMusicVolumeFirstTime = true;
+        isChangingSoundFXVolumeFirstTime = true;
+
         CheckAudioState();
 
         InitializeSliders();
@@ -38,21 +45,36 @@ public class OptionsMenuMainScreen : MonoBehaviour
 
     public void ChangeMasterVolume(float masterVolume)
     {
-        AudioManager.Instance.ClickForwardSound();
+        if (!isChangingMasterVolumeFirstTime)
+        {
+            AudioManager.Instance.ClickForwardSound();
+        }
+
+        isChangingMasterVolumeFirstTime = false;
 
         AudioManager.Instance.ChangeMasterVolume(masterVolume);
     }
 
     public void ChangeMusicVolume(float musicVolume)
     {
-        AudioManager.Instance.ClickForwardSound();
+        if (!isChangingMusicVolumeFirstTime)
+        {
+            AudioManager.Instance.ClickForwardSound();
+        }
+
+        isChangingMusicVolumeFirstTime = false;
 
         AudioManager.Instance.ChangeMusicVolume(musicVolume);
     }
 
     public void ChangeSoundFXVolume(float soundFXVolume)
     {
-        AudioManager.Instance.ClickForwardSound();
+        if (!isChangingSoundFXVolumeFirstTime)
+        {
+            AudioManager.Instance.ClickForwardSound();
+        }
+
+        isChangingSoundFXVolumeFirstTime = false;
 
         AudioManager.Instance.ChangeSoundEffectVolume(soundFXVolume);
     }

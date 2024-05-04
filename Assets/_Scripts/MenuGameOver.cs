@@ -32,6 +32,8 @@ public class MenuGameOver : MonoBehaviour
 
     private void MenuOn(object sender, EventArgs e)
     {
+        playerDying.PlayerDead -= MenuOn;
+
         PauseMenu.canPause = false;
 
         AudioManager.Instance.PlaySoundEffect(gameOverSound);
@@ -43,6 +45,8 @@ public class MenuGameOver : MonoBehaviour
 
     public void MainMenu()
     {
+        EventSystem.current.SetSelectedGameObject(null);
+
         PauseMenu.canPause = true;
 
         AudioManager.Instance.ClickForwardSound();

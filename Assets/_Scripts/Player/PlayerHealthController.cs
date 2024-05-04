@@ -17,7 +17,7 @@ public class PlayerHealthController : MonoBehaviour, IDamage
     private int playerCurrentHealth;
     public float invincibleLength;
     private float invincibleCounter;
-    private bool isPlayerDeath = false;
+    public bool isPlayerDeath = false;
 
     [Header("Events")]
     [SerializeField] private int healTestValue;
@@ -99,8 +99,6 @@ public class PlayerHealthController : MonoBehaviour, IDamage
         AudioManager.Instance.PlaySoundEffect(playerDeadSound);
 
         playerMovement.StopPlayerMovement();
-
-        playerMovement.enabled = false;
 
         isPlayerDeath = true;
     }
