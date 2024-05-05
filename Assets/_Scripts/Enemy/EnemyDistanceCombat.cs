@@ -26,6 +26,7 @@ public class EnemyDistanceCombat : MonoBehaviour
     {
         // Calculate the direction of the bullet and shoot it
         Vector2 direction = player.position - shootPoint.position;
+        
         switch (enemyType)
         {
             case "Ninja":
@@ -37,7 +38,8 @@ public class EnemyDistanceCombat : MonoBehaviour
             case "Archer":
                 GameObject archerBullet = archerBulletPool.RequestBullet();
                 archerBullet.transform.position = shootPoint.position;
-                archerBullet.transform.rotation = aim.transform.rotation;
+                archerBullet.transform.right = direction;
+                archerBullet.transform.Rotate(0, 0, -40);
 
                 archerBullet.GetComponent<Rigidbody2D>().velocity = direction.normalized * bulletVelocity;
                 break;
