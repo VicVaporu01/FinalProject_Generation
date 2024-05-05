@@ -172,11 +172,14 @@ MonoBehaviour:
   father: {fileID: 4212389803508239147}
   health: 3
   speed: 2
-  damage: 1
+  damage: 2
   hasLineOfSight: 0
   isFacingRight: 1
   canApproach: 0
   canAttack: 0
+  layers:
+    serializedVersion: 2
+    m_Bits: 0
   followDistance: 8
   minDistanceToAttack: 8
   timePatrolling: 0
@@ -424,7 +427,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4212389804324385834}
   m_LocalRotation: {x: 0, y: -1, z: 0, w: 0}
-  m_LocalPosition: {x: 0.78, y: 0.218, z: 0}
+  m_LocalPosition: {x: 0.648, y: 0.218, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

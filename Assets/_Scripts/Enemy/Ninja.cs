@@ -21,8 +21,9 @@ public class Ninja : Enemy
 
     private int hash_isFacingRight, hash_velocity, hash_attacked, hash_hit;
 
-    [Header("Sound Effects")]
-    [SerializeField] private AudioClip[] shootShurikenSound;
+    [Header("Sound Effects")] [SerializeField]
+    private AudioClip[] shootShurikenSound;
+
     [SerializeField] private AudioClip knifeHitSound;
 
     private void Start()
@@ -55,10 +56,7 @@ public class Ninja : Enemy
     private void FixedUpdate()
     {
         // To know if the enemy is facing right or left
-        if (hasLineOfSight)
-        {
-            Flip();
-        }
+        Flip();
 
         // To set the animator parameter
         animator.SetFloat(hash_velocity, velocity);
@@ -111,9 +109,9 @@ public class Ninja : Enemy
         switch (damageType)
         {
             case DamageType.Physical:
-                return damage / 2.0f;
+                return damage * 0.75f;
             case DamageType.Magical:
-                return damage / 2.0f;
+                return damage * 0.75f;
             default:
                 Debug.LogError("Damage type not found");
                 return 0f;
