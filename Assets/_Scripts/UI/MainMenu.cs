@@ -39,6 +39,8 @@ public class MainMenu : MonoBehaviour
         LockCursor();
 
         AudioManager.Instance.ChangeMusic(mainMenuMusic);
+
+        PauseMenu.canPause = true;
     }
 
     public void LockCursor()

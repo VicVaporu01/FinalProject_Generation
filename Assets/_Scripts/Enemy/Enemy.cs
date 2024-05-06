@@ -8,7 +8,7 @@ public class Enemy : MonoBehaviour, IDamage
     public GameObject player;
     [SerializeField] private GameObject father;
 
-    [Header("Enemy Stats")] 
+    [Header("Enemy Stats")]
     public float health;
     public float speed;
     public float damage;
@@ -37,7 +37,7 @@ public class Enemy : MonoBehaviour, IDamage
         Vector2 playerDirection = player.transform.position - transform.position;
         Ray2D rayToSee = new Ray2D(transform.position, playerDirection);
         Debug.DrawRay(rayToSee.origin, rayToSee.direction * followDistance, Color.green);
-    
+
         RaycastHit2D[] hit = Physics2D.RaycastAll(rayToSee.origin, playerDirection, followDistance);
         if (hit.Length > 1 && hit[1].collider != null && hit[1].collider.CompareTag("Player"))
         {
@@ -48,7 +48,7 @@ public class Enemy : MonoBehaviour, IDamage
             hasLineOfSight = false;
         }
     }
-    
+
     // public void DetectPlayer(float followDistance, GameObject player)
     // {
     //     // Just to see the ray
@@ -195,7 +195,7 @@ public class Enemy : MonoBehaviour, IDamage
 
         if (appleSpawnProbability <= spawnAppleProbability)
         {
-            Instantiate(appleColectableObject, transform.position, Quaternion.identity);
+            Instantiate(appleColectableObject, transform.localPosition, Quaternion.identity);
         }
     }
 

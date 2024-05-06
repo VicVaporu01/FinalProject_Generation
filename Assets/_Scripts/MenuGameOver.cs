@@ -26,14 +26,18 @@ public class MenuGameOver : MonoBehaviour
 
     private void Start()
     {
-        playerDying = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHealthController>();
-        playerDying.PlayerDead += MenuOn;
+        GameObject playerGameObject = GameObject.FindGameObjectWithTag("Player");
+        playerDying = playerGameObject.GetComponent<PlayerHealthController>();
+        playerDying.OnPlayerDead.AddListener(MenuOn);
     }
 
-    private void MenuOn(object sender, EventArgs e)
+    private void OnDisable()
     {
-        playerDying.PlayerDead -= MenuOn;
+        playerDying.OnPlayerDead.RemoveListener(MenuOn);
+    }
 
+    private void MenuOn()
+    {
         PauseMenu.canPause = false;
 
         AudioManager.Instance.PlaySoundEffect(gameOverSound);
@@ -41,13 +45,13 @@ public class MenuGameOver : MonoBehaviour
         AudioManager.Instance.StopMusic();
 
         StartCoroutine(StartGameOverMenuAnimation());
+
+        playerDying.OnPlayerDead.RemoveListener(MenuOn);
     }
 
     public void MainMenu()
     {
         EventSystem.current.SetSelectedGameObject(null);
-
-        PauseMenu.canPause = true;
 
         AudioManager.Instance.ClickForwardSound();
 
