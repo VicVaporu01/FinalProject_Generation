@@ -13,24 +13,31 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioMixer masterAudioMixer;
 
     [Header("Strings Values")]
-    private const string MASTER_VOLUME_STRING = "MasterVolume";
-    private const string MUSIC_VOLUME_STRING = "MusicVolume";
-    private const string SOUNDFX_VOLUME_STRING = "SoundFXVolume";
+    public const string MASTER_VOLUME_STRING = "MasterVolume";
+    public const string MUSIC_VOLUME_STRING = "MusicVolume";
+    public const string SOUNDFX_VOLUME_STRING = "SoundFXVolume";
 
     [Header("Music Volume Changes")]
     [SerializeField] private float timeToChangeMusic;
     [SerializeField] private float waitTimeToChangeMusicClip;
+    public bool isAudioMuted = false;
+
+    [Header("Sounds")]
+    [SerializeField] private AudioClip clickForward;
+    [SerializeField] private AudioClip clickBackwards;
+    [SerializeField] private AudioClip enterLevelSound;
+    [SerializeField] private AudioClip spawnObjectsSound;
 
     private void Awake()
     {
-        if (Instance == null)
+        if (Instance != null && Instance != this)
         {
-            Instance = this;
-            DontDestroyOnLoad(this);
+            Destroy(gameObject);
         }
         else
         {
-            Destroy(gameObject);
+            Instance = this;
+            DontDestroyOnLoad(this);
         }
     }
 
@@ -116,6 +123,35 @@ public class AudioManager : MonoBehaviour
             {
                 musicAudioSource.volume = value;
             });
+    }
+
+    public void ChangeMuteState()
+    {
+        isAudioMuted = !isAudioMuted;
+
+        musicAudioSource.mute = isAudioMuted;
+
+        soundFXAudioSource.mute = isAudioMuted;
+    }
+
+    public void ClickForwardSound()
+    {
+       PlaySoundEffect(clickForward);
+    }
+
+    public void ClickBackwardsSound()
+    {
+        PlaySoundEffect(clickBackwards);
+    }
+
+    public void EnterLevelSound()
+    {
+        PlaySoundEffect(enterLevelSound);
+    }
+
+    public void SpawnObjectsSound()
+    {
+        PlaySoundEffect(spawnObjectsSound);
     }
 
 }

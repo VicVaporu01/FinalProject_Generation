@@ -2,7 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem.XR;
+using Random = UnityEngine.Random;
 
 public class PlayerHealthController : MonoBehaviour, IDamage
 {
@@ -10,18 +12,21 @@ public class PlayerHealthController : MonoBehaviour, IDamage
     [SerializeField] private PlayerStats playerStats;
     private Animator playerAnimator;
     private PlayerMovement playerMovement;
+    private SpriteRenderer theSR;
 
     [Header("Health Values")]
     private int playerCurrentHealth;
-
     public float invincibleLength;
     private float invincibleCounter;
+    public bool isPlayerDeath = false;
 
-    private SpriteRenderer theSR;
-
-    public event EventHandler PlayerDead;
-
+    [Header("Events")]
     [SerializeField] private int healTestValue;
+    public UnityEvent OnPlayerDead;
+
+    [Header("Sounds")]
+    [SerializeField] private AudioClip[] takeDamageSounds;
+    [SerializeField] private AudioClip playerDeadSound;
 
     void Start()
     {
@@ -30,6 +35,8 @@ public class PlayerHealthController : MonoBehaviour, IDamage
         playerAnimator = GetComponent<Animator>();
         playerMovement = GetComponent<PlayerMovement>();
         theSR = GetComponent<SpriteRenderer>();
+
+        isPlayerDeath = false;
     }
 
     private void OnEnable()
@@ -69,20 +76,33 @@ public class PlayerHealthController : MonoBehaviour, IDamage
 
     public void TakeDamage(float damage, DamageType damageType)
     {
-        CinemachineMovimientoCamara.Instance.MoverCamara(5, 5, 0.5f);
-
-        playerCurrentHealth = GameManager.Instance.TakeDamage(damage, damageType);
-
-        if (playerCurrentHealth <= 0)
+        if (!isPlayerDeath)
         {
-            Die();
+            CinemachineMovimientoCamara.Instance.MoverCamara(5, 5, 0.5f);
 
-            PlayerDead?.Invoke(this, EventArgs.Empty);
+            playerCurrentHealth = GameManager.Instance.TakeDamage(damage, damageType);
+
+            if (playerCurrentHealth <= 0)
+            {
+                Die();
+            }
+            else
+            {
+                AudioManager.Instance.PlaySoundEffect(takeDamageSounds[Random.Range(0, takeDamageSounds.Length)]);
+
+                playerAnimator.SetTrigger("Damaged");
+            }
         }
     }
 
     private void Die()
     {
-        playerMovement.enabled = false;
+        OnPlayerDead.Invoke();
+
+        AudioManager.Instance.PlaySoundEffect(playerDeadSound);
+
+        playerMovement.StopPlayerMovement();
+
+        isPlayerDeath = true;
     }
 }

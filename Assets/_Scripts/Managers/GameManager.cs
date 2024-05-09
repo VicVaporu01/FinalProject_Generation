@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     public int maxLifeStats;
     public int magicDamageStats;
     public int bulletAmountStats;
+    public int coinsAmount = 50;
 
     [SerializeField] private int currentHealth;
     [SerializeField] private int maxHealth;
@@ -26,7 +27,7 @@ public class GameManager : MonoBehaviour
     }
 
     public CollectibleObject[] collectableObjects;
-
+    public CollectibleObject finalObjectReward;
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -44,7 +45,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        currentHealth = maxHealth + maxLifeStats;
+        currentHealth = GetMaxHealth();
     }
 
     public int TakeDamage(float damage, DamageType damageType)
@@ -87,7 +88,7 @@ public class GameManager : MonoBehaviour
 
     public int GetMaxHealth()
     {
-        return maxHealth + maxLifeStats;
+        return maxHealth + (maxLifeStats * 2);
     }
 
     // public void Set CurrentHealth(int health)
@@ -105,6 +106,11 @@ public class GameManager : MonoBehaviour
         int randomObjectIndex = Random.Range(0, collectableObjects.Length);
 
         return collectableObjects[randomObjectIndex];
+    }
+
+    public CollectibleObject GetFinalReward()
+    {
+        return finalObjectReward;
     }
 
     private void SetInitialStatsValues()
@@ -131,7 +137,17 @@ public class GameManager : MonoBehaviour
 
         maxLifeStats = newMaxHealth;
 
-        currentHealth += maxLifeDiference;
+        if (maxLifeDiference > 0)
+        {
+            currentHealth += maxLifeDiference * 2;
+        }
+        else
+        {
+            if (currentHealth > GetMaxHealth())
+            {
+                currentHealth = GetMaxHealth();
+            }
+        }
 
         UIHealthController.Instance.ChangeHearths(GetMaxHealth());
 

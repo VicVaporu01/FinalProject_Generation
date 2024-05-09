@@ -27,6 +27,7 @@ public class MapLevel : MonoBehaviour
     [Header("Image Values")]
     [Range(0, 1)][SerializeField] private float hueDownValue;
 
+
     private void Start()
     {
         objectRectTransform = GetComponent<RectTransform>();
@@ -54,6 +55,9 @@ public class MapLevel : MonoBehaviour
             case MapLevelTypeEnum.HardLevel:
                 levelToLoadIndex = MapUIManager.Instance.GetRandomLevelToPlay();
                 break;
+            case MapLevelTypeEnum.MediumLevel:
+                levelToLoadIndex = MapUIManager.Instance.GetRandomLevelToPlay();
+                break;
             case MapLevelTypeEnum.ShopLevel:
                 levelToLoadIndex = MapUIManager.Instance.GetRandomLevelToPlay();
                 break;
@@ -67,8 +71,10 @@ public class MapLevel : MonoBehaviour
 
     private void SelectStage()
     {
-        if (canSelectLevel)
+        if (canSelectLevel && !MapUIManager.Instance.isPlayingALevel)
         {
+            AudioManager.Instance.EnterLevelSound();
+
             MapUIManager.Instance.SetActualMapLevelToPlay(this);
 
             EventSystem.current.SetSelectedGameObject(null);
@@ -130,16 +136,22 @@ public class MapLevel : MonoBehaviour
         NextLevels.Add(levelGameObject);
     }
 
-    public void ActivateNextLevelsInMap()
+    public int ActivateNextLevelsInMap()
     {
+        int activatedLevelsAmount = 0;
+
         foreach (MapLevel mapLevel in NextLevels)
         {
             mapLevel.ActivateLevel();
 
             EventSystem.current.SetSelectedGameObject(mapLevel.gameObject);
+
+            activatedLevelsAmount++;
         }
 
         canSelectLevel = false;
+
+        return activatedLevelsAmount;
     }
 
     public void DisableMapLevel()

@@ -12,17 +12,31 @@ public class ObjectSpawnManager : MonoBehaviour
     [SerializeField] private GameObject exitPortalPrefab;
     [SerializeField] private Transform exitPortalSpawnPosition;
 
-    [ContextMenu("Spawn Reward Objects")]
     public void SpawnRewardObjects()
     {
-        foreach (Transform spawnTransform in objectSpawnPositions)
+        if (GameManager.Instance.GiveDifficultyToLevel() == MapLevelTypeEnum.BossLevel)
         {
-            CollectibleObject randomObject = Instantiate(GameManager.Instance.GetRandomObjectToSpawn(), spawnTransform.position, Quaternion.identity);
+            CollectibleObject finalObject = Instantiate(GameManager.Instance.GetFinalReward(), objectSpawnPositions[1].position, Quaternion.identity);
 
-            randomObject.SetObjectRewardParent(this);
+            finalObject.SetObjectRewardParent(this);
 
-            objectsSpawned.Add(randomObject);
+            objectsSpawned.Add(finalObject);
         }
+        else
+        {
+            foreach (Transform spawnTransform in objectSpawnPositions)
+            {
+                CollectibleObject randomObject = Instantiate(GameManager.Instance.GetRandomObjectToSpawn(), spawnTransform.position, Quaternion.identity);
+
+                randomObject.SetObjectRewardParent(this);
+
+                objectsSpawned.Add(randomObject);
+            }
+        }
+
+        AudioManager.Instance.SpawnObjectsSound();
+
+        CinemachineMovimientoCamara.Instance.MoverCamara(10, 10, 0.75f);
     }
 
     public void RewardObjectCollected(CollectibleObject collectibleObjectPicked)

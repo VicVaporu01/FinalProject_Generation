@@ -10,6 +10,9 @@ public class EnemyBulletLife : MonoBehaviour
 
     [SerializeField] private float lifeTime = 3.0f;
 
+    [Header("Sound Effects")]
+    [SerializeField] private AudioClip bulletHit;
+
     private void Start()
     {
         bulletRB = GetComponent<Rigidbody2D>();
@@ -41,6 +44,7 @@ public class EnemyBulletLife : MonoBehaviour
             if (other.gameObject.CompareTag("Player"))
             {
                 damage.TakeDamage(1.0f, DamageType.Physical);
+                AudioManager.Instance.PlaySoundEffect(bulletHit);
                 gameObject.SetActive(false);
             }
         }

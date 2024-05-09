@@ -4,34 +4,30 @@ using UnityEngine;
 
 public class ExitPortal : MonoBehaviour
 {
-    [SerializeField] private ParticleSystem hoverIndicator;
+    [SerializeField] private GameObject activatePortalEffect;
+    [SerializeField] private AudioClip enterPortalSound;
+    private bool canExitLevel;
 
-    private void OnTriggerEnter2D(Collider2D other)
+    private void Start()
     {
-        if (other.CompareTag("Player"))
-        {
-            hoverIndicator.Play();
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            hoverIndicator.Stop();
-        }
+        canExitLevel = true;
     }
 
     public void ExitLevel()
     {
         PlayerMovement playerMovement = FindObjectOfType<PlayerMovement>();
 
-        if (playerMovement != null)
+        if (playerMovement != null && canExitLevel)
         {
-            playerMovement.enabled = false;
+            playerMovement.StopPlayerMovement();
+
+            Instantiate(activatePortalEffect, transform.position, Quaternion.identity);
+
+            AudioManager.Instance.PlaySoundEffect(enterPortalSound);
+
+            canExitLevel = false;
+
+            MapUIManager.Instance.StageCompleted();
         }
-
-        MapUIManager.Instance.StageCompleted();
     }
-
 }

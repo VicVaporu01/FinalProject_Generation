@@ -46,7 +46,7 @@ public class Mage : Enemy
         
         if (canAttack && attackCooldown<=0)
         {
-            distanceCombatController.Shoot();
+            distanceCombatController.Shoot("Mage");
             attackCooldown = 1.5f;
         }
         else

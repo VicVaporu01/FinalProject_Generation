@@ -2,36 +2,113 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class OptionMenu : MonoBehaviour
 {
-    [SerializeField] private AudioMixer audioMixer;
-    public Toggle toggleCameraShake;
+    [Header("Mute Sound Button")]
+    [SerializeField] private Sprite mutedSoundSprite;
+    [SerializeField] private Sprite unMutedSoundSprite;
+    [SerializeField] private Image muteSoundImage;
+    private bool isChangingMasterVolumeFirstTime = true;
+    private bool isChangingMusicVolumeFirstTime = true;
+    private bool isChangingSoundFXVolumeFirstTime = true;
+
+    [Header("References")]
+    [SerializeField] private GameObject optionsButtonGameObject;
+    [SerializeField] private GameObject optionsMenuGameObject;
+    [SerializeField] private GameObject pauseMenuGameObject;
+
+    [Header("Sliders")]
+    [SerializeField] private Slider masterVolumeSlider;
+    [SerializeField] private Slider musicVolumeSlider;
+    [SerializeField] private Slider soundFXVolumeSlider;
 
     private void Start()
     {
-        // Asocia el método ActivarDesactivarCameraShake al evento onValueChanged del Toggle
-        toggleCameraShake.onValueChanged.AddListener(ActivarDesactivarCameraShake);
+        isChangingMasterVolumeFirstTime = true;
+        isChangingMusicVolumeFirstTime = true;
+        isChangingSoundFXVolumeFirstTime = true;
+
+        CheckAudioState();
+
+        InitializeSliders();
     }
 
-    public void CambiarVolumenMusic(float volumen)
+    private void InitializeSliders()
     {
-        audioMixer.SetFloat("MusicVolume", volumen);
+        masterVolumeSlider.value = PlayerPrefs.GetFloat(AudioManager.MASTER_VOLUME_STRING, 0f);
+        musicVolumeSlider.value = PlayerPrefs.GetFloat(AudioManager.MUSIC_VOLUME_STRING, 0f);
+        soundFXVolumeSlider.value = PlayerPrefs.GetFloat(AudioManager.SOUNDFX_VOLUME_STRING, 0f);
     }
 
-    public void CambiarVolumenSFX(float volumen)
+    public void ChangeMasterVolume(float masterVolume)
     {
-        audioMixer.SetFloat("SFXVolume", volumen);
-    }
-
-    public void ActivarDesactivarCameraShake(bool activar)
-    {
-        // Lógica para activar o desactivar la cámara shake
-        Cinemachine.CinemachineFreeLook[] freeLookCameras = FindObjectsOfType<Cinemachine.CinemachineFreeLook>();
-        foreach (var camera in freeLookCameras)
+        if (!isChangingMasterVolumeFirstTime)
         {
-            camera.m_RecenterToTargetHeading.m_enabled = activar;
+            AudioManager.Instance.ClickForwardSound();
+        }
+
+        isChangingMasterVolumeFirstTime = false;
+
+        AudioManager.Instance.ChangeMasterVolume(masterVolume);
+    }
+
+    public void ChangeMusicVolume(float musicVolume)
+    {
+        if (!isChangingMusicVolumeFirstTime)
+        {
+            AudioManager.Instance.ClickForwardSound();
+        }
+
+        isChangingMusicVolumeFirstTime = false;
+
+        AudioManager.Instance.ChangeMusicVolume(musicVolume);
+    }
+
+    public void ChangeSoundFXVolume(float soundFXVolume)
+    {
+        if (!isChangingSoundFXVolumeFirstTime)
+        {
+            AudioManager.Instance.ClickForwardSound();
+        }
+
+        isChangingSoundFXVolumeFirstTime = false;
+
+        AudioManager.Instance.ChangeSoundEffectVolume(soundFXVolume);
+    }
+
+    public void MuteAudio()
+    {
+        AudioManager.Instance.ClickForwardSound();
+
+        AudioManager.Instance.ChangeMuteState();
+
+        CheckAudioState();
+    }
+
+    private void CheckAudioState()
+    {
+        if (AudioManager.Instance.isAudioMuted)
+        {
+            muteSoundImage.sprite = mutedSoundSprite;
+        }
+        else
+        {
+            muteSoundImage.sprite = unMutedSoundSprite;
         }
     }
+
+    public void BackToPauseMenuButton()
+    {
+        AudioManager.Instance.ClickBackwardsSound();
+
+        optionsMenuGameObject.SetActive(false);
+
+        pauseMenuGameObject.SetActive(true);
+
+        EventSystem.current.SetSelectedGameObject(optionsButtonGameObject);
+    }
+
 }

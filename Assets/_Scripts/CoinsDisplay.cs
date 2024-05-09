@@ -3,24 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
 public class CoinsDisplay : MonoBehaviour
 {
-    public TMP_Text coinsText;
+    public TextMeshProUGUI coinsText;
+    [SerializeField] private CoinSystem playerCoinSystem;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
-        
+        playerCoinSystem = FindObjectOfType<CoinSystem>();
+
+        if (playerCoinSystem != null)
+        {
+            playerCoinSystem.OnCoinsChanged.AddListener(ChangeCoinTextUI);
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    private void ChangeCoinTextUI(int actualCoinAmount)
     {
-        CoinSystem playerCoinSystem = FindObjectOfType<CoinSystem>();
-        if(playerCoinSystem != null)
-        {
-            coinsText.text = "Current Coins: " + playerCoinSystem.currentCoins.ToString();
-        }
-        
+        coinsText.text = actualCoinAmount.ToString();
     }
 }

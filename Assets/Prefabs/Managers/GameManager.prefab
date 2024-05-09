@@ -50,8 +50,18 @@ MonoBehaviour:
   maxLifeStats: 1
   magicDamageStats: 1
   bulletAmountStats: 1
+  coinsAmount: 50
   currentHealth: 6
-  maxHealth: 5
+  maxHealth: 6
   collectableObjects:
-  - {fileID: 3593639196240768436, guid: 9ddd82103908e2a48a9182afcd0ea5f4, type: 3}
-  - {fileID: 8158415400464065124, guid: 8c9df9c7bfe761749a3f872f035b32a0, type: 3}
+  - {fileID: 5301874347976680067, guid: 7740c3d1f4d7f5144beab53f11e4962c, type: 3}
+  - {fileID: 1219743453961159874, guid: 3d3ae2229c9b59f47962d1031b38c2eb, type: 3}
+  - {fileID: 619080133765219079, guid: 9e53d34487169f942b5f05b8b757a080, type: 3}
+  - {fileID: 7504672819233282618, guid: f2e540ee07cc20246ada0c866fa2fde1, type: 3}
+  - {fileID: 5948746449204695713, guid: f440f5495d12c04458373c90a75dbaef, type: 3}
+  - {fileID: 4998189323453718957, guid: 7a8b8d456bf513441ad8722dc2597a9b, type: 3}
+  - {fileID: 8403855591913556146, guid: 22a115940b5850d479f0e3a4716f742b, type: 3}
+  - {fileID: 7808167988502686720, guid: f3690a2b66cda2249968dd90f2ba8032, type: 3}
+  - {fileID: 3453319286799841036, guid: 45e09f81c33e40a4bb2db0542dba28f5, type: 3}
+  - {fileID: 5668788963349108072, guid: c08d3060c13d7fd49b430098ab2d88b1, type: 3}
+  finalObjectReward: {fileID: 2139218003891987851, guid: 3681af739c4567a499911f55842020b1, type: 3}

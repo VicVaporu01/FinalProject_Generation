@@ -9,10 +9,10 @@ public class EnemySpawnManager : MonoBehaviour
     [SerializeField] private List<Transform> spawnPoints;
     [SerializeField] private EnemiesPool enemiesPool;
 
-    private float spawnRate;
-    private int enemiesMaxAmount;
-    private int enemiesInvoked;
-    private int enemiesCurrentAmount;
+    [SerializeField] private float spawnRate;
+    [SerializeField] private int enemiesMaxAmount;
+    [SerializeField] private int enemiesInvoked;
+    [SerializeField] private int enemiesCurrentAmount;
 
     private void Start()
     {
@@ -40,6 +40,17 @@ public class EnemySpawnManager : MonoBehaviour
                 Debug.Log("Hard Level");
                 enemiesMaxAmount = 5;
                 spawnRate = 1.0f;
+                break;
+            case MapLevelTypeEnum.BossLevel:
+                Debug.Log("Boss Level");
+                enemiesMaxAmount = 10;
+                spawnRate = 2.0f;
+                break;
+            case MapLevelTypeEnum.ShopLevel:
+                Debug.Log("Shop Level");
+                enemiesMaxAmount = 0;
+                spawnRate = 100.0f;
+                SpawnShopBehaviour();
                 break;
             default:
                 Debug.Log("Default Level");
@@ -86,6 +97,16 @@ public class EnemySpawnManager : MonoBehaviour
             {
                 FindObjectOfType<ObjectSpawnManager>().SpawnRewardObjects();
             }
+        }
+    }
+
+    private void SpawnShopBehaviour()
+    {
+        ShopSpawnManager shopSpawnManager = FindObjectOfType<ShopSpawnManager>();
+
+        if (shopSpawnManager != null)
+        {
+            shopSpawnManager.SpawnShop();
         }
     }
 }

@@ -3,40 +3,77 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System;
+using UnityEngine.EventSystems;
 
 public class MenuGameOver : MonoBehaviour
 {
-    [SerializeField] private GameObject menuGameOver;
+    [Header("References")]
+    [SerializeField] private GameObject menuGameOverObject;
+    [SerializeField] private CanvasGroup backGroundObject;
+    [SerializeField] private CanvasGroup youAreDeadImage;
+    [SerializeField] private CanvasGroup mainMenuButtonObject;
     private PlayerHealthController playerDying;
-    private SceneManagerObject sceneManager;
+
+    [Header("Animation Values")]
+    [SerializeField] private float timeToOpenMenu;
+    [SerializeField] private float timeToChangeBackgroundAlpha;
+    [SerializeField] private float timeToChangeImageAlpha;
+    [SerializeField] private float timeToChangeButtonAlpha;
+
+    [Header("Sounds")]
+    [SerializeField] private AudioClip gameOverSound;
+
 
     private void Start()
     {
-        playerDying = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHealthController>();
-        playerDying.PlayerDead += MenuOn;
-        sceneManager = GameObject.FindObjectOfType<SceneManagerObject>();
+        GameObject playerGameObject = GameObject.FindGameObjectWithTag("Player");
+        playerDying = playerGameObject.GetComponent<PlayerHealthController>();
+        playerDying.OnPlayerDead.AddListener(MenuOn);
     }
 
-    public void restart()
+    private void OnDisable()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    }
-    private void MenuOn(object sender, EventArgs e)
-    {
-        menuGameOver.SetActive(true);
-
+        playerDying.OnPlayerDead.RemoveListener(MenuOn);
     }
 
-
-    public void MainMenu(string nombre)
+    private void MenuOn()
     {
+        PauseMenu.canPause = false;
+
+        AudioManager.Instance.PlaySoundEffect(gameOverSound);
+
+        AudioManager.Instance.StopMusic();
+
+        StartCoroutine(StartGameOverMenuAnimation());
+
+        playerDying.OnPlayerDead.RemoveListener(MenuOn);
+    }
+
+    public void MainMenu()
+    {
+        EventSystem.current.SetSelectedGameObject(null);
+
+        AudioManager.Instance.ClickForwardSound();
+
         SceneManagerObject.Instance.LoadScene(0);
     }
 
-    public void Exit()
+    private IEnumerator StartGameOverMenuAnimation()
     {
-        sceneManager.LoadNextScene();
-        //UnityEditor.EditorApplication.isPlaying = false;
-        Application.Quit();
+        menuGameOverObject.SetActive(true);
+
+        yield return new WaitForSeconds(timeToOpenMenu);
+
+        LeanTween.alphaCanvas(backGroundObject, 1f, timeToChangeBackgroundAlpha).setOnComplete(() =>
+        {
+            LeanTween.alphaCanvas(youAreDeadImage, 1f, timeToChangeImageAlpha).setOnComplete(() =>
+            {
+                LeanTween.alphaCanvas(mainMenuButtonObject, 1f, timeToChangeButtonAlpha).setOnComplete(() =>
+                {
+                    EventSystem.current.SetSelectedGameObject(mainMenuButtonObject.gameObject);
+                });
+            });
+        }
+        );
     }
 }

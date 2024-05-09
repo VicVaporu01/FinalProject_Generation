@@ -4,63 +4,77 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
+using System;
 
 public class PauseMenu : MonoBehaviour
 {
-    public static PauseMenu instance;
-
-    public string mainMenu;
-
+    [Header("References")]
     public GameObject pauseScreen;
     public GameObject pauseOverlay;
     public GameObject statsPanel;
+    [SerializeField] private GameObject optionsMenuObject;
+    [SerializeField] private GameObject resumeButtonObject;
+    [SerializeField] private GameObject mapButtonObject;
+    [SerializeField] private GameObject backOptionsMenuObject;
+    [SerializeField] private CanvasGroup pauseMenuCanvasGroup;
 
-    public List<Image> speedSprites; // Lista de sprites para la velocidad
-    public List<Image> damageSprites; // Lista de sprites para el daño
-    public List<Image> maxLifeSprites; // Lista de sprites para la vida máxima
+    [Header("Stats Panel View")]
+    public List<Image> speedSprites;
+    public List<Image> damageSprites;
+    public List<Image> maxLifeSprites;
+    public List<Image> magicDamageSprites;
+    public List<Image> bulletAmountSprites;
 
-    public Sprite spriteFull; // Sprite para representar una estadística completa
-    public Sprite spriteHalf; // Sprite para representar una estadística a la mitad
+    [Header("Sprites Stats")]
+    public Sprite spriteFull;
+    public Sprite spriteHalf;
+    public Sprite spriteEmpty;
 
-    public bool isPaused;
-
-    private string currentScene;
-
-    void Awake()
-    {
-        instance = this;
-    }
+    public bool isPaused = false;
+    public static bool canPause = true;
+    public int mainMenuIndex;
 
     void Start()
     {
-        currentScene = SceneManager.GetActiveScene().name;
-        statsPanel.SetActive(false); // Ocultar el panel de estadísticas al inicio
+        statsPanel.SetActive(false);
     }
 
-    void Update()
+    public void CloseMap()
     {
-        if (Input.GetButtonDown("Menu"))
+        if (isPaused && MapUIManager.Instance.isMapOpen)
         {
-            PauseUnpause();
+            MapUIManager.Instance.CloseMap();
+
+            AudioManager.Instance.ClickBackwardsSound();
+
+            EventSystem.current.SetSelectedGameObject(mapButtonObject);
+
+            pauseMenuCanvasGroup.interactable = true;
         }
     }
 
     public void PauseUnpause()
     {
-        isPaused = !isPaused;
-        pauseScreen.SetActive(isPaused);
-        pauseOverlay.SetActive(isPaused);
-        Time.timeScale = isPaused ? 0f : 1f;
-
-        TogglePlayerComponents(!isPaused);
-
-        if (isPaused)
+        if (canPause)
         {
-            MostrarEstadisticas(); // Mostrar las estadísticas al pausar
-        }
-        else
-        {
-            statsPanel.SetActive(false); // Ocultar el panel de estadísticas al despausar
+            isPaused = !isPaused;
+            pauseScreen.SetActive(isPaused);
+            pauseOverlay.SetActive(isPaused);
+            Time.timeScale = isPaused ? 0f : 1f;
+
+            if (isPaused)
+            {
+                MostrarEstadisticas();
+                EventSystem.current.SetSelectedGameObject(resumeButtonObject);
+                AudioManager.Instance.ClickBackwardsSound();
+            }
+            else
+            {
+                AudioManager.Instance.ClickForwardSound();
+                statsPanel.SetActive(false);
+            }
         }
     }
 
@@ -88,31 +102,30 @@ public class PauseMenu : MonoBehaviour
         }
     }
 
-    public void RestartLevel()
-    {
-        SceneManager.LoadScene(currentScene);
-        Time.timeScale = 1f;
-    }
-
     public void MainMenu()
     {
-        SceneManager.LoadScene(mainMenu);
         Time.timeScale = 1f;
+
+        EventSystem.current.SetSelectedGameObject(null);
+
+        SceneManagerObject.Instance.LoadScene(mainMenuIndex);
+
+        AudioManager.Instance.ClickBackwardsSound();
     }
 
     private void MostrarEstadisticas()
     {
-        // Obtener el componente PlayerStats
         PlayerStats playerStats = FindObjectOfType<PlayerStats>();
 
         if (playerStats != null)
         {
-            // Mostrar las estadísticas en el panel de estadísticas
             UpdateStatSprites(speedSprites, playerStats.speedStats);
             UpdateStatSprites(damageSprites, playerStats.damangeStats);
             UpdateStatSprites(maxLifeSprites, playerStats.maxLifeStats);
+            UpdateStatSprites(magicDamageSprites, playerStats.magicDamageStats); // Mostrar estadï¿½stica de magicDamage
+            UpdateStatSprites(bulletAmountSprites, playerStats.bulletAmountStats); // Mostrar estadï¿½stica de bulletAmount
 
-            statsPanel.SetActive(true); // Mostrar el panel de estadísticas
+            statsPanel.SetActive(true);
         }
     }
 
@@ -133,8 +146,32 @@ public class PauseMenu : MonoBehaviour
             }
             else
             {
-                statSprites[i].sprite = null; // Sprite vacío
+                statSprites[i].sprite = spriteEmpty; // Mostrar un sprite vacï¿½o
             }
         }
     }
+
+    public void OpenOptionsMenu()
+    {
+        pauseScreen.SetActive(false);
+
+        optionsMenuObject.SetActive(true);
+
+        EventSystem.current.SetSelectedGameObject(backOptionsMenuObject);
+
+        AudioManager.Instance.ClickForwardSound();
+    }
+
+    public void OpenMap()
+    {
+        if (MapUIManager.Instance != null)
+        {
+            pauseMenuCanvasGroup.interactable = false;
+
+            MapUIManager.Instance.OpenMap();
+
+            AudioManager.Instance.ClickForwardSound();
+        }
+    }
+
 }

@@ -47,4 +47,4 @@ MonoBehaviour:
   listEnemiesPrefabs:
   - {fileID: 4212389803508239147, guid: 0a0e22077ea0e284bb9c4a159bdf4a76, type: 3}
   - {fileID: 7051996226404478905, guid: 3ac194c0b4cce914fbf51cab0331774a, type: 3}
-  arraySize: 0
+  - {fileID: 7756592541845115887, guid: a3028b9d031532f4185e39e981d0ead2, type: 3}

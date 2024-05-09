@@ -11,7 +11,8 @@ public class MapUIManager : MonoBehaviour
     [SerializeField] private RectTransform contentRectTransform;
     [SerializeField] private CanvasGroup mapCanvasGroup;
     [SerializeField] private GameObject selectedGameObject;
-    private RectTransform selectedGameObjectRectTransform;
+    [SerializeField] private RectTransform selectedGameObjectRectTransform;
+    [SerializeField] private VictoryMenu victoryMenu;
 
     [Header("Animation Values")]
     [SerializeField] private float stepValue;
@@ -25,14 +26,18 @@ public class MapUIManager : MonoBehaviour
     [SerializeField] private List<MapStage> mapStagesSpawned;
     [SerializeField] public MapLevel actualMapLevel;
     [SerializeField] private int actualMapStageIndex = 0;
-    [SerializeField] private bool isPlayingALevel = false;
-    private bool isMapOpen = true;
+    public bool isPlayingALevel = false;
+    public bool isMapOpen = true;
 
     [Header("Level Control")]
     [SerializeField] private int initialLevelIndex;
     [SerializeField] private int finalLevelIndex;
     [SerializeField] private Sprite levelCompletedImage;
     public int[] playableLevelsIndexList;
+
+    [Header("Change Stage Values")]
+    [SerializeField] private float timeToOpenMapStageComplete;
+    [SerializeField] private float timeToCloseMapStageComplete;
 
     private void Awake()
     {
@@ -67,11 +72,11 @@ public class MapUIManager : MonoBehaviour
                 {
                     if (IsObjectInRightBound(selectedGameObjectRectTransform))
                     {
-                        LeanTween.moveX(contentRectTransform, contentRectTransform.anchoredPosition.x - stepValue, timeToComplete);
+                        LeanTween.moveX(contentRectTransform, contentRectTransform.anchoredPosition.x - stepValue, timeToComplete).setIgnoreTimeScale(true);
                     }
                     else
                     {
-                        LeanTween.moveX(contentRectTransform, contentRectTransform.anchoredPosition.x + stepValue, timeToComplete);
+                        LeanTween.moveX(contentRectTransform, contentRectTransform.anchoredPosition.x + stepValue, timeToComplete).setIgnoreTimeScale(true);
                     }
                 }
             }
@@ -127,7 +132,6 @@ public class MapUIManager : MonoBehaviour
         mapStagesSpawned.Add(mapStage);
     }
 
-    [ContextMenu("Stage Completed")]
     public void StageCompleted()
     {
         if (isPlayingALevel)
@@ -136,13 +140,18 @@ public class MapUIManager : MonoBehaviour
 
             mapStagesSpawned[actualMapStageIndex].DisableAllMapLevelsInStage();
 
-            actualMapLevel.ActivateNextLevelsInMap();
+            int levelsActivated = actualMapLevel.ActivateNextLevelsInMap();
 
             actualMapLevel.ChangeBackgroundSprite(levelCompletedImage);
 
             actualMapStageIndex++;
 
-            Invoke(nameof(OpenMap), 1.5f);
+            Invoke(nameof(OpenMap), timeToOpenMapStageComplete);
+
+            if (levelsActivated <= 0)
+            {
+                victoryMenu.StartVictoryPanel();
+            }
         }
     }
 
@@ -163,7 +172,7 @@ public class MapUIManager : MonoBehaviour
 
             SceneManagerObject.Instance.LoadScene(mapLevel.GetLevelMapIndex());
 
-            Invoke(nameof(CloseMap), 0.5f);
+            Invoke(nameof(CloseMap), timeToCloseMapStageComplete);
         }
     }
 
@@ -174,7 +183,8 @@ public class MapUIManager : MonoBehaviour
 
     public int GetRandomLevelToPlay()
     {
-        return playableLevelsIndexList[Random.Range(0, playableLevelsIndexList.Length)];
+        int playableLevelIndex = playableLevelsIndexList[Random.Range(0, playableLevelsIndexList.Length)];
+        return playableLevelIndex;
     }
 
     public int GetInitialLevelIndex()
@@ -187,21 +197,27 @@ public class MapUIManager : MonoBehaviour
         return finalLevelIndex;
     }
 
-    [ContextMenu("Open Map")]
     public void OpenMap()
     {
         LeanTween.alphaCanvas(mapCanvasGroup, 1f, timeToOpenMap).setEase(easeOpenMap).setOnComplete(() =>
         {
             mapCanvasGroup.blocksRaycasts = true;
+            mapCanvasGroup.interactable = true;
             isMapOpen = true;
-        });
+            PauseMenu.canPause = false;
+            EventSystem.current.SetSelectedGameObject(actualMapLevel.gameObject);
+        }).setIgnoreTimeScale(true);
     }
 
-    [ContextMenu("Close Map")]
     public void CloseMap()
     {
         isMapOpen = false;
 
-        LeanTween.alphaCanvas(mapCanvasGroup, 0f, timeToCloseMap).setEase(easeCloseMap).setOnComplete(() => mapCanvasGroup.blocksRaycasts = false);
+        LeanTween.alphaCanvas(mapCanvasGroup, 0f, timeToCloseMap).setEase(easeCloseMap).setOnComplete(() =>
+        {
+            mapCanvasGroup.blocksRaycasts = false;
+            mapCanvasGroup.interactable = false;
+            PauseMenu.canPause = true;
+        }).setIgnoreTimeScale(true);
     }
 }

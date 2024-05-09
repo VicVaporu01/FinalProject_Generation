@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class PlayerMeleeAttack : MonoBehaviour
 {
@@ -14,6 +15,9 @@ public class PlayerMeleeAttack : MonoBehaviour
     [SerializeField] private int maxAttackDamage;
     [SerializeField] private int minAttackDamage;
 
+    [Header("Sounds")]
+    [SerializeField] private AudioClip[] hitSounds;
+
     private void OnEnable()
     {
         playerStats.OnStatsChanged += ChangeAttackDamage;
@@ -22,6 +26,11 @@ public class PlayerMeleeAttack : MonoBehaviour
     private void OnDisable()
     {
         playerStats.OnStatsChanged -= ChangeAttackDamage;
+    }
+
+    private void Start()
+    {
+        attackDamage = (int)MathF.Round(playerStats.GetNewStatValue(GameManager.Instance.damangeStats, maxAttackDamage, minAttackDamage));
     }
 
     private void ChangeAttackDamage(int newSpeed, int newDamage, int newMaxLife, int newMagicDamage, int newBulletAmountStats)
@@ -35,6 +44,8 @@ public class PlayerMeleeAttack : MonoBehaviour
         {
             if (other.TryGetComponent(out IDamage objectHit))
             {
+                AudioManager.Instance.PlaySoundEffect(hitSounds[Random.Range(0, hitSounds.Length)]);
+
                 objectHit.TakeDamage(attackDamage, damageType);
             }
         }

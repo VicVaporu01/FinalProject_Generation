@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour, IDamage
 {
-    private Rigidbody2D enemyRB;
+    public Rigidbody2D enemyRB;
     public GameObject player;
     [SerializeField] private GameObject father;
 
-    [Header("Enemy Stats")] public float health;
+    [Header("Enemy Stats")]
+    public float health;
     public float speed;
     public float damage;
 
@@ -17,8 +18,18 @@ public class Enemy : MonoBehaviour, IDamage
 
     public float followDistance, minDistanceToAttack;
     public float timePatrolling;
-    private Vector2 randomDirection;
+    public Vector2 randomDirection;
     public float xRange, yRange;
+
+    [Header("Effects")]
+    [SerializeField] private int coinsAmountGived;
+    [SerializeField] private GameObject dieEffectGameObject;
+    [SerializeField] private GameObject appleColectableObject;
+    [SerializeField] private float spawnAppleProbability = 10;
+
+    [Header("Sound Effects")]
+    [SerializeField] private AudioClip[] getHitSounds;
+    [SerializeField] private AudioClip[] deathSounds;
 
     public void DetectPlayer(float followDistance, GameObject player)
     {
@@ -38,6 +49,26 @@ public class Enemy : MonoBehaviour, IDamage
         }
     }
 
+    // public void DetectPlayer(float followDistance, GameObject player)
+    // {
+    //     // Just to see the ray
+    //     Vector2 playerDirection = player.transform.position - transform.position;
+    //     Ray2D rayToSee = new Ray2D(transform.position, playerDirection);
+    //     Debug.DrawRay(rayToSee.origin, rayToSee.direction * followDistance, Color.green);
+    //
+    //     RaycastHit2D hit;
+    //     bool hitSomething = Physics2D.Raycast(rayToSee.origin, );
+    //     
+    //     if (hit.collider.CompareTag("Player"))
+    //     {
+    //         hasLineOfSight = true;
+    //     }
+    //     else
+    //     {
+    //         hasLineOfSight = false;
+    //     }
+    // }
+
     // This method is to flip the enemy when the player is on the opposite side
     public void Flip()
     {
@@ -48,7 +79,8 @@ public class Enemy : MonoBehaviour, IDamage
         // Or if the player is left and the enemy is facing right, the enemy will flip
         if ((isFacingRight && !isPlayerRight) || (!isFacingRight && isPlayerRight))
         {
-            transform.Rotate(0, 180, 0);
+            // transform.Rotate(0, 180, 0);
+            enemyRB.velocity = Vector2.zero;
             isFacingRight = !isFacingRight;
         }
     }
@@ -88,6 +120,14 @@ public class Enemy : MonoBehaviour, IDamage
     public void GenerateRandomDirection()
     {
         randomDirection = new Vector2(Random.Range(-xRange, xRange), Random.Range(-yRange, yRange)).normalized;
+        if (!hasLineOfSight && randomDirection.x > 0)
+        {
+            isFacingRight = true;
+        }
+        else if (!hasLineOfSight && randomDirection.x < 0)
+        {
+            isFacingRight = false;
+        }
     }
 
     public void TakeDamage(float damage, DamageType damageType)
@@ -119,14 +159,44 @@ public class Enemy : MonoBehaviour, IDamage
         health -= damage;
         if (health <= 0)
         {
+            AudioManager.Instance.PlaySoundEffect(deathSounds[Random.Range(0, deathSounds.Length)]);
+
             Die();
+        }
+        else
+        {
+            AudioManager.Instance.PlaySoundEffect(getHitSounds[Random.Range(0, getHitSounds.Length)]);
         }
     }
 
     public void Die()
     {
         GameObject.Find("SpawnManager").GetComponent<EnemySpawnManager>().SubtractEnemy();
+
+        Instantiate(dieEffectGameObject, transform.position, Quaternion.identity);
+
+        transform.localPosition = new Vector3(0, 0, 0);
+
+        TrySpawnApple();
+
+        CoinSystem playerCoinSystem = FindAnyObjectByType<CoinSystem>();
+
+        if (playerCoinSystem != null)
+        {
+            playerCoinSystem.GainCoins(coinsAmountGived);
+        }
+
         father.SetActive(false);
+    }
+
+    private void TrySpawnApple()
+    {
+        float appleSpawnProbability = Random.Range(0, 100);
+
+        if (appleSpawnProbability <= spawnAppleProbability)
+        {
+            Instantiate(appleColectableObject, transform.localPosition, Quaternion.identity);
+        }
     }
 
     public Rigidbody2D GetEnemyRB()

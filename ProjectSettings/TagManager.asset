@@ -18,10 +18,10 @@ TagManager:
   - UI
   - Enemy
   - Player
-  - EnemyProjectiles
-  - 
-  - 
-  - 
+  - EnemyBullet
+  - Grass
+  - Dirt
+  - Obstacles
   - 
   - 
   - 

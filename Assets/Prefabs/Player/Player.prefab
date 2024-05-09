@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &949541464
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 949541465}
+  m_Layer: 8
+  m_Name: ShootController
+  m_TagString: Untagged
+  m_Icon: {fileID: 6519382022992737161, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &949541465
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 949541464}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1058581465873877390}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1058581465626041665
 GameObject:
   m_ObjectHideFlags: 0
@@ -13,7 +44,7 @@ GameObject:
   - component: {fileID: 4134944706679042042}
   m_Layer: 0
   m_Name: Attack
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -74,8 +105,11 @@ MonoBehaviour:
   playerStats: {fileID: 1058581465873877382}
   attackDamage: 1
   damageType: 0
-  maxAttackDamage: 5
+  maxAttackDamage: 4
   minAttackDamage: 1
+  hitSounds:
+  - {fileID: 8300000, guid: eb17f5e2a6d27e3498a32d2b771da3d1, type: 3}
+  - {fileID: 8300000, guid: 2c72290d2605a464dab0121b6b641751, type: 3}
 --- !u!1 &1058581465873877400
 GameObject:
   m_ObjectHideFlags: 0
@@ -95,6 +129,7 @@ GameObject:
   - component: {fileID: 1058581465873877382}
   - component: {fileID: 1058581465873877401}
   - component: {fileID: 3141891886827117559}
+  - component: {fileID: 487601594}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -115,6 +150,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1058581465626041678}
+  - {fileID: 949541465}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -201,10 +237,6 @@ MonoBehaviour:
     m_ActionName: Basic/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: 851c1e7e-d6a4-4ead-b5e8-7aa1eab5b928
-    m_ActionName: Basic/Aim[/Keyboard/upArrow,/Keyboard/downArrow,/Keyboard/leftArrow,/Keyboard/rightArrow]
-  - m_PersistentCalls:
-      m_Calls: []
     m_ActionId: 606ba462-b72c-45a3-a438-47237868978e
     m_ActionName: Basic/Interact[/Keyboard/e]
   - m_PersistentCalls:
@@ -251,6 +283,18 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: fce3b382-625c-4473-a79b-77cba7037d20
     m_ActionName: UI/TrackedDeviceOrientation
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 14edfcf2-263e-4107-a004-f5fa5deb3906
+    m_ActionName: Basic/Shoot[/Keyboard/z,/Mouse/rightButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 8b6dd1db-eb00-4cba-abc8-e0246229988c
+    m_ActionName: Basic/Pause[/Keyboard/p]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 95d678d3-a248-4905-840b-74c4d00f519a
+    m_ActionName: Basic/Back[/Keyboard/backspace,/Keyboard/b]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Basic
@@ -318,10 +362,11 @@ MonoBehaviour:
   playerInput: {fileID: 1058581465873877376}
   playerStats: {fileID: 1058581465873877382}
   rb2D: {fileID: 1058581465873877378}
-  movementSpeed: 5
+  movementSpeed: 4
   moveDirection: {x: 0, y: 0}
+  lastMoveDirection: {x: 0, y: 0}
   minMoveSpeed: 4
-  maxMoveSpeed: 7
+  maxMoveSpeed: 6
 --- !u!95 &1058581465873877380
 Animator:
   serializedVersion: 5
@@ -357,7 +402,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerStats: {fileID: 1058581465873877382}
   invincibleLength: 1
+  isPlayerDeath: 0
   healTestValue: 1
+  OnPlayerDead:
+    m_PersistentCalls:
+      m_Calls: []
+  takeDamageSounds:
+  - {fileID: 8300000, guid: 85bca55070883e848a7bcd6647e47392, type: 3}
+  - {fileID: 8300000, guid: ae927b9852fb2884a9cb826d8a13b429, type: 3}
+  - {fileID: 8300000, guid: 064074c40f4810a45b0e91a007aad026, type: 3}
+  playerDeadSound: {fileID: 8300000, guid: c073bf14ff1b6b54a9ac5a34de3f76e9, type: 3}
 --- !u!114 &1058581465873877382
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -392,8 +446,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b13cef141d534334f969ad92fab8d5c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingCoins: 100
   currentCoins: 100
+  OnCoinsChanged:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &3141891886827117559
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -420,7 +476,45 @@ MonoBehaviour:
   - {x: 0.15, y: -0.13, z: 0}
   m_ShapePathHash: 822327269
   m_Mesh: {fileID: 0}
-  m_InstanceId: -22064
+  m_InstanceId: 61626
   m_LocalBounds:
     m_Center: {x: 0, y: -0.044015124, z: 0}
     m_Extent: {x: 0.15, y: 0.08598487, z: 0}
+--- !u!114 &487601594
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1058581465873877400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb64df57927d16343807e98237e9b051, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerMovement: {fileID: 1058581465873877381}
+  playerStats: {fileID: 1058581465873877382}
+  playerHealthController: {fileID: 1058581465873877383}
+  animator: {fileID: 1058581465873877380}
+  playerInput: {fileID: 1058581465873877376}
+  actualBulletDamage: 1
+  maxBulletDamage: 3
+  minBulletDamage: 1
+  bulletPrefab: {fileID: 6239234748968913836, guid: c4fef1f0c76a72747bb4c750d60164f4, type: 3}
+  shootControllerTransform: {fileID: 949541465}
+  shootDelay: 0.3
+  timeBtwnShots: 1
+  maxAmmoAmount: 5
+  actualAmmoAmount: 0
+  timeToChargeAmmo: 5
+  rightShootPosition: {x: 0.331, y: 0.357, z: 0}
+  leftShootPosition: {x: -0.331, y: 0.357, z: 0}
+  backShootPosition: {x: 0, y: 0.5, z: 0}
+  frontShootPosition: {x: 0, y: 0.341, z: 0}
+  OnBulletAmountChange:
+    m_PersistentCalls:
+      m_Calls: []
+  OnBulletRechargeChange:
+    m_PersistentCalls:
+      m_Calls: []
+  shootSound: {fileID: 8300000, guid: 1e7d5db4fd1843049a24efabf2f9a2e9, type: 3}
